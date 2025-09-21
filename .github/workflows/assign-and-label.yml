@@ -7,7 +7,6 @@ on:
 jobs:
   handle-commands:
     runs-on: ubuntu-latest
-    if: github.event.issue.pull_request
     
     steps:
       - name: Checkout repository
@@ -16,23 +15,34 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Get PR details
-        id: pr
+      - name: Get issue/PR details
+        id: issue
         uses: actions/github-script@v7
         with:
           script: |
-            const { data: pr } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.issue.number
-            });
+            const issueNumber = context.payload.issue.number;
+            const isPR = context.payload.issue.pull_request !== undefined;
             
-            return {
-              number: pr.number,
-              head_sha: pr.head.sha,
-              base_ref: pr.base.ref,
-              head_ref: pr.head.ref
-            };
+            if (isPR) {
+              const { data: pr } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: issueNumber
+              });
+              
+              return {
+                number: pr.number,
+                head_sha: pr.head.sha,
+                base_ref: pr.base.ref,
+                head_ref: pr.head.ref,
+                isPR: true
+              };
+            } else {
+              return {
+                number: issueNumber,
+                isPR: false
+              };
+            }
       
       - name: Check if user is code owner
         id: check-permissions
@@ -119,6 +129,10 @@ jobs:
             const commentBody = context.payload.comment.body;
             const prNumber = context.payload.issue.number;
             
+            const issueNumber = context.payload.issue.number;
+            const isPR = context.payload.issue.pull_request !== undefined;
+            const itemType = isPR ? 'PR' : 'Issue';
+            
             // Process /assign commands
             const assignMatches = commentBody.match(/\/assign\s+@([\w-]+)/g);
             if (assignMatches) {
@@ -128,10 +142,10 @@ jobs:
                   await github.rest.issues.addAssignees({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    issue_number: prNumber,
+                    issue_number: issueNumber,
                     assignees: [username]
                   });
-                  console.log(`Assigned @${username} to PR #${prNumber}`);
+                  console.log(`Assigned @${username} to ${itemType} #${issueNumber}`);
                 } catch (error) {
                   console.log(`Failed to assign @${username}: ${error.message}`);
                 }
@@ -147,10 +161,10 @@ jobs:
                   await github.rest.issues.removeAssignees({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    issue_number: prNumber,
+                    issue_number: issueNumber,
                     assignees: [username]
                   });
-                  console.log(`Unassigned @${username} from PR #${prNumber}`);
+                  console.log(`Unassigned @${username} from ${itemType} #${issueNumber}`);
                 } catch (error) {
                   console.log(`Failed to unassign @${username}: ${error.message}`);
                 }
@@ -173,10 +187,10 @@ jobs:
                   await github.rest.issues.addLabels({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    issue_number: prNumber,
+                    issue_number: issueNumber,
                     labels: labels
                   });
-                  console.log(`Added labels ${labels.join(', ')} to PR #${prNumber}`);
+                  console.log(`Added labels ${labels.join(', ')} to ${itemType} #${issueNumber}`);
                 } catch (error) {
                   console.log(`Failed to add labels: ${error.message}`);
                 }
@@ -214,4 +228,4 @@ jobs:
         run: |
           echo "✅ Commands processed successfully by authorized user"
           echo "User: ${{ github.event.comment.user.login }}"
-          echo "PR: #${{ github.event.issue.number }}"
+          echo "Issue/PR: #${{ github.event.issue.number }}"
