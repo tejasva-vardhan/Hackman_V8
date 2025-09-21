@@ -1,0 +1,231 @@
+name: Assign and Label Commands
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  handle-commands:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Get issue/PR details
+        id: issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const isPR = context.payload.issue.pull_request !== undefined;
+            
+            if (isPR) {
+              const { data: pr } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: issueNumber
+              });
+              
+              return {
+                number: pr.number,
+                head_sha: pr.head.sha,
+                base_ref: pr.base.ref,
+                head_ref: pr.head.ref,
+                isPR: true
+              };
+            } else {
+              return {
+                number: issueNumber,
+                isPR: false
+              };
+            }
+      
+      - name: Check if user is code owner
+        id: check-permissions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commenter = context.payload.comment.user.login;
+            const commentBody = context.payload.comment.body;
+            
+            // Check if comment contains assignment or labeling commands
+            const hasAssignCommand = /\/assign\s+@[\w-]+/.test(commentBody);
+            const hasUnassignCommand = /\/unassign\s+@[\w-]+/.test(commentBody);
+            const hasLabelCommand = /\/label\s+[\w\s-]+/.test(commentBody);
+            
+            if (!hasAssignCommand && !hasUnassignCommand && !hasLabelCommand) {
+              console.log('No assignment or labeling commands found');
+              return { hasCommands: false };
+            }
+            
+            // Get CODEOWNERS file content
+            let codeOwnersContent = '';
+            try {
+              const { data } = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path: '.github/CODEOWNERS'
+              });
+              codeOwnersContent = Buffer.from(data.content, 'base64').toString();
+            } catch (error) {
+              console.log('CODEOWNERS file not found, checking repository settings');
+              // If no CODEOWNERS file, check if user has admin or write permissions
+              try {
+                const { data: permissions } = await github.rest.repos.getCollaboratorPermissionLevel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  username: commenter
+                });
+                
+                const hasPermission = ['admin', 'write'].includes(permissions.permission);
+                console.log(`User ${commenter} has ${permissions.permission} permission: ${hasPermission}`);
+                return { 
+                  hasCommands: true, 
+                  hasPermission: hasPermission,
+                  isCodeOwner: hasPermission
+                };
+              } catch (permError) {
+                console.log(`User ${commenter} has no special permissions`);
+                return { 
+                  hasCommands: true, 
+                  hasPermission: false,
+                  isCodeOwner: false
+                };
+              }
+            }
+            
+            // Parse CODEOWNERS file
+            const codeOwnerLines = codeOwnersContent.split('\n')
+              .filter(line => line.trim() && !line.startsWith('#'))
+              .map(line => {
+                const parts = line.trim().split(/\s+/);
+                const path = parts[0];
+                const owners = parts.slice(1).map(owner => owner.replace('@', ''));
+                return { path, owners };
+              });
+            
+            // Check if commenter is a code owner
+            const isCodeOwner = codeOwnerLines.some(line => 
+              line.owners.includes(commenter)
+            );
+            
+            console.log(`User ${commenter} is code owner: ${isCodeOwner}`);
+            
+            return { 
+              hasCommands: true, 
+              hasPermission: isCodeOwner,
+              isCodeOwner: isCodeOwner
+            };
+      
+      - name: Process assignment commands
+        if: steps.check-permissions.outputs.hasCommands == 'true' && steps.check-permissions.outputs.hasPermission == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commentBody = context.payload.comment.body;
+            const prNumber = context.payload.issue.number;
+            
+            const issueNumber = context.payload.issue.number;
+            const isPR = context.payload.issue.pull_request !== undefined;
+            const itemType = isPR ? 'PR' : 'Issue';
+            
+            // Process /assign commands
+            const assignMatches = commentBody.match(/\/assign\s+@([\w-]+)/g);
+            if (assignMatches) {
+              for (const match of assignMatches) {
+                const username = match.replace('/assign @', '');
+                try {
+                  await github.rest.issues.addAssignees({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issueNumber,
+                    assignees: [username]
+                  });
+                  console.log(`Assigned @${username} to ${itemType} #${issueNumber}`);
+                } catch (error) {
+                  console.log(`Failed to assign @${username}: ${error.message}`);
+                }
+              }
+            }
+            
+            // Process /unassign commands
+            const unassignMatches = commentBody.match(/\/unassign\s+@([\w-]+)/g);
+            if (unassignMatches) {
+              for (const match of unassignMatches) {
+                const username = match.replace('/unassign @', '');
+                try {
+                  await github.rest.issues.removeAssignees({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issueNumber,
+                    assignees: [username]
+                  });
+                  console.log(`Unassigned @${username} from ${itemType} #${issueNumber}`);
+                } catch (error) {
+                  console.log(`Failed to unassign @${username}: ${error.message}`);
+                }
+              }
+            }
+            
+            // Process /label commands
+            const labelMatches = commentBody.match(/\/label\s+([\w\s-]+)/g);
+            if (labelMatches) {
+              const labels = [];
+              for (const match of labelMatches) {
+                const labelText = match.replace('/label ', '').trim();
+                // Split by spaces to handle multiple labels
+                const labelList = labelText.split(/\s+/);
+                labels.push(...labelList);
+              }
+              
+              if (labels.length > 0) {
+                try {
+                  await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issueNumber,
+                    labels: labels
+                  });
+                  console.log(`Added labels ${labels.join(', ')} to ${itemType} #${issueNumber}`);
+                } catch (error) {
+                  console.log(`Failed to add labels: ${error.message}`);
+                }
+              }
+            }
+      
+      - name: Comment on permission denied
+        if: steps.check-permissions.outputs.hasCommands == 'true' && steps.check-permissions.outputs.hasPermission == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commenter = context.payload.comment.user.login;
+            const commentBody = context.payload.comment.body;
+            
+            // Extract the commands that were attempted
+            const commands = [];
+            if (/\/assign\s+@[\w-]+/.test(commentBody)) commands.push('assign');
+            if (/\/unassign\s+@[\w-]+/.test(commentBody)) commands.push('unassign');
+            if (/\/label\s+[\w\s-]+/.test(commentBody)) commands.push('label');
+            
+            const commandText = commands.length === 1 ? 'command' : 'commands';
+            const commandList = commands.join(', ');
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: `❌ **Permission Denied**\n\n@${commenter}, you don't have permission to use the \`/${commandList}\` ${commandText}. Only code owners can use assignment and labeling commands.\n\nIf you believe this is an error, please contact a repository administrator.`
+            });
+            
+            console.log(`Permission denied for user ${commenter} attempting to use commands: ${commandList}`);
+      
+      - name: Log successful execution
+        if: steps.check-permissions.outputs.hasCommands == 'true' && steps.check-permissions.outputs.hasPermission == 'true'
+        run: |
+          echo "✅ Commands processed successfully by authorized user"
+          echo "User: ${{ github.event.comment.user.login }}"
+          echo "Issue/PR: #${{ github.event.issue.number }}"
