@@ -104,13 +104,16 @@ jobs:
               .map(line => {
                 const parts = line.trim().split(/\s+/);
                 const path = parts[0];
-                const owners = parts.slice(1).map(owner => owner.replace('@', ''));
+                const owners = parts.slice(1).map(owner => 
+                  owner.replace('@', '').toLowerCase()
+                );
                 return { path, owners };
               });
             
-            // Check if commenter is a code owner
+            // Check if commenter is a code owner (case-insensitive)
+            const commenterWithoutAt = commenter.replace('@', '').toLowerCase();
             const isCodeOwner = codeOwnerLines.some(line => 
-              line.owners.includes(commenter)
+              line.owners.includes(commenterWithoutAt)
             );
             
             console.log(`User ${commenter} is code owner: ${isCodeOwner}`);
