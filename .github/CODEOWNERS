@@ -1,1 +1,6 @@
+# Code Owners for Hackman_V8
+# This file defines who can use assignment and labeling commands in PRs
+# Format: <file_path> <@username1> <@username2> ...
+
+# Global code owners - can use commands on any file
 * @arpit529srivastava @basedbaba @khushiiagrawal @slashexx @HansaSingh
