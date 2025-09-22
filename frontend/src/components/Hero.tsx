@@ -7,7 +7,7 @@ const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 export default function Hero() {
   return (
     <section
-      className="relative text-white md:w-[95vw] md:h-[100vh]"
+      className="relative text-white md:w-[100vw] md:h-[100vh]"
       style={{
         backgroundImage: "url('/hero-bg.png')",
         backgroundPosition: "center",
@@ -23,7 +23,7 @@ export default function Hero() {
       </div>
 
       <div className="absolute top-[15%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full px-4 md:relative md:top-auto md:left-auto md:translate-x-0 md:flex-row-reverse md:justify-between md:items-center md:my-0">
-        <div className="flex flex-col items-center text-center md:items-end md:text-right pr-0 md:pr-[10%] md:pt-[16%]">
+        <div className="flex flex-col items-center text-center md:items-end md:text-right pr-0 md:pr-[8%] md:pt-[15%]">
           <h1
             className={`${nosifer.className} text-[#FF0700] text-[5vw] md:text-[7vw] leading-none`}
           >
