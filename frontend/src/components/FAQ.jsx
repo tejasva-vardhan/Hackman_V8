@@ -1,8 +1,32 @@
 "use client";
-import React from 'react';
-import FAQItem from './FAQItem';
+
+import React, { useState } from 'react';
+import Image from 'next/image';
 import styles from '../styles/FAQ.module.css';
-import Image from 'next/image'; // Import Image component
+
+
+const FAQItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className={styles.faqItem}>
+      <div className={styles.faqQuestion} onClick={toggleOpen}>
+        <h3>{question}</h3>
+        <span className={styles.toggleIcon}>{isOpen ? '−' : '+' }</span>
+      </div>
+      {isOpen && (
+        <div className={styles.faqAnswer}>
+          <p>{answer}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 const faqData = [
   {
@@ -32,10 +56,10 @@ const FAQ = () => {
   return (
     <section className={styles.faqSection}>
       <Image
-        src="/skull.png" 
+        src="/skull.png"
         alt="Decorative Skull"
-        width={300} 
-        height={400} 
+        width={300}
+        height={400}
         className={styles.faqSkullLeft}
       />
 
