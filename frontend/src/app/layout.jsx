@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Creepster, Metal_Mania } from "next/font/google";
+import { Geist, Geist_Mono, Creepster, Jolly_Lodger } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -11,10 +11,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const metalMania = Metal_Mania({
+const jollyLodger = Jolly_Lodger({
   weight: "400",
   subsets: ["latin"],
-  variable: "--font-metal-mania",
+  variable: "--font-jolly-lodger",
   display: "swap",
 });
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${metalMania.variable} ${creepster.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${jollyLodger.variable} ${creepster.variable}`}
     >
       <body className="antialiased">{children}</body>
     </html>

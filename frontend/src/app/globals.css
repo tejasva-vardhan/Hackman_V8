@@ -27,11 +27,12 @@ body {
 
 
 h2 {
-  font-family: var(--font-creepster), cursive; 
-  font-size: 4em; 
-  color: #FF2400;
-  text-transform: uppercase;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-  text-align: center; 
-  margin-bottom: 50px; 
+  font-family: var(--font-jolly-lodger), cursive; 
+  font-size: 4rem; 
+  color: #ff4500;
+  text-transform: none;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  margin-bottom: 50px;
+  letter-spacing: 2px;
 }

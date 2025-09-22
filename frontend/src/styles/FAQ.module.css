@@ -8,7 +8,7 @@
 
 .faqTitle {
   margin-bottom: 50px;
-  text-transform: uppercase;
+  text-transform: none;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
 }
 
