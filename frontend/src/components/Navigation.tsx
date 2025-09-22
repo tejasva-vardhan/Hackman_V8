@@ -10,99 +10,70 @@ const poppins = Poppins({
 export default function Navigation() {
   return (
     <>
+      {/* Orange Announcement Bar */}
       <div
-        className={`${jolly.className} w-full bg-[#FF6600] text-white text-center py-2 md:h-[5vh] flex items-center justify-center text-[2.5vw] md:text-[1.3rem] tracking-[0.05em] capitalize transform transition-all duration-300 animate-slide-down`}
+        className={`${jolly.className}  w-full bg-[#FF6600] text-white text-center py-2 md:h-[6.5vh] flex items-center justify-center text-[2.5vw] md:text-[1.45rem] tracking-[0.05em] z-50 animate-slide-down`}
         style={{
           animation: "slideDown 0.8s ease-out forwards",
         }}
       >
-        <p className="leading-[140%] animate-fade-in" style={{
-          animation: "fadeIn 1s ease-out 0.3s forwards",
-          opacity: 0,
-        }}>
-          Registrations are now open for Hackman… if you dare to enter.
+        <p
+          className="leading-[140%] animate-fade-in"
+          style={{
+            animation: "fadeIn 1s ease-out 0.3s forwards",
+            opacity: 0,
+          }}
+        >
+          Registrations Are Now Open For Hackman… If You Dare To Enter.
         </p>
       </div>
+
+      {/* Main Navbar */}
       <nav
-        className={`bg-black text-white w-full ${poppins.className} px-4 py-4 md:px-12 md:py-2 flex items-center justify-between transform transition-all duration-300 animate-fade-in-up`}
+        className={`  w-full bg-black text-white ${poppins.className} px-4 py-5 md:px-20 md:py-8 flex items-center justify-between z-50 animate-fade-in-up `}
         style={{
           animation: "fadeInUp 0.8s ease-out 0.2s forwards",
           opacity: 0,
         }}
       >
-        <div className="flex flex-1 items-center justify-start space-x-6 md:space-x-12">
-          <ul className="flex space-x-4 md:space-x-8 text-[3vw] md:text-[1rem] font-medium">
-            <li className="animate-fade-in-stagger" style={{
-              animation: "fadeIn 0.6s ease-out 0.5s forwards",
-              opacity: 0,
-            }}>
-              <a 
-                href="#hero" 
+        {/* Links */}
+        <ul className="flex space-x-6 md:space-x-10 text-[3vw] md:text-[1.2rem]">
+          {[
+            { href: "#hero", label: "Home", delay: 0.5 },
+            { href: "#about-hackman", label: "About Hackman", delay: 0.6 },
+            { href: "#about-genesis", label: "About Genesis", delay: 0.7 },
+            { href: "#sponsors", label: "Sponsors", delay: 0.8 },
+            { href: "#gallery", label: "Gallery", delay: 0.9 },
+          ].map((item, idx) => (
+            <li
+              key={idx}
+              style={{
+                animation: `fadeIn 0.6s ease-out ${item.delay}s forwards`,
+                opacity: 0,
+              }}
+            >
+              <a
+                href={item.href}
                 className="hover:text-gray-400 transition-all duration-300 hover:scale-105 relative group"
               >
-                Home
+                {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-400 transition-all duration-300 group-hover:w-full"></span>
               </a>
             </li>
-            <li className="animate-fade-in-stagger" style={{
-              animation: "fadeIn 0.6s ease-out 0.6s forwards",
-              opacity: 0,
-            }}>
-              <a 
-                href="#about-hackman" 
-                className="hover:text-gray-400 transition-all duration-300 hover:scale-105 relative group"
-              >
-                About Hackman
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-400 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            </li>
-            <li className="animate-fade-in-stagger" style={{
-              animation: "fadeIn 0.6s ease-out 0.7s forwards",
-              opacity: 0,
-            }}>
-              <a 
-                href="#about-genesis" 
-                className="hover:text-gray-400 transition-all duration-300 hover:scale-105 relative group"
-              >
-                About Genesis
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-400 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            </li>
-            <li className="animate-fade-in-stagger" style={{
-              animation: "fadeIn 0.6s ease-out 0.8s forwards",
-              opacity: 0,
-            }}>
-              <a 
-                href="#sponsors" 
-                className="hover:text-gray-400 transition-all duration-300 hover:scale-105 relative group"
-              >
-                Sponsors
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-400 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            </li>
-            <li className="animate-fade-in-stagger" style={{
-              animation: "fadeIn 0.6s ease-out 0.9s forwards",
-              opacity: 0,
-            }}>
-              <a 
-                href="#gallery" 
-                className="hover:text-gray-400 transition-all duration-300 hover:scale-105 relative group"
-              >
-                Gallery
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-400 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      
-        <div className="flex-shrink-0 animate-fade-in" style={{
-          animation: "fadeIn 0.8s ease-out 1s forwards",
-          opacity: 0,
-        }}>
+          ))}
+        </ul>
+
+        {/* Logo */}
+        <div
+          style={{
+            animation: "fadeIn 0.8s ease-out 1s forwards",
+            opacity: 0,
+          }}
+        >
           <img
             src="/genesis-2k25-logo.png"
             alt="Genesis 2025 Logo"
-            className="h-12 md:h-16 transform transition-all duration-300 hover:scale-110 hover:rotate-3"
+            className="h-12 md:h-17 transform transition-all duration-300 hover:scale-110 hover:rotate-3"
           />
         </div>
       </nav>
