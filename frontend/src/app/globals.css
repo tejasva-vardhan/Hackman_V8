@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
+
+
+@import "tailwindcss";
+
+
 :root {
+  --font-jolly: 'Jolly Lodger', cursive;
+  --font-nosifer: 'Nosifer', cursive;
+
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -12,12 +20,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
+
 
 body {
   background: var(--background);
@@ -26,8 +36,27 @@ body {
 }
 
 
+.font-jolly {
+  font-family: var(--font-jolly);
+}
+
+.font-nosifer {
+  font-family: var(--font-nosifer);
+}
+
+
+.font-nosifer {
+  font-family: var(--font-nosifer);
+  text-transform: uppercase; 
+  font-weight: 800;         
+  letter-spacing: 0.05em;    
+}
+
+
+
+
 h2 {
-  font-family: var(--font-jolly-lodger), cursive; 
+  font-family: var(--font-jolly), cursive; 
   font-size: 4rem; 
   color: #FF0700;
   text-transform: none;
