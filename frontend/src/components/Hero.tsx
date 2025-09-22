@@ -7,7 +7,7 @@ const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 export default function Hero() {
   return (
     <section
-      className="relative text-white lg:w-[100vw] lg:h-[100vh] xl:mb-[3%] md:mb-[2%] 2xl:mb-[6%] lg:mb-[5%]"
+      className="relative text-white lg:w-[100vw] lg:h-[100vh] xl:mb-[3%] md:mb-[2%] 2xl:mb-[6%] lg:mb-[3%]"
       style={{
         backgroundImage: "url('/hero-bg2.png')",
         backgroundPosition: "center",
@@ -44,7 +44,7 @@ export default function Hero() {
       </div>
 
       <p
-        className={`${poppins.className} absolute bottom-[5%] left-1/2 -translate-x-1/2 w-[80%] text-center text-[3vw] lg:bottom-[-5%] lg:left-[13%] lg:translate-x-0 lg:text-[1.5vw] lg:w-[95%] lg:text-left xl:bottom-[-6%] 2xl:bottom-[-4%] bg-transparent`}
+        className={`${poppins.className} absolute bottom-[5%] left-1/2 -translate-x-1/2 w-[80%] text-center text-[3vw] lg:bottom-[3%] lg:left-[13%] lg:translate-x-0 lg:text-[1.5vw] lg:w-[95%] lg:text-left xl:bottom-[-6%] 2xl:bottom-[-4%] bg-transparent`}
       >
         Where creativity meets technology. A community of thinkers, builders,
         and leaders shaping the future.
