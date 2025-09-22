@@ -1,55 +1,84 @@
+import React from 'react';
+import { Jolly_Lodger,Poppins} from "next/font/google";
+
+const jollyLodger = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
+const poppins = Poppins({ weight: "400", subsets: ["latin"] });
+
 export default function Contact() {
   return (
-    <section className="py-16 bg-gray-900 text-white">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Contact Us</h2>
-        <div className="max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">Get in Touch</h3>
-              <p className="text-gray-300 mb-6">
-                Have questions about Hackman V8? Wed love to hear from you. 
-                Send us a message and well respond as soon as possible.
-              </p>
-              <div className="space-y-4">
-                <p className="flex items-center">
-                  <span className="mr-3">📧</span>
-                  contact@hackmanv8.com
-                </p>
-                <p className="flex items-center">
-                  <span className="mr-3">📱</span>
-                  +1 (555) 123-4567
-                </p>
-              </div>
-            </div>
-            <div>
-              <form className="space-y-4">
-                <input 
-                  type="text" 
-                  placeholder="Your Name" 
-                  className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700"
-                />
-                <input 
-                  type="email" 
-                  placeholder="Your Email" 
-                  className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700"
-                />
-                <textarea 
-                  placeholder="Your Message" 
-                  rows={4}
-                  className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700"
-                />
-                <button 
-                  type="submit"
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section className="min-h-screen flex flex-col bg-[#000000] text-white relative overflow-hidden">
+  <img
+    src="/spider-web.png"
+    alt="Spider Web"
+    className="absolute top-[10vw] left-0 w-[40vw] max-w-[300px] h-auto opacity-70 z-0 hidden sm:block"
+  />
+  <img
+    src="/spider-web.png"
+    alt="Spider Web"
+    className="absolute top-[8vw] right-[5vw] w-[40vw] max-w-[300px] h-auto opacity-70 z-0 transform translate-x-1/4 -translate-y-1/4 scale-x-[-1] hidden sm:block"
+  />
+  <img
+    src="/spider.png"
+    alt="Hanging Spider"
+    className="absolute top-0 left-[20vw] w-[10vw] max-w-[70px] h-[30vw] max-h-[400px] z-10 hidden sm:block"
+  />
+
+  <div className="absolute bottom-[35vw] right-[25vw] flex items-end space-x-[-10px] z-20 hidden md:flex">
+    <img src="/pumpkin-evil.png" alt="Spooky Pumpkin" className="w-[60px] md:w-[92px] h-[60px] md:h-[96px]" />
+    <img src="/pumpkin-evil.png" alt="Another Spooky Pumpkin" className="w-[40px] md:w-[62px] h-[40px] md:h-[57px]" />
+  </div>
+
+  <div className="relative z-10 flex flex-col items-center max-w-[500px] mx-auto justify-start pt-10 md:pt-20 px-4 pb-10">
+    <h2 className={`${jollyLodger.className} text-[#FF0000] text-5xl md:text-7xl lg:text-8xl text-center mb-8 md:mb-12`}>
+      Contact Us
+    </h2>
+    <div className="w-full max-w-lg space-y-4 md:space-y-6">
+      <input
+        type="text"
+        placeholder="Your Name"
+        className="w-full p-3 md:p-4 bg-[#1A1A1A] rounded-lg focus:outline-none placeholder-gray-500"
+      />
+      <input
+        type="email"
+        placeholder="Your Email Id"
+        className="w-full p-3 md:p-4 bg-[#1A1A1A] rounded-lg focus:outline-none placeholder-gray-500"
+      />
+      <textarea
+        placeholder="Message"
+        rows={4}
+        className="w-full p-3 md:p-4 bg-[#1A1A1A] rounded-lg focus:outline-none placeholder-gray-500 resize-none"
+      />
+    </div>
+  </div>
+      
+  <footer 
+    className="relative w-full h-[250px] md:h-[500px] z-20 flex flex-col justify-center items-center text-center"
+    style={{
+      backgroundColor: '#000000da',
+      backgroundImage: "url('/grass.png')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'bottom center',
+      backgroundRepeat: 'no-repeat'
+    }}>
+    <img
+      src="/genesis-2k25-logo.png"
+      alt="Genesis 2025 Logo"
+      className="mb-4 md:mb-6 mt-8 md:mt-20 w-[100px] md:w-[150px] h-auto filter brightness-75"
+    />
+
+    <nav className={`${poppins.className} flex flex-wrap justify-center space-x-4 md:space-x-8 text-gray-300 text-xs md:text-sm`}>
+      <a href="#hero" className="hover:text-red-500 transition-colors duration-220">Home</a>
+      <a href="#events" className="hover:text-red-500 transition-colors duration-220">Events</a>
+      <a href="#sponsors" className="hover:text-red-500 transition-colors duration-220">Sponsors</a>
+      <a href="#leads" className="hover:text-red-500 transition-colors duration-220">Leads</a>
+      <a href="#gallery" className="hover:text-red-500 transition-colors duration-220">Gallery</a>
+      <a href="#members" className="hover:text-red-500 transition-colors duration-220">Members</a>
+    </nav>
+  </footer>
+
+  <p className="w-full text-center text-xs text-gray-500 py-2">
+    Made With <span className="text-red-500">❤️</span> By Angelica. All Rights Reserved.
+  </p>
+</section>
   );
-}
+} 
