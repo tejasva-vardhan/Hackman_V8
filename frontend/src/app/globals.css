@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+h2 {
+  font-family: var(--font-creepster), cursive; 
+  font-size: 4em; 
+  color: #FF2400;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  text-align: center; 
+  margin-bottom: 50px; 
+}

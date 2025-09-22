@@ -1,0 +1,89 @@
+.faqSection {
+  background-color: transparent; 
+  padding: 80px 0; 
+  text-align: center;
+  position: relative;
+  z-index: 1; 
+}
+
+.faqTitle {
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
+}
+
+.faqContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 15px;
+  padding: 30px;
+}
+
+
+.faqQuestion:hover {
+  color: #ff8c00; 
+}
+
+.faqQuestion h3 {
+  font-family: 'Your Spooky Font', sans-serif; 
+  font-size: 1.4em; 
+  color: #f0f0f0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.toggleIcon {
+  font-size: 2em; 
+  color: #ffffff; 
+  font-weight: bold;
+  margin-left: 20px;
+  transition: transform 0.3s ease;
+}
+
+
+.faqItem {
+  margin-bottom: 10px; 
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px; 
+  text-align: left;
+}
+
+.faqQuestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 0; 
+  transition: color 0.3s ease;
+}
+
+.faqAnswer {
+  padding: 5px 0 5px 15px; 
+  color: #ccc;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+
+@media (max-width: 768px) {
+  .faqTitle {
+    font-size: 2.2em; 
+    margin-bottom: 30px;
+  }
+
+  .faqContainer {
+    padding: 20px;
+  }
+
+  .faqQuestion h3 {
+    font-size: 1.1em; 
+  }
+
+  .toggleIcon {
+    font-size: 1.5em;
+  }
+
+  .faqAnswer {
+    font-size: 1em; 
+  }
+}

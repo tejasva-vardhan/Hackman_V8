@@ -1,0 +1,77 @@
+/* FAQ Section Overall */
+.faqSection {
+  background-color: transparent; /* Assuming your background is inherited or set globally */
+  padding: 80px 0; /* Adjust padding as needed */
+  text-align: center;
+  position: relative;
+  z-index: 1; /* Ensure it's above any background elements */
+}
+
+.faqTitle {
+  font-family: 'Your Spooky Font', sans-serif; /* Use a font that matches your design */
+  font-size: 3em; /* Adjust size */
+  color: #ff4500; /* Deep orange/red color from your design */
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Adds depth */
+}
+
+.faqContainer {
+  max-width: 900px; /* Adjust width of the FAQ box */
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark background with some transparency */
+  border-radius: 15px;
+  padding: 30px;
+  border: 1px solid #333; /* Subtle border */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Individual FAQ Item */
+.faqItem {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #333; /* Separator line between questions */
+  padding-bottom: 15px;
+  text-align: left;
+}
+
+.faqItem:last-child {
+  border-bottom: none; /* No border for the last item */
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.faqQuestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 15px 0;
+  transition: color 0.3s ease;
+}
+
+.faqQuestion:hover {
+  color: #ff8c00; /* Lighter orange on hover */
+}
+
+.faqQuestion h3 {
+  font-family: 'Your Spooky Font', sans-serif; /* Or a clean, readable font */
+  font-size: 1.4em; /* Adjust size */
+  color: #f0f0f0; /* Light text color */
+  margin: 0;
+  flex-grow: 1;
+}
+
+.toggleIcon {
+  font-size: 2em; /* Size of the plus/minus icon */
+  color: #ff4500; /* Icon color */
+  font-weight: bold;
+  margin-left: 20px;
+  transition: transform 0.3s ease;
+}
+
+.faqAnswer {
+  padding: 10px 0 10px 15px;
+  color: #ccc; /* Slightly darker text for the answer */
+  font-size: 1.1em;
+  line-height: 1.6;
+}
