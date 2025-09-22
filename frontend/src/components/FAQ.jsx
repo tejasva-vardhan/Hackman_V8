@@ -55,6 +55,7 @@ const faqData = [
 const FAQ = () => {
   return (
     <section className={styles.faqSection}>
+      {/* Flex Item 1: The Skull */}
       <Image
         src="/skull.png"
         alt="Decorative Skull"
@@ -63,11 +64,14 @@ const FAQ = () => {
         className={styles.faqSkullLeft}
       />
 
-      <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
-      <div className={styles.faqContainer}>
-        {faqData.map((item) => (
-          <FAQItem key={item.id} question={item.question} answer={item.answer} />
-        ))}
+      {/* Flex Item 2: A new wrapper for all text content */}
+      <div className={styles.faqContent}>
+        <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
+        <div className={styles.faqContainer}>
+          {faqData.map((item) => (
+            <FAQItem key={item.id} question={item.question} answer={item.answer} />
+          ))}
+        </div>
       </div>
     </section>
   );
