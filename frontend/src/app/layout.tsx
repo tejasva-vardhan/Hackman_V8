@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Jolly_Lodger } from "next/font/google"
+import { Geist, Geist_Mono, Jolly_Lodger, Nosifer} from "next/font/google"
 import "./globals.css"
 
 const geistSans = Geist({
@@ -19,6 +19,13 @@ const jolly = Jolly_Lodger({
   weight: "400", 
 })
 
+
+const nosifer = Nosifer({
+  variable: "--font-nosifer",
+  subsets: ["latin"],
+  weight: "400", 
+})
+
 export const metadata: Metadata = {
   title: "Hackman V8 - The Ultimate Hackathon Experience",
   description:
@@ -31,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${jolly.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${jolly.variable} ${nosifer.variable} antialiased`}
       >
         {children}
       </body>
