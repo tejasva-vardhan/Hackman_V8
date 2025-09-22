@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
-import FAQItem from './FAQItem'; 
+import FAQItem from './FAQItem';
 import styles from '../styles/FAQ.module.css';
+import Image from 'next/image'; // Import Image component
 
 const faqData = [
   {
@@ -26,9 +27,18 @@ const faqData = [
   },
 ];
 
+
 const FAQ = () => {
   return (
     <section className={styles.faqSection}>
+      <Image
+        src="/skull.png" 
+        alt="Decorative Skull"
+        width={300} 
+        height={400} 
+        className={styles.faqSkullLeft}
+      />
+
       <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
       <div className={styles.faqContainer}>
         {faqData.map((item) => (
