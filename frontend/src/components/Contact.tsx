@@ -10,17 +10,17 @@ export default function Contact() {
   <img
     src="/spider-web.png"
     alt="Spider Web"
-    className="absolute top-[10vw] left-0 w-[40vw] max-w-[300px] h-auto opacity-70 z-0 hidden sm:block"
+    className="absolute top-[10vw] left-0 w-[40vw] max-w-[300px] h-auto opacity-100 z-0 hidden sm:block"
   />
   <img
     src="/spider-web.png"
     alt="Spider Web"
-    className="absolute top-[8vw] right-[5vw] w-[40vw] max-w-[300px] h-auto opacity-70 z-0 transform translate-x-1/4 -translate-y-1/4 scale-x-[-1] hidden sm:block"
+    className="absolute top-[8vw] right-[5vw] w-[40vw] max-w-[300px] h-auto opacity-100 z-0 transform translate-x-1/4 -translate-y-1/4 scale-x-[-1] hidden sm:block"
   />
   <img
     src="/spider.png"
     alt="Hanging Spider"
-    className="absolute top-0 left-[20vw] w-[10vw] max-w-[70px] h-[30vw] max-h-[400px] z-10 hidden sm:block"
+    className="absolute top-[-20vw] left-[13vw] w-[10vw] max-w-[70px] z-10 hidden sm:block"
   />
 
   <div className="absolute bottom-[35vw] right-[25vw] flex items-end space-x-[-10px] z-20 hidden md:flex">
@@ -52,9 +52,9 @@ export default function Contact() {
   </div>
       
   <footer 
-    className="relative w-full h-[250px] md:h-[500px] z-20 flex flex-col justify-center items-center text-center"
+    className="relative w-full h-[150px] md:h-[500px] z-20 flex flex-col justify-center items-center text-center"
     style={{
-      backgroundColor: '#000000da',
+      backgroundColor: 'rgba(0,0,0,0.1)',
       backgroundImage: "url('/grass.png')",
       backgroundSize: 'cover',
       backgroundPosition: 'bottom center',
@@ -77,7 +77,7 @@ export default function Contact() {
   </footer>
 
   <p className="w-full text-center text-xs text-gray-500 py-2">
-    Made With <span className="text-red-500">❤️</span> By Angelica. All Rights Reserved.
+    Made With <span className="text-red-500">❤️</span> By Genesis. All Rights Reserved.
   </p>
 </section>
   );
