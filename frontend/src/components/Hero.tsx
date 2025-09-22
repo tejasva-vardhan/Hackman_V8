@@ -7,7 +7,7 @@ const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 export default function Hero() {
   return (
     <section
-      className="relative text-white md:w-[100vw] md:h-[100vh]"
+      className="relative text-white md:w-[100vw] md:h-[95vh]"
       style={{
         backgroundImage: "url('/hero-bg.png')",
         backgroundPosition: "center",
