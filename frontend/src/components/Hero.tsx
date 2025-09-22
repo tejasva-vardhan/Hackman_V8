@@ -7,40 +7,45 @@ const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 export default function Hero() {
   return (
     <section
-      className="relative bg-cover bg-center text-white md:w-[100vw] md:pb-[3%] bg-black"
+      className="relative text-white md:w-[95vw] md:h-[100vh]"
       style={{
         backgroundImage: "url('/hero-bg.png')",
         backgroundPosition: "center",
         backgroundSize: "cover",
       }}
     >
-      <div className="flex flex-col md:ml-[42%]">
+      <div className="w-full flex justify-end items-start">
         <img
           src="/hero-moon.svg"
           alt="hero-moon illustration"
-          className="md:w-[20%] md:ml-[52%] md:mt-[-2%]"
+          className="absolute top-[2%] right-[12%] w-[10vw] h-auto md:w-[12vw]"
         />
-
-        <h1
-          className={`${nosifer.className} text-[#FF0700] text-[110px] md:text-[3.2rem]`}
-        >
-          Hackman
-        </h1>
-
-        <h1
-          className={`${nosifer.className} text-[89px] md:text-[3rem] md:ml-[44%] md:mt-[-4%]`}
-        >
-          v8.o
-        </h1>
-
-        <a
-          href="/registration"
-          className={`${jolly.className} w-[264px] h-[67px]  bg-[#FE772D] text-black font-bold rounded-[17.64px] text-[40px] flex items-center justify-center md:text-[1.2rem] md:w-[25%] md:h-[8%] md:rounded-[0.8rem] md:ml-[51%]`}
-        >
-          Register Now
-        </a>
       </div>
-      <p className={`${poppins.className} text-[20px] md:text-[0.7rem] md:ml-[13%] md:mt-[10%]`}>
+
+      <div className="absolute top-[15%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full px-4 md:relative md:top-auto md:left-auto md:translate-x-0 md:flex-row-reverse md:justify-between md:items-center md:my-0">
+        <div className="flex flex-col items-center text-center md:items-end md:text-right pr-0 md:pr-[10%] md:pt-[16%]">
+          <h1
+            className={`${nosifer.className} text-[#FF0700] text-[5vw] md:text-[7vw] leading-none`}
+          >
+            Hackman
+          </h1>
+          <h1
+            className={`${nosifer.className} text-[4vw] md:text-[5vw] mt-[2vw] md:mt-[1vw] leading-none`}
+          >
+            v8.o
+          </h1>
+          <a
+            href="/registration"
+            className={`${jolly.className} w-[18vw] h-[4vw] md:w-[15vw] md:h-[4vw] mt-[2vw] bg-[#FE772D] text-black font-bold rounded-[3vw] md:rounded-[1rem] text-[3vw] md:text-[2vw] flex items-center justify-center`}
+          >
+            Register Now
+          </a>
+        </div>
+      </div>
+
+      <p
+        className={`${poppins.className} absolute bottom-[5%] left-1/2 -translate-x-1/2 w-[80%] text-center text-[3vw] md:bottom-[8%] md:left-[13%] md:translate-x-0 md:text-[1.5vw] md:w-[95%] md:text-left`}
+      >
         Where creativity meets technology. A community of thinkers, builders,
         and leaders shaping the future.
       </p>
