@@ -8,45 +8,45 @@ export default function Contact() {
   return (
     <section className="min-h-screen flex flex-col bg-[#000000] text-white relative overflow-hidden">
   <img
-    src="/spider-web.png"
+    src="/spider-web.svg"
     alt="Spider Web"
-    className="absolute top-[10vw] left-0 w-[40vw] max-w-[300px] h-auto opacity-100 z-0 hidden sm:block"
+    className="absolute top-[17vw] left-0 w-[30vw] max-w-[200px] h-auto opacity-100 z-0 hidden sm:block"
   />
   <img
-    src="/spider-web.png"
+    src="/spider-web-right.svg"
     alt="Spider Web"
-    className="absolute top-[8vw] right-[5vw] w-[40vw] max-w-[300px] h-auto opacity-100 z-0 transform translate-x-1/4 -translate-y-1/4 scale-x-[-1] hidden sm:block"
+    className="absolute top-[11vw] right-[0vw] w-[30vw] max-w-[200px] h-auto opacity-100 z-0 hidden sm:block"
   />
   <img
     src="/spider.png"
     alt="Hanging Spider"
-    className="absolute top-[-20vw] left-[13vw] w-[10vw] max-w-[70px] z-10 hidden sm:block"
+    className="absolute top-[-14vw] left-[12vw] w-[10vw] max-w-[70px] z-10 hidden sm:block"
   />
 
-  <div className="absolute bottom-[35vw] right-[25vw] flex items-end space-x-[-10px] z-20 hidden md:flex">
+  <div className="absolute bottom-[35vw] right-[20vw] flex items-end space-x-[-10px] z-20 hidden md:flex">
     <img src="/pumpkin-evil.png" alt="Spooky Pumpkin" className="w-[60px] md:w-[92px] h-[60px] md:h-[96px]" />
     <img src="/pumpkin-evil.png" alt="Another Spooky Pumpkin" className="w-[40px] md:w-[62px] h-[40px] md:h-[57px]" />
   </div>
 
-  <div className="relative z-10 flex flex-col items-center max-w-[500px] mx-auto justify-start pt-10 md:pt-20 px-4 pb-10">
+  <div className="relative z-10 flex flex-col items-center max-w-[700px] mx-auto justify-start pt-10 md:pt-20 px-4 pb-10">
     <h2 className={`${jollyLodger.className} text-[#FF0000] text-5xl md:text-7xl lg:text-8xl text-center mb-8 md:mb-12`}>
       Contact Us
     </h2>
-    <div className="w-full max-w-lg space-y-4 md:space-y-6">
+    <div className="w-full space-y-4 md:space-y-6">
       <input
         type="text"
         placeholder="Your Name"
-        className="w-full p-3 md:p-4 bg-[#1A1A1A] rounded-lg focus:outline-none placeholder-gray-500"
+        className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500"
       />
       <input
         type="email"
         placeholder="Your Email Id"
-        className="w-full p-3 md:p-4 bg-[#1A1A1A] rounded-lg focus:outline-none placeholder-gray-500"
+        className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500"
       />
       <textarea
         placeholder="Message"
         rows={4}
-        className="w-full p-3 md:p-4 bg-[#1A1A1A] rounded-lg focus:outline-none placeholder-gray-500 resize-none"
+        className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500 resize-none"
       />
     </div>
   </div>
