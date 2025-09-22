@@ -1,49 +1,42 @@
-/* Main section container - using Flexbox for side-by-side layout */
 .faqSection {
   display: flex;
-  align-items: center; /* Vertically centers the skull and content */
+  align-items: center; 
   background-color: #000000;
   margin-top: -200px;
 }
 
-/* Flex Item 1: The Skull */
 .faqSkullLeft {
   height: 490px;
-  width: auto; /* Prevents skull from becoming too large */
-  opacity: 0.99; /* Makes the skull faint, like in the image */
+  width: auto; 
+  opacity: 0.99; 
   pointer-events: none;
   transform: translateY(162px);
 }
 
-/* Flex Item 2: The Content Column */
 .faqContent {
-  flex: 1 1 80%; /* Allows content to take up ~60% of the space */
+  flex: 1 1 80%; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Vertically centers the title and container */
+  justify-content: center; 
   min-width: 0;
   transform: translateX(-130px);
 }
 
-/* The "Frequently Asked Questions" title */
 .faqTitle {
   font-size: 4.2em;
-  text-align: center; /* Centers the title within the content column */
+  text-align: center; 
   margin-bottom: 40px;
   text-transform: none;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
-/* Wrapper for the list of FAQ items */
 .faqContainer {
   margin-left: 228px;
   margin-right: 108px;
   
-  /* Remove any other margin properties like max-width or margin: 0 auto */
-  width: auto; /* Allow width to be flexible */
+  width: auto; 
   padding: 15px;}
 
-/* A single question-answer item */
 .faqItem {
   margin-bottom: 8px;
   padding-bottom: 8px;
@@ -51,7 +44,6 @@
   text-align: left;
 }
 
-/* The clickable question bar */
 .faqQuestion {
   display: flex;
   justify-content: space-between;
@@ -65,9 +57,8 @@
   color: #ff8c00;
 }
 
-/* The question text itself */
 .faqQuestion h3 {
-  font-family: var(--font-geist-sans), sans-serif; /* Using a readable font */
+  font-family: var(--font-geist-sans), sans-serif; 
   font-size: 1em;
   color: #f0f0f0;
   margin: 0;
@@ -75,7 +66,6 @@
   font-weight: 550;
 }
 
-/* The expandable answer text */
 .faqAnswer {
   padding: 5px 0 5px 15px;
   color: #ccc;
@@ -84,7 +74,6 @@
   line-height: 1.5;
 }
 
-/* The '+' and '-' icon */
 .toggleIcon {
   font-size: 1.5em;
   color: #ffffff;
@@ -92,32 +81,35 @@
   margin-left: 15px;
 }
 
-@media (max-width: 768px) {
-  .faqTitle {
-    font-size: 2.2em; 
-    margin-bottom: 30px;
-  }
-
-  .faqContainer {
-    padding: 20px;
-  }
-
-  .faqQuestion h3 {
-    font-size: 1.1em; 
-  }
-
-  .toggleIcon {
-    font-size: 1.5em;
-  }
-
-  .faqAnswer {
-    font-size: 1em; 
+@media (max-width: 1024px) {
+  .faqSection {
+    flex-direction: column; 
+    padding: 60px 20px; 
+    margin-top: -70px; 
+    min-height: auto;
   }
 
   .faqSkullLeft {
-    width: 180px;      
-    left: 0px;
-    bottom: -50px;
+    display: none; 
+  }
+
+  .faqContent {
+    transform: none; 
+    width: 100%;
+  }
+
+  .faqTitle {
+    font-size: 2.5em;
+  }
+
+  .faqContainer {
+    margin: 0 auto;
+    max-width: 600px; 
+  }
+
+  .faqQuestion h3,
+  .faqAnswer {
+    font-size: 1rem; 
   }
 }
 
