@@ -1,6 +1,3 @@
-@import "tailwindcss";
-
-
 
 @import "tailwindcss";
 
@@ -54,7 +51,6 @@ body {
 
 
 
-
 h2 {
   font-family: var(--font-jolly), cursive; 
   font-size: 4rem; 
@@ -65,4 +61,3 @@ h2 {
   margin-bottom: 50px;
   letter-spacing: 2px;
 }
-
