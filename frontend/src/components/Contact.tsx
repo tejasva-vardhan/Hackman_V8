@@ -77,7 +77,7 @@ export default function Contact() {
   </footer>
 
   <p className="w-full text-center text-xs text-gray-500 py-2">
-    Made With <span className="text-red-500">❤️</span> By Angelica. All Rights Reserved.
+    Made With <span className="text-red-500">❤️</span> By Genesis. All Rights Reserved.
   </p>
 </section>
   );
