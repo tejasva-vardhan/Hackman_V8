@@ -10,15 +10,15 @@ export default function Navigation() {
   return (
     <>
       <div
-        className={`${jolly.className} top-0 left-0 w-full bg-[#FF6600] text-white h-[45px] text-center content-center text-[22px] tracking-[0.05em] capitalize`}
+        className={`${jolly.className} top-0 left-0 w-full bg-[#FF6600] text-white h-[45px] text-center content-center text-[22px] tracking-[0.05em] capitalize md:h-[10%] md:text-[0.8rem] md:py-[0.2%]`}
       >
         <p className="leading-[140%]">Registrations are now open for Hackman… if you dare to enter.</p>
       </div>
       <nav
-        className={`bg-black text-white w-full h-[95px] ${poppins.className} px-[15px]`}
+        className={`bg-black text-white w-full h-[95px] ${poppins.className} px-[15px] md:h-[5%] md:px-[1%] md:pt-[1%] md:mb-[0.5%]`}
       >
         <div className="container mx-auto flex justify-between items-center h-full px-12">
-          <ul className="flex space-x-10 text-[18px] font-medium">
+          <ul className="flex space-x-10 text-[18px] font-medium md:text-[0.7rem] md:space-x-3">
             <li>
               <a href="#hero" className="hover:text-blue-200 transition-colors">
                 Home
@@ -60,7 +60,7 @@ export default function Navigation() {
           <img
             src="/genesis-2k25-logo.png"
             alt="Genesis 2025 Logo"
-            className="h-16"
+            className="h-16 md:h-[2.25rem]"
           />
         </div>
       </nav>
