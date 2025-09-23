@@ -1,5 +1,6 @@
 import React from 'react';
 import { Jolly_Lodger,Poppins} from "next/font/google";
+import Image from "next/image";
 
 const jollyLodger = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
@@ -7,25 +8,31 @@ const poppins = Poppins({ weight: "400", subsets: ["latin"] });
 export default function Contact() {
   return (
     <section className="min-h-screen flex flex-col bg-[#000000] text-white relative overflow-hidden">
-  <img
+  <Image
     src="/spider-web.svg"
     alt="Spider Web"
+    width={200}
+    height={200}
     className="absolute top-[17vw] left-0 w-[30vw] max-w-[200px] h-auto opacity-100 z-0 hidden sm:block"
   />
-  <img
+  <Image
     src="/spider-web-right.svg"
     alt="Spider Web"
+    width={200}
+    height={200}
     className="absolute top-[11vw] right-[0vw] w-[30vw] max-w-[200px] h-auto opacity-100 z-0 hidden sm:block"
   />
-  <img
+  <Image
     src="/spider.png"
     alt="Hanging Spider"
+    width={70}
+    height={70}
     className="absolute top-[-14vw] left-[12vw] w-[10vw] max-w-[70px] z-10 hidden sm:block"
   />
 
   <div className="absolute bottom-[35vw] right-[20vw] flex items-end space-x-[-10px] z-20 hidden md:flex">
-    <img src="/pumpkin-evil.png" alt="Spooky Pumpkin" className="w-[60px] md:w-[92px] h-[60px] md:h-[96px]" />
-    <img src="/pumpkin-evil.png" alt="Another Spooky Pumpkin" className="w-[40px] md:w-[62px] h-[40px] md:h-[57px]" />
+    <Image src="/pumpkin-evil.png" alt="Spooky Pumpkin" width={92} height={96} className="w-[60px] md:w-[92px] h-[60px] md:h-[96px]" />
+    <Image src="/pumpkin-evil.png" alt="Another Spooky Pumpkin" width={62} height={57} className="w-[40px] md:w-[62px] h-[40px] md:h-[57px]" />
   </div>
 
   <div className="relative z-10 flex flex-col items-center max-w-[700px] mx-auto justify-start pt-10 md:pt-20 px-4 pb-10">
@@ -60,9 +67,11 @@ export default function Contact() {
       backgroundPosition: 'bottom center',
       backgroundRepeat: 'no-repeat'
     }}>
-    <img
+    <Image
       src="/genesis-2k25-logo.png"
       alt="Genesis 2025 Logo"
+      width={150}
+      height={150}
       className="mb-4 md:mb-6 mt-8 md:mt-50 w-[100px] md:w-[150px] h-auto filter brightness-75"
     />
 

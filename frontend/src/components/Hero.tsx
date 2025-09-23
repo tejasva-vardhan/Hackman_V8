@@ -1,4 +1,5 @@
 import { Nosifer, Jolly_Lodger, Poppins } from "next/font/google";
+import Image from "next/image";
 
 const nosifer = Nosifer({ weight: "400", subsets: ["latin"] });
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
@@ -13,9 +14,11 @@ export default function Hero() {
         backgroundPosition: "center 175%",
       }}
     >
-      <img
+      <Image
         src="/hero-moon.svg"
         alt="hero-moon illustration"
+        width={185}
+        height={192}
         className="absolute w-[185px] h-[192px] top-[-50px] right-[180px]"
       />
       <h1

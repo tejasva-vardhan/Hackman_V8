@@ -1,4 +1,5 @@
 import { Poppins, Jolly_Lodger } from "next/font/google";
+import Image from "next/image";
 
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({
@@ -57,9 +58,11 @@ export default function Navigation() {
               </a>
             </li>
           </ul>
-          <img
+          <Image
             src="/genesis-2k25-logo.png"
             alt="Genesis 2025 Logo"
+            width={64}
+            height={64}
             className="h-16"
           />
         </div>
