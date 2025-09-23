@@ -19,21 +19,21 @@ export default function Hero() {
       }}
     >
       <div>
-        <img src="/Hero/botton.png" alt="" className="absolute bottom-[-6%]" />
-        <img src="/Hero/house.png" alt="" className="absolute bottom-32 left-1.9 h-[72.5%]"/>
-        <img src="/Hero/witch.png" alt="" className="absolute right-155 top-18 "/> 
-        <img src="/Hero/moon.png" alt="" className="absolute right-73 top-[-78] w-[13%]" />
-        <img src="/Hero/pumpkin evil.png" alt="" className="absolute right-18 bottom-30 h-[12%]"/>
-        <img src="/Hero/Vector.png" alt="" className="absolute bottom-[16%] right-[43%]" />
-        <img src="/Hero/Vector-4.png" alt="" className="absolute bottom-[16%] right-[44%]" />
-        <img src="/Hero/Vector-7.png" alt="" className="absolute bottom-[17.5%] right-[41.5%]" />
-        <img src="/Hero/Vector-2.png" alt="" className="absolute bottom-[17.5%] right-[40%]" />
-        <img src="/Hero/Vector-1.png" alt="" className="absolute bottom-[17.5%] right-[39%]" />
-        <img src="/Hero/ghost.png" alt="" className="absolute bottom-[16%] right-[35%]" />
-        <img src="/Hero/Vector-3.png" alt="" className="absolute bottom-[13%] right-[36%]" />
-        <img src="/Hero/Vector-5.png" alt="" className="absolute bottom-[17.5%] right-[34%]" />
-        <img src="/Hero/Vector-8.png" alt="" className="absolute bottom-[13%] right-[32.5%]" />
-        <img src="/Hero/Vector-6.png" alt="" className="absolute bottom-[14%] right-[28%]" />
+        <Image src="/Hero/botton.png" alt="" width={1450} height={20} className="absolute bottom-[-6%]" />
+        <Image src="/Hero/house.png" alt="" width={490} height={20} className="absolute bottom-32 left-1.9 h-[72.5%]"/>
+        <Image src="/Hero/witch.png" alt="" width={70} height={20} className="absolute right-155 top-18 "/> 
+        <Image src="/Hero/moon.png" alt="" width={90} height={20} className="absolute right-73 top-[-78] w-[13%]" />
+        <Image src="/Hero/pumpkin evil.png" alt="" width={92} height={20} className="absolute right-18 bottom-30 h-[12%]"/>
+        <Image src="/Hero/Vector.png" alt="" width={30} height={20} className="absolute bottom-[16%] right-[43%]" />
+        <Image src="/Hero/Vector-4.png" alt="" width={40} height={20} className="absolute bottom-[16%] right-[44%]" />
+        <Image src="/Hero/Vector-7.png" alt="" width={35} height={10} className="absolute bottom-[17.5%] right-[41.5%]" />
+        <Image src="/Hero/Vector-2.png" alt="" width={30} height={10} className="absolute bottom-[17.5%] right-[40%]" />
+        <Image src="/Hero/Vector-1.png" alt="" width={20} height={10}className="absolute bottom-[17.5%] right-[39%]" />
+        <Image src="/Hero/ghost.png" alt="" width={85} height={10}className="absolute bottom-[16%] right-[35%]" />
+        <Image src="/Hero/Vector-3.png" alt="" width={55} height={10} className="absolute bottom-[13%] right-[36%]" />
+        <Image src="/Hero/Vector-5.png" alt="" width={30} height={10} className="absolute bottom-[17.5%] right-[34%]" />
+        <Image src="/Hero/Vector-8.png" alt="" width={25} height={10} className="absolute bottom-[13%] right-[32.5%]" />
+        <Image src="/Hero/Vector-6.png" alt="" width={35} height={10} className="absolute bottom-[14%] right-[28%]" />
       </div>
       <div className="absolute top-[12%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full px-4 lg:relative lg:top-[-8%] lg:left-[-15] lg:translate-x-0 lg:flex-row-reverse lg:justify-between lg:items-center lg:my-0 ">
         <div className="flex flex-col items-center text-center lg:items-end lg:text-right pr-0 lg:pr-[8%] lg:pt-[15%]">

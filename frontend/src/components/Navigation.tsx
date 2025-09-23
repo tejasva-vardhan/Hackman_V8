@@ -10,7 +10,6 @@ const poppins = Poppins({
 export default function Navigation() {
   return (
     <>
-      {/* Orange Announcement Bar */}
       <div
         className={`${jolly.className}  w-full bg-[#FF6600] text-white text-center py-2 md:h-[6.5vh] flex items-center justify-center text-[2.5vw] md:text-[1.45rem] tracking-[0.05em] z-50 animate-slide-down`}
         style={{
@@ -27,8 +26,6 @@ export default function Navigation() {
           Registrations Are Now Open For Hackman… If You Dare To Enter.
         </p>
       </div>
-
-      {/* Main Navbar */}
       <nav
         className={`  w-full bg-black text-white ${poppins.className} px-4 py-5 md:px-20 md:py-8 flex items-center justify-between z-50 animate-fade-in-up `}
         style={{
@@ -36,7 +33,6 @@ export default function Navigation() {
           opacity: 0,
         }}
       >
-        {/* Links */}
         <ul className="flex space-x-6 md:space-x-10 text-[3vw] md:text-[1.2rem]">
           {[
             { href: "#hero", label: "Home", delay: 0.5 },
@@ -62,8 +58,6 @@ export default function Navigation() {
             </li>
           ))}
         </ul>
-
-        {/* Logo */}
         <div
           style={{
             animation: "fadeIn 0.8s ease-out 1s forwards",
