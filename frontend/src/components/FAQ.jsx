@@ -31,23 +31,53 @@ const FAQItem = ({ question, answer }) => {
 const faqData = [
   {
     id: 1,
-    question: "Lorem ipsum dolor sit amet",
-    answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+    question: "What is Hackman v8?",
+    answer: "Hackman is a 24-hour Inter-College Hackathon, hosted by the Department of Information Science, DSCE",
   },
   {
     id: 2,
-    question: "Lorem ipsum dolor sit amet, consectetur",
-    answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+    question: "Who can participate in Hackman v8?",
+    answer: "Any student pursuing engineering from any year with an interest in technology can participate in Hackman. This includes programmers, designers, data scientists, and other tech enthusiasts.",
   },
   {
     id: 3,
-    question: "Lorem ipsum dolor sit amet",
-    answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+    question: "Is there a registration fee for Hackman v8?",
+    answer: "Yes, there is a minimal registration fee of ₹600 per team.",
   },
   {
     id: 4,
-    question: "Lorem ipsum dolor sit amet, consectetur",
-    answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+    question: "What is the theme of Hackman v8?",
+    answer: "Hackman v8 has an open theme for the choice of topics, meaning participants are free to work on any project belonging to a domain of their liking.",
+  },
+  {
+    id: 5,
+    question: "Will Food, shelter and refreshments be provided at Hackman v8?",
+    answer: "Yes. Food, shelter and timely refreshments will be provided to all the participants throughout the duration of the Hackathon.",
+  },
+  {
+    id: 6,
+    question: "How will projects be judged at Hackman v8?",
+    answer: "Projects at Hackman v8 will be judged based on a set of criteria established by the event organizers, which may include factors such as creativity, technical complexity, feasibility, and potential impact.",
+  },
+  {
+    id: 7,
+    question: "How many members can be on a team at Hackman v8?",
+    answer: "Teams at Hackman v8 can range in size from 2 to 4 members. This allows participants to collaborate with others and share the workload while still keeping the teams small enough to ensure efficient communication and decision-making.",
+  },
+  {
+    id: 8,
+    question: "What should I bring to this hackathon?",
+    answer: "You should bring your laptop, any necessary chargers or accessories, and any other tools or resources you may need to work on your project. Optionally, you may also want to bring a change of clothes, toiletries, and any snacks or drinks you prefer.",
+  },
+  {
+    id: 9,
+    question: "Do I need to have programming experience to participate?",
+    answer: "While programming experience is certainly helpful, it is not always required to participate in HACKMAN. We also welcome designers, data scientists, and other tech enthusiasts who can contribute to the development of a project in other ways.",
+  },
+  {
+    id: 10,
+    question: "What are the benefits of participating in Hackman v8?",
+    answer: "It offers a variety of benefits, including the opportunity to learn new skills, network with like-minded individuals, gain exposure to new technologies and ideas, and potentially win prizes or recognition for your work.",
   },
 ];
 
@@ -59,8 +89,8 @@ const FAQ = () => {
       <Image
         src="/skull.png"
         alt="Decorative Skull"
-        width={300}
-        height={400}
+        width={265}
+        height={490}
         className={styles.faqSkullLeft}
       />
 
