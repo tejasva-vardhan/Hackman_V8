@@ -4,8 +4,25 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from '../styles/FAQ.module.css';
 
+// --- Step 1: Define the types ---
 
-const FAQItem = ({ question, answer }) => {
+// Type for a single FAQ item's data
+interface FaqItemData {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+// Type for the props of the FAQItem component
+interface FAQItemProps {
+  question: string;
+  answer: string;
+}
+
+// --- Step 2: Type the components and data ---
+
+// Type the FAQItem component with its props
+const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
@@ -27,8 +44,8 @@ const FAQItem = ({ question, answer }) => {
   );
 };
 
-
-const faqData = [
+// Type the faqData array
+const faqData: FaqItemData[] = [
   {
     id: 1,
     question: "What is Hackman v8?",
@@ -81,8 +98,8 @@ const faqData = [
   },
 ];
 
-
-const FAQ = () => {
+// Type the main FAQ component
+const FAQ: React.FC = () => {
   return (
     <section className={styles.faqSection}>
       {/* Flex Item 1: The Skull */}
