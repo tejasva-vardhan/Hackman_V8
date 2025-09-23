@@ -1,10 +1,9 @@
 "use client";
-import { Nosifer, Jolly_Lodger, Poppins } from "next/font/google";
-import { } from "react";
+import React from "react";
+import { Jolly_Lodger } from "next/font/google";
+import Image from "next/image";
 
-const nosifer = Nosifer({ weight: ["400"], subsets: ["latin"] });
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
-const poppins = Poppins({ weight: ["600", "400"], subsets: ["latin"] });
 
 const sponsors = [
   { id: 1, src: "/sponsor1.png", alt: "Sponsor 1", color: "rgb(0, 0, 139)" },
@@ -56,11 +55,13 @@ export default function Sponsors() {
               <div
                 key={`${sponsor.id}-${index}`}
                 className={`item h-36 md:h-60 flex-shrink-0 flex items-center justify-center`}
-                style={{ ['--shadow-color' as any]: hoverShadowColors[index % hoverShadowColors.length] }}
+                style={{ '--shadow-color': hoverShadowColors[index % hoverShadowColors.length] } as React.CSSProperties}
               >
-                <img
+                <Image
                   src={sponsor.src}
                   alt={sponsor.alt}
+                  width={200}
+                  height={160}
                   className="w-auto h-28 md:h-40 object-contain rounded-lg transform transition-transform duration-300 hover:scale-110"
                   draggable={false}
                 />
@@ -70,11 +71,13 @@ export default function Sponsors() {
                <div
                  key={`dup-${sponsor.id}-${index}`}
                  className={`item h-36 md:h-48 flex-shrink-0 flex items-center justify-center`}
-                 style={{ ['--shadow-color' as any]: hoverShadowColors[index % hoverShadowColors.length] }}
+                 style={{ '--shadow-color': hoverShadowColors[index % hoverShadowColors.length] } as React.CSSProperties}
                >
-                 <img
+                 <Image
                    src={sponsor.src}
                    alt={sponsor.alt}
+                   width={200}
+                   height={160}
                    className="w-auto h-28 md:h-40 object-contain rounded-lg transform transition-transform duration-300 hover:scale-110"
                    draggable={false}
                  />

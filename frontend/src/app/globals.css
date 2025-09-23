@@ -1,12 +1,15 @@
 
 @import "tailwindcss";
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
 
 :root {
+  --background: #000000;
   --font-jolly: 'Jolly Lodger', cursive;
   --font-nosifer: 'Nosifer', cursive;
-
-  --background: #ffffff;
   --foreground: #171717;
 }
 
