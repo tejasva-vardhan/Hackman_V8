@@ -1,6 +1,6 @@
 "use client";
 import { Nosifer, Jolly_Lodger, Poppins } from "next/font/google";
-import { useState } from "react";
+import { } from "react";
 
 const nosifer = Nosifer({ weight: ["400"], subsets: ["latin"] });
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
@@ -8,7 +8,7 @@ const poppins = Poppins({ weight: ["600", "400"], subsets: ["latin"] });
 
 const sponsors = [
   { id: 1, src: "/sponsor1.png", alt: "Sponsor 1", color: "rgb(0, 0, 139)" },
-  
+ 
   { id: 3, src: "/sponsor3.jpeg", alt: "Sponsor 3", color: "rgb(255, 255, 224)" },
   { id: 4, src: "/sponsor4.jpg", alt: "Sponsor 4", color: "rgb(255, 0, 0)" },
   { id: 5, src: "/sponsor5.png", alt: "Sponsor 5", color: "rgb(255, 215, 0)" },
@@ -24,40 +24,81 @@ const sponsors = [
 ];
 
 export default function Sponsors() {
-  const [hoveredImage, setHoveredImage] = useState<number | null>(null);
+  const hoverShadowColors = [
+    'rgba(173, 216, 230, 1)', // 1 light blue
+    'rgba(255, 255, 255, 0.9)', // 2 white
+    'rgba(255, 0, 0, 1)',     // 3 red
+    'rgba(255, 215, 0, 1)',   // 4 yellow
+    'rgba(0, 0, 139, 1)',     // 5 dark blue
+    'rgba(128, 0, 128, 1)',   // 6 purple
+    'rgba(0, 100, 0, 1)',     // 7 dark green
+    'rgba(0, 119, 190, 1)',   // 8 ocean blue
+    'rgba(135, 206, 235, 1)', // 9 sky blue
+    'rgba(144, 238, 144, 1)', // 10 light green
+    'rgba(238, 130, 238, 1)', // 11 violet
+    'rgba(255, 165, 0, 1)',   // 12 orange
+    'rgba(0, 100, 0, 1)',     // 13 dark green
+  ];
 
   return (
     <section className="py-16 bg-black-60 relative">
       <div className="container mx-auto px-4">
         <h2
-          className={`${jolly.className} text-[#FF0700] text-[72px] text-center mb-25`}
+          className={`${jolly.className} text-[#FF0700] text-[72px] text-center mb-12`}
         >
-          PREVIOUS YEAR SPONSOR
+          PREVIOUS YEAR SPONSORS
         </h2>
 
-        <div className="flex flex-wrap justify-center gap-10">
-          {sponsors.map((sponsor) => (
-            <div
-              key={sponsor.id}
-              className={`relative rounded-lg overflow-hidden w-auto h-36 md:h-48 transition-all duration-300 hover:scale-110`}
-              style={{
-                boxShadow:
-                  hoveredImage === sponsor.id
-                    ? `0 10px 20px 5px ${sponsor.color}`
-                    : `0 10px 15px rgba(255, 255, 255, 0.4)`,
-              }}
-              onMouseEnter={() => setHoveredImage(sponsor.id)}
-              onMouseLeave={() => setHoveredImage(null)}
-            >
-              <img
-                src={sponsor.src}
-                alt={sponsor.alt}
-                className="w-full h-full object-cover"
-              />
+        <div className="relative overflow-hidden">
+          <div className="marquee">
+            <div className="marquee-inner flex flex-nowrap items-center gap-10">
+              {sponsors.map((sponsor, index) => (
+              <div
+                key={`${sponsor.id}-${index}`}
+                className={`item h-36 md:h-60 flex-shrink-0 flex items-center justify-center`}
+                style={{ ['--shadow-color' as any]: hoverShadowColors[index % hoverShadowColors.length] }}
+              >
+                <img
+                  src={sponsor.src}
+                  alt={sponsor.alt}
+                  className="w-auto h-28 md:h-40 object-contain rounded-lg transform transition-transform duration-300 hover:scale-110"
+                  draggable={false}
+                />
+              </div>
+              ))}
+              {sponsors.map((sponsor, index) => (
+               <div
+                 key={`dup-${sponsor.id}-${index}`}
+                 className={`item h-36 md:h-48 flex-shrink-0 flex items-center justify-center`}
+                 style={{ ['--shadow-color' as any]: hoverShadowColors[index % hoverShadowColors.length] }}
+               >
+                 <img
+                   src={sponsor.src}
+                   alt={sponsor.alt}
+                   className="w-auto h-28 md:h-40 object-contain rounded-lg transform transition-transform duration-300 hover:scale-110"
+                   draggable={false}
+                 />
+               </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
+      <style jsx>{`
+        .marquee { overflow: hidden; }
+        .marquee-inner {
+          will-change: transform;
+          width: max-content;
+          animation: marquee-scroll 36s linear infinite;
+        }
+        .item:hover img {
+          filter: drop-shadow(0 0 12px var(--shadow-color));
+        }
+        @keyframes marquee-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </section>
   );
 }
