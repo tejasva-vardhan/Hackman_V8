@@ -1,5 +1,5 @@
 "use client";
-"use client";
+import Image from "next/image";
 import { Nosifer, Jolly_Lodger, Poppins } from "next/font/google";
 
 const nosifer = Nosifer({ weight: "400", subsets: ["latin"] });
@@ -19,7 +19,6 @@ export default function Hero() {
       }}
     >
       <div>
-        //design elements
         <img src="/Hero/botton.png" alt="" className="absolute bottom-[-6%]" />
         <img src="/Hero/house.png" alt="" className="absolute bottom-32 left-1.9 h-[72.5%]"/>
         <img src="/Hero/witch.png" alt="" className="absolute right-155 top-18 "/> 
@@ -36,8 +35,7 @@ export default function Hero() {
         <img src="/Hero/Vector-8.png" alt="" className="absolute bottom-[13%] right-[32.5%]" />
         <img src="/Hero/Vector-6.png" alt="" className="absolute bottom-[14%] right-[28%]" />
       </div>
-      {/* Add design elements later */}
-      <div className="absolute top-[12%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full px-4 lg:relative lg:top-[-10%] lg:left-[-15] lg:translate-x-0 lg:flex-row-reverse lg:justify-between lg:items-center lg:my-0 ">
+      <div className="absolute top-[12%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full px-4 lg:relative lg:top-[-8%] lg:left-[-15] lg:translate-x-0 lg:flex-row-reverse lg:justify-between lg:items-center lg:my-0 ">
         <div className="flex flex-col items-center text-center lg:items-end lg:text-right pr-0 lg:pr-[8%] lg:pt-[15%]">
           <h1
             className={`${nosifer.className} text-[#FF0700] text-[5vw] lg:text-[7vw] leading-none animate-fade-in-up`}
