@@ -51,7 +51,7 @@ const faqData = [
   },
   {
     id: 5,
-    question: "Will Food, shelter and refreshments be provided at Hackman v8?",
+    question: "Will food, shelter and refreshments be provided at Hackman v8?",
     answer: "Yes. Food, shelter and timely refreshments will be provided to all the participants throughout the duration of the Hackathon.",
   },
   {

@@ -88,7 +88,7 @@
 @media (max-width: 1024px) {
   .faqSection {
     flex-direction: column;
-    
+    align-items: center; /* <-- This centers the content block */
     padding: 60px 20px;
     margin-top: -70px;
     min-height: auto;
@@ -104,6 +104,7 @@
   }
 
   .faqTitle {
+    margin-left: 0px;
     font-size: 2.5em;
     text-align: center;
     margin-bottom: 40px;
