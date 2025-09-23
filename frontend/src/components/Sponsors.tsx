@@ -24,7 +24,6 @@ const sponsors = [
 ];
 
 export default function Sponsors() {
-  
   const [hoveredImage, setHoveredImage] = useState<number | null>(null);
 
   return (
@@ -33,24 +32,19 @@ export default function Sponsors() {
         <h2
           className={`${jolly.className} text-[#FF0700] text-[72px] text-center mb-25`}
         >
-          PREVIOUS YEAR SPONSORS
+          PREVIOUS YEAR SPONSOR
         </h2>
 
         <div className="flex flex-wrap justify-center gap-10">
           {sponsors.map((sponsor) => (
             <div
               key={sponsor.id}
-              className={`relative rounded-lg overflow-hidden w-auto h-36 md:h-48 transition-all duration-300 hover:scale-110
-                ${hoveredImage !== null && hoveredImage !== sponsor.id ? 'blur-sm' : ''}`}
+              className={`relative rounded-lg overflow-hidden w-auto h-36 md:h-48 transition-all duration-300 hover:scale-110`}
               style={{
                 boxShadow:
                   hoveredImage === sponsor.id
                     ? `0 10px 20px 5px ${sponsor.color}`
                     : `0 10px 15px rgba(255, 255, 255, 0.4)`,
-                filter:
-                  hoveredImage !== null && hoveredImage !== sponsor.id
-                    ? 'blur(5px)'
-                    : 'blur(0)',
               }}
               onMouseEnter={() => setHoveredImage(sponsor.id)}
               onMouseLeave={() => setHoveredImage(null)}
