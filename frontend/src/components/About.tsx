@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <section className="relative bg-black text-white" id="about">
+    <section className="relative -mb-32 bg-black text-white" id="about">
       {/* Background Images */}
       <div className="absolute left-0 top-4 hidden lg:block">
         <Image src="/images/net.jpg" alt="Spiderweb" width={240} height={280} className="opacity-60" />
@@ -65,7 +65,7 @@ export default function About() {
 
 export function AboutHackman() {
   return (
-    <section className="relative bg-black text-white" id="about-hackman">
+    <section className="relative bg-black text-white mb-24" id="about-hackman">
       <div className="relative py-10 sm:py-12 lg:py-16">
         {/* Side bats */}
         <div className="absolute top-1/2 left-0 -translate-y-1/2 transform hidden lg:block">
