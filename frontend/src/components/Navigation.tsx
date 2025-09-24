@@ -11,13 +11,13 @@ export default function Navigation() {
   return (
     <>
       <div
-        className={`${jolly.className}  w-full bg-[#FF6600] text-white text-center py-2 md:h-[6.5vh] flex items-center justify-center text-[2.5vw] md:text-[1.45rem] tracking-[0.05em] z-50 animate-slide-down`}
+        className={`${jolly.className} w-full bg-[#FF6600] text-white text-center py-3 md:py-2 md:h-[6.5vh] flex items-center justify-center text-[clamp(16px,2.5vw,24px)] md:text-[1.45rem] tracking-[0.05em] z-50 animate-slide-down`}
         style={{
           animation: "slideDown 0.8s ease-out forwards",
         }}
       >
         <p
-          className="leading-[140%] animate-fade-in"
+          className="leading-[140%] animate-fade-in px-2"
           style={{
             animation: "fadeIn 1s ease-out 0.3s forwards",
             opacity: 0,
@@ -27,22 +27,23 @@ export default function Navigation() {
         </p>
       </div>
       <nav
-        className={`  w-full bg-black text-white ${poppins.className} px-4 py-5 md:px-20 md:py-8 flex items-center justify-between z-50 animate-fade-in-up `}
+        className={`w-full bg-black text-white ${poppins.className} px-4 py-4 md:px-20 md:py-8 flex flex-col md:flex-row items-center justify-between z-50 animate-fade-in-up gap-4 md:gap-0`}
         style={{
           animation: "fadeInUp 0.8s ease-out 0.2s forwards",
           opacity: 0,
         }}
       >
-        <ul className="flex space-x-6 md:space-x-10 text-[3vw] md:text-[1.2rem]">
+        <ul className="flex flex-wrap justify-center gap-2 md:gap-6 lg:gap-8 text-[clamp(14px,3vw,18px)] md:text-[1.1rem] lg:text-[1.2rem] order-2 md:order-1">
           {[
             { href: "#hero", label: "Home", delay: 0.5 },
             { href: "#about-hackman", label: "About Hackman", delay: 0.6 },
-            { href: "#about-genesis", label: "About Genesis", delay: 0.7 },
+            { href: "#about", label: "About Genesis", delay: 0.7 },
             { href: "#sponsors", label: "Sponsors", delay: 0.8 },
             { href: "#gallery", label: "Gallery", delay: 0.9 },
           ].map((item, idx) => (
             <li
               key={idx}
+              className="flex"
               style={{
                 animation: `fadeIn 0.6s ease-out ${item.delay}s forwards`,
                 opacity: 0,
@@ -50,15 +51,16 @@ export default function Navigation() {
             >
               <a
                 href={item.href}
-                className="hover:text-gray-400 transition-all duration-300 hover:scale-105 relative group"
+                className="relative group flex items-center px-3 py-2 hover:text-gray-400 transition-all duration-500 transform hover:scale-105"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gray-400 transition-all duration-300 group-hover:w-full"></span>
-              </a>
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-red-500 transition-all duration-500 group-hover:w-full group-hover:shadow-lg group-hover:shadow-orange-400/50"></span>
+              </a> 
             </li>
           ))}
         </ul>
         <div
+          className="order-1 md:order-2 flex-shrink-0"
           style={{
             animation: "fadeIn 0.8s ease-out 1s forwards",
             opacity: 0,
@@ -67,7 +69,7 @@ export default function Navigation() {
           <img
             src="/genesis-2k25-logo.png"
             alt="Genesis 2025 Logo"
-            className="h-12 md:h-17 transform transition-all duration-300 hover:scale-110 hover:rotate-3"
+            className="h-12 md:h-16 lg:h-20 transform transition-all duration-300 hover:scale-110 hover:rotate-3"
           />
         </div>
       </nav>
@@ -101,6 +103,40 @@ export default function Navigation() {
           }
           to {
             opacity: 1;
+          }
+        }
+
+        /* Enhanced touch targets */
+        nav ul li a {
+          position: relative;
+          z-index: 10;
+        }
+
+        /* Increase clickable area for better accessibility */
+        nav ul li a::after {
+          content: '';
+          position: absolute;
+          top: -10px;
+          left: -10px;
+          right: -10px;
+          bottom: -10px;
+          z-index: -1;
+        }
+
+        /* Prevent layout issues on zoom */
+        @media (max-width: 768px) {
+          nav {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+          
+          nav ul {
+            gap: 0.5rem;
+          }
+          
+          nav ul li a {
+            padding: 0.75rem 1rem;
+            font-size: clamp(12px, 3.5vw, 16px);
           }
         }
       `}</style>
