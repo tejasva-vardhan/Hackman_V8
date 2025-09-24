@@ -30,6 +30,7 @@ export default function Home() {
         <section id="sponsors">
           <Sponsors />
         </section>
+        <Contact />
       </main>
     </>
   );
