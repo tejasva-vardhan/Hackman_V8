@@ -4,14 +4,12 @@ import React, { useState } from 'react';
 import styles from '../styles/RegistrationForm.module.css';
 import { Nosifer } from 'next/font/google';
 
-// Set up the font instance locally for this component
 const nosifer = Nosifer({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
 });
 
-// Define a type for a single team member
 interface TeamMember {
   id: number;
   name: string;
@@ -20,13 +18,10 @@ interface TeamMember {
 }
 
 const RegistrationForm: React.FC = () => {
-  // State for basic team and project info
   const [teamName, setTeamName] = useState('');
   const [collegeName, setCollegeName] = useState('');
   const [projectTitle, setProjectTitle] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
-
-  // State for dynamically managing team members (min 2, max 4)
   const [members, setMembers] = useState<TeamMember[]>([
     { id: 1, name: '', email: '', phone: '' },
     { id: 2, name: '', email: '', phone: '' },

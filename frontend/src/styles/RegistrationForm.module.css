@@ -19,7 +19,6 @@
 }
 
 .title {
-  /* Font is applied directly in the component via className */
   color: #FF0500;
   font-size: 3.5rem;
   text-align: center;
@@ -50,7 +49,6 @@
 }
 
 .legend {
-  font-family: var(--font-creepster), cursive;
   font-size: 1.8rem;
   color: #fff;
   margin-bottom: 10px;
@@ -100,7 +98,6 @@
   text-align: right;
 }
 
-/* Member Card Styles */
 .memberCard {
   background-color: #1a1a1a;
   border: 1px solid #333;
@@ -178,7 +175,6 @@
 .submitButton {
   background-color: #FF0500;
   color: #fff;
-  font-family: var(--font-creepster), cursive;
   font-size: 1.5rem;
   padding: 15px;
   border: none;
@@ -194,11 +190,33 @@
   box-shadow: 0 4px 15px rgba(255, 5, 0, 0.4);
 }
 
-/* Fix for browser autofill background */
 .input:-webkit-autofill,
 .input:-webkit-autofill:hover,
 .input:-webkit-autofill:focus,
 .input:-webkit-autofill:active {
   box-shadow: 0 0 0 30px #0d0d0d inset !important;
   -webkit-text-fill-color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .registrationSection {
+    padding: 40px 15px; 
+  }
+
+  .formContainer {
+    padding: 20px; 
+  }
+
+  .title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+  }
+
+  .legend {
+    font-size: 1.5rem; 
+  }
+
+  .submitButton {
+    font-size: 1.2rem; 
+  }
 }
