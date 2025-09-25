@@ -48,7 +48,7 @@ export default function Navigation() {
         </p>
       </div>
       <nav
-        className={` w-full  text-white ${poppins.className} px-4 py-4 md:px-20 md:py-1 flex flex-col md:flex-row items-center justify-between z-50 animate-fade-in-up gap-4 md:gap-0`}
+        className={`fixed w-full  text-white ${poppins.className} px-4 py-4 md:px-20 md:py-1 flex flex-col md:flex-row items-center justify-between z-50 animate-fade-in-up gap-4 md:gap-0`}
         style={{
           animation: "fadeInUp 0.8s ease-out 0.2s forwards",
           opacity: 0,
