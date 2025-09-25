@@ -1,4 +1,4 @@
-import Navigation from '@/components/Navigation';
+import Navigation, { OrangeStrip } from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import FAQ from '@/components/FAQ';
@@ -10,7 +10,8 @@ import { AboutHackman } from '@/components/About';
 export default function Home() {
   return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
+      {/* <OrangeStrip /> */}
       <main className="min-h-screen">
         <section id="hero">
           <Hero />
