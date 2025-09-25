@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/RegistrationForm.module.css';
 import { Nosifer } from 'next/font/google';
+import { useRouter } from 'next/navigation';
 
 const nosifer = Nosifer({
   weight: '400',
@@ -18,6 +19,7 @@ interface TeamMember {
 }
 
 const RegistrationForm: React.FC = () => {
+  const router = useRouter();
   const [teamName, setTeamName] = useState('');
   const [collegeName, setCollegeName] = useState('');
   const [projectTitle, setProjectTitle] = useState('');
@@ -52,19 +54,42 @@ const RegistrationForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const formData = {
-      teamName,
-      collegeName,
-      projectTitle,
-      projectDescription,
-      teamLeadId,
-      members,
-    };
-    console.log('Form Submitted:', formData);
-    alert('Registration Submitted! Check the console for the form data.');
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  const formData = {
+    teamName,
+    collegeName,
+    projectTitle,
+    projectDescription,
+    teamLeadId,
+    members,
   };
+
+  try {
+    const response = await fetch('/api/registration', { 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      router.push('/');
+    } else {
+      alert(`Error: ${result.message}`);
+    }
+  } catch (error) {
+    console.error('Failed to submit form:', error);
+    alert('An error occurred while submitting the form.');
+  }
+};
+
+
+
 
   return (
     <section className={styles.registrationSection}>
