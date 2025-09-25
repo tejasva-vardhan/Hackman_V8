@@ -104,22 +104,24 @@ export default function About() {
               About Genesis
             </h2>
             <div ref={contentRef} className="about-content max-w-6xl mx-auto text-center">
-              <p className={`${"font-poppins"} text-white mb-4 text-base sm:text-lg`}>
-                GENESIS Is Much More Than Just A Team, It&apos;s A Close-Knit Family. With A Diverse Group Of 50 Individuals,
-                Each Bringing Their Own Set Of Skills And Experiences, The Connections They Share Go Far Beyond The
-                Typical Work Relationship. From Managers To Supervisors To Executives, Everyone Comes Together With A
-                Shared Vision And A Collective Purpose. GENESIS Is Built On Four Major Pillars: Technical, Sports,
-                Cultural, And Social. But These Aren&apos;t Just Categories Or Labels, But Also &mdash; They&rsquo;re A Reflection Of The
-                Unique Passions And Interests That Each Team Member Brings.
-              </p>
-              <p className={`${"font-poppins"} text-white text-base sm:text-lg`}>
-                Some Are Creative Minds With A Knack For Design, Others Are Passionate Athletes, And Some Are Tech
-                Experts. There Are Also Those Who Are Deeply Committed To Making A Social Impact. What Truly Makes GENESIS
-                Stand Out, However, Is The Emotional Connection They Create With The People They Serve. Through Events
-                Like Cultural Festivals That Unite Different Groups And Sports Activities That Promote Camaraderie And
-                Healthy Competition, GENESIS Fosters A Strong Sense Of Community Among Students, Faculty, And Beyond.
-              </p>
-            </div>
+  <p className="font-poppins text-white mb-4 text-base sm:text-lg">
+    Genesis is much more than just a team, it&apos;s a close-knit family. with a diverse group of 50 individuals,
+    each bringing their own set of skills and experiences, the connections they share go far beyond the
+    typical work relationship. from managers to supervisors to executives, everyone comes together with a
+    shared vision and a collective purpose. genesis is built on four major pillars: technical, sports,
+    cultural, and social. but these aren&apos;t just categories or labels, but also — they&apos;re a reflection of the
+    unique passions and interests that each team member brings.
+  </p>
+
+  <p className="font-poppins text-white text-base sm:text-lg">
+    Some are creative minds with a knack for design, others are passionate athletes, and some are tech
+    experts. there are also those who are deeply committed to making a social impact. what truly makes genesis
+    stand out, however, is the emotional connection they create with the people they serve. through events
+    like cultural festivals that unite different groups and sports activities that promote camaraderie and
+    healthy competition, genesis fosters a strong sense of community among students, faculty, and beyond.
+  </p>
+</div>
+
           </div>
 
           <div className="mb-16 lg:mb-32">

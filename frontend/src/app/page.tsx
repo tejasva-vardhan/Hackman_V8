@@ -10,7 +10,7 @@ import { AboutHackman } from '@/components/About';
 export default function Home() {
   return (
     <>
-      {/* <Navigation /> */}
+      <Navigation />
       {/* <OrangeStrip /> */}
       <main className="min-h-screen">
         <section id="hero">

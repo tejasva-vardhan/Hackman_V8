@@ -107,7 +107,7 @@ export default function Hero() {
           backgroundSize: "cover",
         }}
       >
-        <Navigation />
+        {/* <Navigation /> */}
 
         <div>
           <Image 
@@ -224,7 +224,7 @@ export default function Hero() {
           />
         </div>
         <div className="absolute top-[12%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full px-4 lg:relative lg:top-[-8%] lg:left-[-15] lg:translate-x-0 lg:flex-row-reverse lg:justify-between lg:items-center lg:my-0 ">
-          <div className="flex flex-col items-center text-center lg:items-end lg:text-right pr-0 lg:pr-[8%] lg:pt-[15%]">
+          <div className="mt-40 flex flex-col items-center text-center lg:items-end lg:text-right pr-0 lg:pr-[8%] lg:pt-[15%]">
             <h1
               className={`${nosifer.className} text-[#FF0700] text-[5vw] lg:text-[7vw] leading-none hover-lift`}
               style={{
