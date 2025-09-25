@@ -90,6 +90,7 @@ const RegistrationForm: React.FC = () => {
                 className={styles.input}
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
+                placeholder="e.g., The Code Crusaders"
                 required
               />
             </div>
@@ -101,14 +102,17 @@ const RegistrationForm: React.FC = () => {
                 className={styles.input}
                 value={collegeName}
                 onChange={(e) => setCollegeName(e.target.value)}
+                placeholder="e.g., Dayananda Sagar College of Engineering"
                 required
               />
             </div>
           </fieldset>
 
           {/* --- Team Members Details --- */}
-          <fieldset className={styles.fieldset }>
-            <legend className={styles.legend}>Team Members (2-4)</legend>
+          <fieldset className={styles.fieldset}>
+            <legend className={`${styles.legend} ${nosifer.className}`}>
+              Team Members (2-4)
+            </legend>
             {members.map((member, index) => (
               <div key={member.id} className={styles.memberCard}>
                 <div className={styles.memberHeader}>
@@ -167,7 +171,9 @@ const RegistrationForm: React.FC = () => {
 
           {/* --- Project Idea Details --- */}
           <fieldset className={styles.fieldset}>
-            <legend className={styles.legend}>Project Idea</legend>
+            <legend className={`${styles.legend} ${nosifer.className}`}>
+              Project Idea
+            </legend>
             <div className={styles.inputGroup}>
               <label htmlFor="projectTitle" className={styles.label}>Project Title</label>
               <input
@@ -176,6 +182,7 @@ const RegistrationForm: React.FC = () => {
                 className={styles.input}
                 value={projectTitle}
                 onChange={(e) => setProjectTitle(e.target.value)}
+                placeholder="A cool name for your project"
                 required
               />
             </div>
@@ -188,13 +195,14 @@ const RegistrationForm: React.FC = () => {
                 onChange={(e) => setProjectDescription(e.target.value)}
                 maxLength={500}
                 rows={5}
+                placeholder="Describe your project idea in a few sentences..."
                 required
               ></textarea>
               <small className={styles.charCount}>{500 - projectDescription.length} characters remaining</small>
             </div>
           </fieldset>
 
-          <button type="submit" className={styles.submitButton}>
+          <button type="submit" className={`${styles.submitButton} ${nosifer.className}`}>
             Submit Registration
           </button>
         </form>
