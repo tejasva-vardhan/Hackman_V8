@@ -30,7 +30,6 @@ export async function POST(request: Request) {
 
     // 3. (DATABASE LOGIC) - This is where you would save the data to your database
     // For now, we'll just log it to the console to confirm it was received.
-    console.log('Received registration data:', data);
 
     return NextResponse.json(
       { message: 'Registration successful!', data: data },
