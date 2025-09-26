@@ -106,13 +106,11 @@ export default function Navigation() {
           }
         }
 
-        /* Enhanced touch targets */
         nav ul li a {
           position: relative;
           z-index: 10;
         }
 
-        /* Increase clickable area for better accessibility */
         nav ul li a::after {
           content: '';
           position: absolute;
@@ -123,7 +121,6 @@ export default function Navigation() {
           z-index: -1;
         }
 
-        /* Prevent layout issues on zoom */
         @media (max-width: 768px) {
           nav {
             padding-left: 1rem;

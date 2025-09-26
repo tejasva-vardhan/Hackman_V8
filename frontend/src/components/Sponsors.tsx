@@ -24,19 +24,19 @@ const sponsors = [
 
 export default function Sponsors() {
   const hoverShadowColors = [
-    'rgba(173, 216, 230, 1)', // 1 light blue
-    'rgba(255, 255, 255, 0.9)', // 2 white
-    'rgba(255, 0, 0, 1)',     // 3 red
-    'rgba(255, 215, 0, 1)',   // 4 yellow
-    'rgba(0, 0, 139, 1)',     // 5 dark blue
-    'rgba(128, 0, 128, 1)',   // 6 purple
-    'rgba(0, 100, 0, 1)',     // 7 dark green
-    'rgba(0, 119, 190, 1)',   // 8 ocean blue
-    'rgba(135, 206, 235, 1)', // 9 sky blue
-    'rgba(144, 238, 144, 1)', // 10 light green
-    'rgba(238, 130, 238, 1)', // 11 violet
-    'rgba(255, 165, 0, 1)',   // 12 orange
-    'rgba(0, 100, 0, 1)',     // 13 dark green
+    'rgba(173, 216, 230, 1)',
+    'rgba(255, 255, 255, 0.9)',
+    'rgba(255, 0, 0, 1)',
+    'rgba(255, 215, 0, 1)',
+    'rgba(0, 0, 139, 1)',
+    'rgba(128, 0, 128, 1)',
+    'rgba(0, 100, 0, 1)',
+    'rgba(0, 119, 190, 1)',
+    'rgba(135, 206, 235, 1)',
+    'rgba(144, 238, 144, 1)',
+    'rgba(238, 130, 238, 1)',
+    'rgba(255, 165, 0, 1)',
+    'rgba(0, 100, 0, 1)',
   ];
 
   return (

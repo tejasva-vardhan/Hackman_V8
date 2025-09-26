@@ -3,7 +3,6 @@ import Image from 'next/image';
 export default function About() {
   return (
     <section className="relative -mb-32 bg-black text-white" id="about">
-      {/* Background Images */}
       <div className="absolute left-0 top-4 hidden lg:block">
         <Image src="/images/net.jpg" alt="Spiderweb" width={240} height={280} className="opacity-60" />
       </div>
@@ -17,7 +16,6 @@ export default function About() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-40">
-        {/* About Genesis */}
         <div className="mb-20 lg:mb-32">
           <h2 className="font-jolly text-center text-[#ff0500] text-4xl sm:text-5xl lg:text-6xl mb-6">
             About Genesis
@@ -41,7 +39,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Three Icons Section */}
         <div className="mb-16 lg:mb-32">
           <div className="relative mx-auto max-w-4xl">
             <Image
@@ -67,7 +64,6 @@ export function AboutHackman() {
   return (
     <section className="relative bg-black text-white mb-24" id="about-hackman">
       <div className="relative py-10 sm:py-12 lg:py-16">
-        {/* Side bats */}
         <div className="absolute top-1/2 left-0 -translate-y-1/2 transform hidden lg:block">
           <Image src="/images/left_bat.png" alt="Bats" width={400} height={200} />
         </div>
