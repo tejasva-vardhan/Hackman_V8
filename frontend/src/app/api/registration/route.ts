@@ -27,7 +27,6 @@ interface RegistrationData {
 export async function POST(request: Request) {
   try {
     await dbConnect();
-
     const data: RegistrationData = await request.json();
 
     const teamMemberSchema = z.object({
@@ -41,7 +40,7 @@ export async function POST(request: Request) {
       usn: z
         .string()
         .trim()
-        .regex(/^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i, 'USN must match 1 + 2 letters + 21-25 + 2 letters + 3 digits'),
+        .regex(/^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i, 'USN must match format'),
       linkedin: z
         .string()
         .trim()
@@ -89,6 +88,7 @@ export async function POST(request: Request) {
       });
 
     const parsed = registrationSchema.safeParse(data);
+
     if (!parsed.success) {
       const { fieldErrors, formErrors } = parsed.error.flatten();
       return NextResponse.json(
@@ -99,7 +99,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
+
     const newRegistration = await Registration.create(parsed.data);
 
     try {
@@ -112,4 +112,34 @@ export async function POST(request: Request) {
       });
 
       const emailPromises = parsed.data.members.map((member) => {
-        return transporter.sendMai
+        return transporter.sendMail({
+          from: `"Hackathon Team" <${process.env.EMAIL_SERVER_USER}>`,
+          to: member.email,
+          subject: '✅ Your Hackathon Registration is Confirmed!',
+          html: `
+            <h1>Hi ${member.name},</h1>
+            <p>Your team, <strong>${parsed.data.teamName}</strong>, has been successfully registered for the hackathon!</p>
+            <p><strong>Project Title:</strong> ${parsed.data.projectTitle}</p>
+            <p>We're excited to have you on board. We'll be in touch with more information soon.</p>
+            <br/>
+            <p>Best of luck!</p>
+            <p>The Hackathon Organizers</p>
+          `,
+        });
+      });
+
+      await Promise.all(emailPromises);
+
+    } catch (emailError) {
+      console.error('Failed to send one or more confirmation emails:', emailError);
+    }
+
+    return NextResponse.json(
+      { message: 'Registration successful!', registrationId: newRegistration._id },
+      { status: 201 }
+    );
+
+  } catch (error: unknown) {
+    return handleError(error);
+  }
+}
