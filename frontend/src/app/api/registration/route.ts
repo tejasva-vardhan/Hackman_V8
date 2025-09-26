@@ -14,6 +14,7 @@ interface TeamMember {
   linkedin?: string;
   github?: string;
 }
+
 interface RegistrationData {
   teamName: string;
   collegeName: string;
@@ -100,6 +101,7 @@ export async function POST(request: Request) {
     }
     
     const newRegistration = await Registration.create(parsed.data);
+
     try {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -110,33 +112,4 @@ export async function POST(request: Request) {
       });
 
       const emailPromises = parsed.data.members.map((member) => {
-        return transporter.sendMail({
-          from: `"Hackathon Team" <${process.env.EMAIL_SERVER_USER}>`,
-          to: member.email,
-          subject: '✅ Your Hackathon Registration is Confirmed!',
-          html: `
-            <h1>Hi ${member.name},</h1>
-            <p>Your team, <strong>${parsed.data.teamName}</strong>, has been successfully registered for the hackathon!</p>
-            <p><strong>Project Title:</strong> ${parsed.data.projectTitle}</p>
-            <p>We're excited to have you on board. We'll be in touch with more information soon.</p>
-            <br/>
-            <p>Best of luck!</p>
-            <p>The Hackathon Organizers</p>
-          `,
-        });
-      });
-
-      await Promise.all(emailPromises);
-
-    } catch (emailError) {
-      console.error('Failed to send one or more confirmation emails:', emailError);
-    }
-    return NextResponse.json(
-      { message: 'Registration successful!', registrationId: newRegistration._id },
-      { status: 201 }
-    );
-
-  } catch (error: unknown) {
-    return handleError(error);
-  }
-}
+        return transporter.sendMai
