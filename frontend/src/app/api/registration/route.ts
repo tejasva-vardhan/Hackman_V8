@@ -3,6 +3,7 @@ import dbConnect from '../../../../lib/dbConnect';
 import Registration from '../../../../models/Registration';
 import { handleError } from '../../../../lib/errorUtils.js';
 import { z } from 'zod';
+import nodemailer from 'nodemailer';
 
 interface TeamMember {
   id: number;
@@ -99,7 +100,37 @@ export async function POST(request: Request) {
     }
     
     const newRegistration = await Registration.create(parsed.data);
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
+        },
+      });
 
+      const emailPromises = parsed.data.members.map((member) => {
+        return transporter.sendMail({
+          from: `"Hackathon Team" <${process.env.EMAIL_SERVER_USER}>`,
+          to: member.email,
+          subject: '✅ Your Hackathon Registration is Confirmed!',
+          html: `
+            <h1>Hi ${member.name},</h1>
+            <p>Your team, <strong>${parsed.data.teamName}</strong>, has been successfully registered for the hackathon!</p>
+            <p><strong>Project Title:</strong> ${parsed.data.projectTitle}</p>
+            <p>We're excited to have you on board. We'll be in touch with more information soon.</p>
+            <br/>
+            <p>Best of luck!</p>
+            <p>The Hackathon Organizers</p>
+          `,
+        });
+      });
+
+      await Promise.all(emailPromises);
+
+    } catch (emailError) {
+      console.error('Failed to send one or more confirmation emails:', emailError);
+    }
     return NextResponse.json(
       { message: 'Registration successful!', registrationId: newRegistration._id },
       { status: 201 }

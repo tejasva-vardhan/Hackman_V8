@@ -1,13 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  console.warn(
-    'MONGODB_URI environment variable is not defined. Please create .env.local with MONGODB_URI=mongodb://localhost:27017/hackman-v8'
-  );
-  return Promise.resolve();
-}
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/hackman-v8';
 
 let cached = global.mongoose;
 
@@ -23,6 +16,7 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {

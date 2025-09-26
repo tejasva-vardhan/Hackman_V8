@@ -117,7 +117,6 @@ const handleSubmit = async (e: React.FormEvent) => {
   try {
     setHasTriedSubmit(true);
     setIsSubmitting(true);
-    // Required field checks
     if (!isNonEmpty(teamName) || !isNonEmpty(collegeName) || !isNonEmpty(projectTitle) || !isNonEmpty(projectDescription)) {
       toast.error('Please fill all required team and project fields.');
       setIsSubmitting(false);
