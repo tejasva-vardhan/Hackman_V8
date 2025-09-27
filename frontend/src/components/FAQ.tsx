@@ -37,7 +37,6 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, index }) => {
   );
 };
 
-
 const faqData = [
   { id: 1, question: "What is Hackman v8?", answer: "Hackman is a 24-hour Inter-College Hackathon, hosted by the Department of Information Science, DSCE" },
   { id: 2, question: "Who can participate in Hackman v8?", answer: "Any student pursuing engineering from any year with an interest in technology can participate in Hackman. This includes programmers, designers, data scientists, and other tech enthusiasts." },
@@ -80,16 +79,17 @@ const FAQ: React.FC = () => {
         .animate-fade-up { opacity: 0; transform: translateY(50px); }
         .animate-in .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; }
         .animate-in h2 { opacity: 0; transform: translateY(-50px); animation: fadeUp 0.8s ease-out forwards; }
-              @keyframes floatUpDown {
+
+        @keyframes floatUpDown {
           0% { transform: translateY(0); }
-          50% { transform: translateY(-20px); } /* move up 20px */
+          50% { transform: translateY(-20px); }
           100% { transform: translateY(0); }
         }
 
         .floatingSkull {
           animation: floatUpDown 2s ease-in-out infinite;
         }
-            `}</style>
+      `}</style>
 
       <section ref={sectionRef} className={`${styles.faqSection} relative`}>
         <Image
