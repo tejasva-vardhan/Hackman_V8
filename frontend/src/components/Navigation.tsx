@@ -6,6 +6,27 @@ const poppins = Poppins({
   weight: ["400"],
   subsets: ["latin"],
 });
+// not in use for now...
+export function OrangeStrip() {
+  return (
+    <div
+      className={`${jolly.className} w-full bg-[#FF6600] text-white text-center py-3 md:py-2 md:h-[6.5vh] flex items-center justify-center text-[clamp(16px,2.5vw,24px)] md:text-[1.45rem] tracking-[0.05em] z-50 animate-slide-down`}
+      style={{
+        animation: "slideDown 0.8s ease-out forwards",
+      }}
+    >
+      <p
+        className="leading-[140%] animate-fade-in px-2"
+        style={{
+          animation: "fadeIn 1s ease-out 0.3s forwards",
+          opacity: 0,
+        }}
+      >
+        Registrations Are Now Open For Hackman… If You Dare To Enter.
+      </p>
+    </div>
+  );
+}
 
 export default function Navigation() {
   return (
@@ -27,7 +48,7 @@ export default function Navigation() {
         </p>
       </div>
       <nav
-        className={`w-full bg-black text-white ${poppins.className} px-4 py-4 md:px-20 md:py-8 flex flex-col md:flex-row items-center justify-between z-50 animate-fade-in-up gap-4 md:gap-0`}
+  className={`fixed left-4 right-4 top- bg-black/50 backdrop-blur-lg text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-50 animate-fade-in-up gap-4 md:gap-0 rounded-2xl shadow-lg`}
         style={{
           animation: "fadeInUp 0.8s ease-out 0.2s forwards",
           opacity: 0,
