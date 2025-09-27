@@ -40,14 +40,22 @@ const RegistrationForm: React.FC = () => {
   const isValidUsn = (usn: string) => /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
   const isNonEmpty = (s: string) => s.trim().length > 0;
   const isValidEmail = (s: string) => /.+@.+\..+/.test(s.trim());
-  const isValidPhone = (s: string) => /^\d{10}$/.test(s);
+  const isValidPhone = (s: string) => {
+    // Remove all non-digits and check if it's 10 digits
+    const digits = s.replace(/\D/g, '');
+    return digits.length === 10;
+  };
   const isValidUrl = (s: string) => /^https?:\/\/.+\..+/i.test(s.trim());
   const isLinkedInUrl = (s: string) => /^(https?:\/\/)?([a-z0-9-]+\.)*linkedin\.com\//i.test(s.trim());
   const isGitHubUrl = (s: string) => /^(https?:\/\/)?([a-z0-9-]+\.)*github\.com\//i.test(s.trim());
 
   const handleMemberChange = (id: number, field: keyof TeamMember, value: string) => {
     const nextValue = (() => {
-      if (field === 'phone') return value.replace(/\D/g, '').slice(0, 10);
+      if (field === 'phone') {
+        // Allow digits, spaces, hyphens, and parentheses for phone formatting
+        const cleaned = value.replace(/[^\d\s\-\(\)]/g, '');
+        return cleaned.slice(0, 15); // Allow up to 15 characters for formatted numbers
+      }
       if (field === 'usn') return value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 10);
       if (field === 'linkedin' || field === 'github') return value.trim();
       return value;

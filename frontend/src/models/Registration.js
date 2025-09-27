@@ -36,7 +36,6 @@ const RegistrationSchema = new mongoose.Schema({
   teamName: {
     type: String,
     required: [true, 'Please provide a team name.'],
-    unique: true,
   },
   collegeName: {
     type: String,
@@ -57,6 +56,52 @@ const RegistrationSchema = new mongoose.Schema({
   members: {
     type: [MemberSchema],
     validate: [v => v.length >= 2 && v.length <= 4, 'Team must have between 2 and 4 members.']
+  },
+  // Dashboard related fields
+  teamCode: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  submissionStatus: {
+    type: String,
+    enum: ['not_submitted', 'submitted', 'under_review', 'accepted', 'rejected'],
+    default: 'not_submitted',
+  },
+  selectionStatus: {
+    type: String,
+    enum: ['pending', 'selected', 'waitlisted', 'rejected'],
+    default: 'pending',
+  },
+  submissionDetails: {
+    githubRepo: {
+      type: String,
+      default: '',
+    },
+    liveDemo: {
+      type: String,
+      default: '',
+    },
+    presentationLink: {
+      type: String,
+      default: '',
+    },
+    additionalNotes: {
+      type: String,
+      default: '',
+    },
+    submittedAt: {
+      type: Date,
+      default: null,
+    },
+  },
+  reviewComments: {
+    type: String,
+    default: '',
+  },
+  finalScore: {
+    type: Number,
+    default: null,
   },
 }, { 
   timestamps: true

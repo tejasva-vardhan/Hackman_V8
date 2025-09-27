@@ -41,17 +41,17 @@ export default function Navigation() {
           className="leading-[140%] animate-fade-in px-2"
           style={{
             animation: "fadeIn 1s ease-out 0.3s forwards",
-            opacity: 0,
+            opacity: 1,
           }}
         >
           Registrations Are Now Open For Hackman… If You Dare To Enter.
         </p>
       </div>
       <nav
-  className={`fixed left-4 right-4 top- bg-black/50 backdrop-blur-lg text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-50 animate-fade-in-up gap-4 md:gap-0 rounded-2xl shadow-lg`}
+        className={`fixed left-4 right-4 top- bg-black/50 backdrop-blur-lg text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-50 animate-fade-in-up gap-4 md:gap-0 rounded-2xl shadow-lg`}
         style={{
           animation: "fadeInUp 0.8s ease-out 0.2s forwards",
-          opacity: 0,
+          opacity: 1,
         }}
       >
         <ul className="flex flex-wrap justify-center gap-2 md:gap-6 lg:gap-8 text-[clamp(14px,3vw,18px)] md:text-[1.1rem] lg:text-[1.2rem] order-2 md:order-1">
@@ -61,13 +61,15 @@ export default function Navigation() {
             { href: "#about", label: "About Genesis", delay: 0.7 },
             { href: "#sponsors", label: "Sponsors", delay: 0.8 },
             { href: "#gallery", label: "Gallery", delay: 0.9 },
+            { href: "/dashboard", label: "Dashboard", delay: 1.0 },
+            { href: "/registration", label: "Register", delay: 1.1 },
           ].map((item, idx) => (
             <li
               key={idx}
               className="flex"
               style={{
                 animation: `fadeIn 0.6s ease-out ${item.delay}s forwards`,
-                opacity: 0,
+                opacity: 1,
               }}
             >
               <a
@@ -84,7 +86,7 @@ export default function Navigation() {
           className="order-1 md:order-2 flex-shrink-0"
           style={{
             animation: "fadeIn 0.8s ease-out 1s forwards",
-            opacity: 0,
+            opacity: 1,
           }}
         >
           <img
