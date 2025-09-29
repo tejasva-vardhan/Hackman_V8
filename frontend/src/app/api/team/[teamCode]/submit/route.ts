@@ -31,7 +31,7 @@ export async function POST(
 
     if (!projectName) {
       return NextResponse.json(
-        { message: 'Project name is required' },
+  { message: 'Project title is required' },
         { status: 400 }
       );
     }
@@ -50,9 +50,9 @@ export async function POST(
       );
     }
 
-    const team = await Registration.findOne({ 
-      teamCode: teamCode.toUpperCase(),
-      projectTitle: { $regex: new RegExp(`^${projectName.trim()}$`, 'i') }
+    const team = await Registration.findOne({
+      projectTitle: { $regex: new RegExp(`^${projectName.trim()}$`, 'i') },
+      'members.0.phone': teamCode
     });
 
     if (!team) {
@@ -72,9 +72,9 @@ export async function POST(
 
     // Update submission details and status
     const updatedTeam = await Registration.findOneAndUpdate(
-      { 
-        teamCode: teamCode.toUpperCase(),
-        projectTitle: { $regex: new RegExp(`^${projectName.trim()}$`, 'i') }
+      {
+        projectTitle: { $regex: new RegExp(`^${projectName.trim()}$`, 'i') },
+        'members.0.phone': teamCode
       },
       {
         submissionDetails: {

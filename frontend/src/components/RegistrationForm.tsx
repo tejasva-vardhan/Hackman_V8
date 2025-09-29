@@ -37,7 +37,10 @@ const RegistrationForm: React.FC = () => {
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
   // Validation helpers
-  const isValidUsn = (usn: string) => /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
+  const isValidUsn = (usn: string) => {
+    if (!usn || usn.trim() === '') return true; // USN is optional
+    return /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
+  };
   const isNonEmpty = (s: string) => s.trim().length > 0;
   const isValidEmail = (s: string) => /.+@.+\..+/.test(s.trim());
   const isValidPhone = (s: string) => {
@@ -106,12 +109,12 @@ const RegistrationForm: React.FC = () => {
     }
 
     const formData = {
-      teamName,
-      collegeName,
-      projectTitle,
-      projectDescription,
-      teamLeadId,
-      members,
+  teamName,
+  collegeName,
+  projectTitle,
+  projectDescription,
+  teamLeadId: members.findIndex((m) => m.id === teamLeadId),
+  members,
     };
 
     try {
@@ -143,7 +146,7 @@ const RegistrationForm: React.FC = () => {
         return;
       }
 
-      if (members.some((m) => !isValidUsn(m.usn || ''))) {
+      if (members.some((m) => m.usn && m.usn.trim() !== '' && !isValidUsn(m.usn))) {
         toast.error('Please fix invalid USN formats.');
         setIsSubmitting(false);
         return;

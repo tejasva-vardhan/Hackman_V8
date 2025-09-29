@@ -18,6 +18,7 @@ const nosifer = Nosifer({
 
 interface TeamMember {
   id: number;
+  _id?: string;
   name: string;
   email: string;
   phone: string;
@@ -34,7 +35,6 @@ interface TeamData {
   projectDescription: string;
   teamLeadId: number;
   members: TeamMember[];
-  teamCode: string;
   submissionStatus: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
   selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
   submissionDetails: {
@@ -52,8 +52,8 @@ interface TeamData {
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [projectName, setProjectName] = useState('');
-  const [teamCode, setTeamCode] = useState('');
+  const [leadEmail, setLeadEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [teamData, setTeamData] = useState<TeamData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -61,39 +61,40 @@ export default function DashboardPage() {
 
   // Check if user is already authenticated (credentials in localStorage)
   useEffect(() => {
-    const savedProjectName = localStorage.getItem('projectName');
-    const savedTeamCode = localStorage.getItem('teamCode');
-    if (savedProjectName && savedTeamCode) {
-      setProjectName(savedProjectName);
-      setTeamCode(savedTeamCode);
-      fetchTeamData(savedProjectName, savedTeamCode);
+    const savedLeadEmail = localStorage.getItem('leadEmail');
+    const savedPhone = localStorage.getItem('phone');
+    if (savedLeadEmail && savedPhone) {
+      setLeadEmail(savedLeadEmail);
+      setPhone(savedPhone);
+      fetchTeamData(savedLeadEmail, savedPhone);
     }
   }, []);
 
-  const fetchTeamData = async (projectName: string, teamCode: string) => {
+  const fetchTeamData = async (leadEmail: string, phone: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/team/${teamCode}?projectName=${encodeURIComponent(projectName)}`);
+      const response = await fetch(`/api/team/lead?email=${encodeURIComponent(leadEmail)}&phone=${encodeURIComponent(phone)}`);
       const data = await response.json();
 
       if (response.ok) {
         setTeamData(data);
         setIsAuthenticated(true);
-        localStorage.setItem('projectName', projectName);
-        localStorage.setItem('teamCode', teamCode);
+        localStorage.setItem('projectName', data.projectTitle || '');
+        localStorage.setItem('phone', phone);
+        localStorage.setItem('leadEmail', leadEmail);
         toast.success('Welcome to your team dashboard!');
       } else {
         toast.error(data.message || 'Failed to fetch team data');
         setIsAuthenticated(false);
         localStorage.removeItem('projectName');
-        localStorage.removeItem('teamCode');
+        localStorage.removeItem('phone');
       }
     } catch (error) {
       console.error('Error fetching team data:', error);
       toast.error('An error occurred while fetching team data');
       setIsAuthenticated(false);
       localStorage.removeItem('projectName');
-      localStorage.removeItem('teamCode');
+      localStorage.removeItem('phone');
     } finally {
       setIsLoading(false);
     }
@@ -101,20 +102,20 @@ export default function DashboardPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!projectName.trim() || !teamCode.trim()) {
-      toast.error('Please enter both project name and team code');
+    if (!leadEmail.trim() || !phone.trim()) {
+      toast.error('Please enter both team lead email and phone number');
       return;
     }
-    await fetchTeamData(projectName.trim(), teamCode.trim().toUpperCase());
+    await fetchTeamData(leadEmail.trim(), phone.trim());
   };
 
   const handleLogout = () => {
     setTeamData(null);
     setIsAuthenticated(false);
-    setProjectName('');
-    setTeamCode('');
-    localStorage.removeItem('projectName');
-    localStorage.removeItem('teamCode');
+    setLeadEmail('');
+    setPhone('');
+    localStorage.removeItem('leadEmail');
+    localStorage.removeItem('phone');
     toast.success('Logged out successfully');
   };
 
@@ -127,31 +128,31 @@ export default function DashboardPage() {
       <div className={styles.dashboardContainer}>
         <div className={styles.loginContainer}>
           <h1 className={`${styles.title} ${nosifer.className}`}>Team Dashboard</h1>
-          <p className={styles.subtitle}>Enter your project name and team code to access your dashboard</p>
+          <p className={styles.subtitle}>Enter your project title and team code to access your dashboard</p>
           
           <form onSubmit={handleLogin} className={styles.loginForm}>
             <div className={styles.inputGroup}>
-              <label htmlFor="projectName" className={styles.label}>Project Name</label>
+              <label htmlFor="leadEmail" className={styles.label}>Team Lead Email</label>
               <input
-                type="text"
-                id="projectName"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-                placeholder="Enter your project name exactly as registered"
+                type="email"
+                id="leadEmail"
+                value={leadEmail}
+                onChange={(e) => setLeadEmail(e.target.value)}
+                placeholder="Enter team lead's email address"
                 className={styles.input}
                 required
               />
             </div>
             <div className={styles.inputGroup}>
-              <label htmlFor="teamCode" className={styles.label}>Team Code</label>
+              <label htmlFor="phone" className={styles.label}>Team Lead Phone Number</label>
               <input
                 type="text"
-                id="teamCode"
-                value={teamCode}
-                onChange={(e) => setTeamCode(e.target.value.toUpperCase())}
-                placeholder="Enter your 8-character team code"
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter team lead's 10-digit phone number"
                 className={styles.input}
-                maxLength={8}
+                maxLength={10}
                 required
               />
             </div>
@@ -166,7 +167,7 @@ export default function DashboardPage() {
           
           <div className={styles.helpText}>
             <p>Don&apos;t have your credentials? Check your registration confirmation email.</p>
-            <p>Make sure to enter your project name exactly as you registered it.</p>
+            <p>Make sure to enter your project title exactly as you registered it.</p>
             <p>Need help? Contact the organizers.</p>
           </div>
         </div>
@@ -192,7 +193,6 @@ export default function DashboardPage() {
           <h1 className={`${styles.dashboardTitle} ${nosifer.className}`}>
             {teamData.teamName}
           </h1>
-          <p className={styles.teamCode}>Team Code: <span>{teamData.teamCode}</span></p>
           <button onClick={handleLogout} className={styles.logoutButton}>
             Logout
           </button>
@@ -222,8 +222,18 @@ export default function DashboardPage() {
         </nav>
 
         <div className={styles.tabContent}>
-          {activeTab === 'overview' && (
-            <TeamInfo teamData={teamData} />
+          {activeTab === 'overview' && teamData && (
+            <TeamInfo 
+              projectTitle={teamData.projectTitle}
+              teamLeadPhone={teamData.members[teamData.teamLeadId]?.phone || "N/A"}
+              members={teamData.members.map((m, idx) => ({ 
+                name: m.name, 
+                email: m.email, 
+                phone: m.phone,
+                isLead: idx === teamData.teamLeadId
+              }))}
+              teamLeadIndex={teamData.teamLeadId}
+            />
           )}
           {activeTab === 'submission' && (
             <ProjectSubmission 

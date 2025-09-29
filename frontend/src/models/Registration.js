@@ -43,7 +43,7 @@ const RegistrationSchema = new mongoose.Schema({
   },
   projectTitle: {
     type: String,
-    required: [true, 'Please provide a project title.'],
+  required: [true, 'Please provide a project title.'],
   },
   projectDescription: {
     type: String,

@@ -22,7 +22,7 @@ export async function GET(
 
     if (!projectName) {
       return NextResponse.json(
-        { message: 'Project name is required' },
+  { message: 'Project title is required' },
         { status: 400 }
       );
     }
@@ -34,7 +34,7 @@ export async function GET(
 
     if (!team) {
       return NextResponse.json(
-        { message: 'Invalid credentials. Please check your project name and team code.' },
+  { message: 'Invalid credentials. Please check your project title and team code.' },
         { status: 404 }
       );
     }
@@ -65,20 +65,10 @@ export async function PUT(
 
     if (!projectName) {
       return NextResponse.json(
-        { message: 'Project name is required' },
+  { message: 'Project title is required' },
         { status: 400 }
       );
     }
-
-    // Validate submission data
-    const allowedFields = [
-      'projectTitle',
-      'projectDescription',
-      'submissionDetails.githubRepo',
-      'submissionDetails.liveDemo',
-      'submissionDetails.presentationLink',
-      'submissionDetails.additionalNotes'
-    ];
 
     const updateData: Record<string, unknown> = {};
     

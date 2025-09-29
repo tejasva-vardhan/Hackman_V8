@@ -19,7 +19,6 @@ interface TeamData {
     linkedin?: string;
     github?: string;
   }>;
-  teamCode: string;
   submissionStatus: string;
   selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
   submissionDetails: {
@@ -105,9 +104,12 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
       <h3 className={styles.cardTitle}>Selection Status</h3>
       
       <div className={styles.statusHeader}>
-        <div className={`${styles.statusBadge} ${getStatusColor(teamData.selectionStatus)}`}>
-          <span className={styles.statusIcon}>{getStatusIcon(teamData.selectionStatus)}</span>
-          <span className={styles.statusText}>{getStatusText(teamData.selectionStatus)}</span>
+        <div className={styles.statusInfo}>
+          <div className={styles.statusLabel}>Current Status</div>
+          <div className={`${styles.statusBadge} ${getStatusColor(teamData.selectionStatus)}`}>
+            <span className={styles.statusIcon}>{getStatusIcon(teamData.selectionStatus)}</span>
+            <span className={styles.statusText}>{getStatusText(teamData.selectionStatus)}</span>
+          </div>
         </div>
       </div>
 
@@ -157,23 +159,26 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
         <div className={styles.pendingInfo}>
           <h4 className={styles.infoTitle}>Selection Timeline</h4>
           <div className={styles.timeline}>
+            {/* Step 1: Registration Closed (completed) */}
             <div className={styles.timelineItem}>
-              <div className={styles.timelineDot}></div>
-              <div className={styles.timelineContent}>
+              <div className={`${styles.timelineDot} ${styles.completed}`}></div>
+              <div className={`${styles.timelineContent} ${styles.completed}`}>
                 <h5>Registration Closed</h5>
                 <p>All teams have been registered</p>
               </div>
             </div>
+            {/* Step 2: Review in Progress (current) */}
             <div className={styles.timelineItem}>
-              <div className={styles.timelineDot}></div>
-              <div className={styles.timelineContent}>
+              <div className={`${styles.timelineDot} ${styles.current}`}></div>
+              <div className={`${styles.timelineContent} ${styles.current}`}>
                 <h5>Review in Progress</h5>
                 <p>Our judges are evaluating all submissions</p>
               </div>
             </div>
+            {/* Step 3: Results Announcement (upcoming) */}
             <div className={styles.timelineItem}>
-              <div className={styles.timelineDot}></div>
-              <div className={styles.timelineContent}>
+              <div className={`${styles.timelineDot} ${styles.upcoming}`}></div>
+              <div className={`${styles.timelineContent} ${styles.upcoming}`}>
                 <h5>Results Announcement</h5>
                 <p>Selected teams will be notified via email</p>
               </div>

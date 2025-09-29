@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '../../../../lib/dbConnect';
-import Registration from '../../../../models/Registration';
-import { handleError } from '../../../../lib/errorUtils.js';
+import dbConnect from '../../../lib/dbConnect';
+import Registration from '../../../models/Registration';
+import { handleError } from '../../../lib/errorUtils.js';
 import { z } from 'zod';
 import nodemailer from 'nodemailer';
 
@@ -28,6 +28,9 @@ export async function POST(request: Request) {
   try {
     await dbConnect();
     const data: RegistrationData = await request.json();
+    
+    // Debug logging
+    console.log('Received registration data:', JSON.stringify(data, null, 2));
 
     const teamMemberSchema = z.object({
       id: z.number(),
@@ -36,11 +39,18 @@ export async function POST(request: Request) {
       phone: z
         .string()
         .trim()
-        .regex(/^\d{10}$/i, 'Phone must contain exactly 10 digits'),
+        .refine((phone) => {
+          const digits = phone.replace(/\D/g, '');
+          return digits.length === 10;
+        }, 'Phone must contain exactly 10 digits'),
       usn: z
         .string()
         .trim()
-        .regex(/^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i, 'USN must match format'),
+        .optional()
+        .refine((usn) => {
+          if (!usn || usn === '') return true; // USN is optional
+          return /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
+        }, 'USN must match format'),
       linkedin: z
         .string()
         .trim()
@@ -91,6 +101,7 @@ export async function POST(request: Request) {
 
     if (!parsed.success) {
       const { fieldErrors, formErrors } = parsed.error.flatten();
+      console.log('Validation failed:', { fieldErrors, formErrors });
       return NextResponse.json(
         {
           message: 'Validation failed',
@@ -100,7 +111,43 @@ export async function POST(request: Request) {
       );
     }
 
-    const newRegistration = await Registration.create(parsed.data);
+      // Check for duplicate member emails across all teams
+      const allEmails = parsed.data.members.map((m: TeamMember) => m.email.trim().toLowerCase());
+      const duplicateEmail = await Registration.findOne({
+        'members.email': { $in: allEmails }
+      });
+      if (duplicateEmail) {
+        return NextResponse.json({
+          message: 'One or more member emails are already registered with another team/project. Each email can only be used for one project.',
+        }, { status: 400 });
+      }
+
+    // Generate unique team code
+    const generateTeamCode = () => {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let result = '';
+      for (let i = 0; i < 6; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    };
+
+    let teamCode;
+    let isUnique = false;
+    while (!isUnique) {
+      teamCode = generateTeamCode();
+      const existingTeam = await Registration.findOne({ teamCode });
+      if (!existingTeam) {
+        isUnique = true;
+      }
+    }
+
+    const registrationData = {
+      ...parsed.data,
+      teamCode,
+    };
+
+    const newRegistration = await Registration.create(registrationData);
 
     try {
       const transporter = nodemailer.createTransport({

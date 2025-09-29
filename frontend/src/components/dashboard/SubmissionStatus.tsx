@@ -19,7 +19,6 @@ interface TeamData {
     linkedin?: string;
     github?: string;
   }>;
-  teamCode: string;
   submissionStatus: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
   selectionStatus: string;
   submissionDetails: {
@@ -96,15 +95,18 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
       <h3 className={styles.cardTitle}>Submission Status</h3>
       
       <div className={styles.statusHeader}>
-        <div className={`${styles.statusBadge} ${getStatusColor(teamData.submissionStatus)}`}>
-          <span className={styles.statusIcon}>{getStatusIcon(teamData.submissionStatus)}</span>
-          <span className={styles.statusText}>{getStatusText(teamData.submissionStatus)}</span>
+        <div className={styles.statusInfo}>
+          <div className={styles.statusLabel}>Current Status</div>
+          <div className={`${styles.statusBadge} ${getStatusColor(teamData.submissionStatus)}`}>
+            <span className={styles.statusIcon}>{getStatusIcon(teamData.submissionStatus)}</span>
+            <span className={styles.statusText}>{getStatusText(teamData.submissionStatus)}</span>
+          </div>
         </div>
       </div>
 
       {teamData.submissionStatus !== 'not_submitted' && (
-        <div className={styles.submissionDetails}>
-          <div className={styles.detailItem}>
+        <div className={styles.statusDetails}>
+          <div className={styles.detailRow}>
             <span className={styles.detailLabel}>Submitted At:</span>
             <span className={styles.detailValue}>
               {teamData.submissionDetails.submittedAt 
@@ -115,7 +117,7 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           </div>
 
           {teamData.submissionDetails.githubRepo && (
-            <div className={styles.detailItem}>
+            <div className={styles.detailRow}>
               <span className={styles.detailLabel}>GitHub Repository:</span>
               <a 
                 href={teamData.submissionDetails.githubRepo} 
@@ -129,7 +131,7 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           )}
 
           {teamData.submissionDetails.liveDemo && (
-            <div className={styles.detailItem}>
+            <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Live Demo:</span>
               <a 
                 href={teamData.submissionDetails.liveDemo} 
@@ -143,7 +145,7 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           )}
 
           {teamData.submissionDetails.presentationLink && (
-            <div className={styles.detailItem}>
+            <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Presentation:</span>
               <a 
                 href={teamData.submissionDetails.presentationLink} 
@@ -157,9 +159,9 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           )}
 
           {teamData.submissionDetails.additionalNotes && (
-            <div className={styles.detailItem}>
+            <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Additional Notes:</span>
-              <p className={styles.detailValue}>{teamData.submissionDetails.additionalNotes}</p>
+              <span className={styles.detailValue}>{teamData.submissionDetails.additionalNotes}</span>
             </div>
           )}
         </div>
