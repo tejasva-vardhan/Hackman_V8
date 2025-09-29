@@ -36,7 +36,6 @@ const RegistrationForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
-  // Validation helpers
   const isValidUsn = (usn: string) => /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
   const isNonEmpty = (s: string) => s.trim().length > 0;
   const isValidEmail = (s: string) => /.+@.+\..+/.test(s.trim());
@@ -80,9 +79,8 @@ const RegistrationForm: React.FC = () => {
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setHasTriedSubmit(true); // Show validation errors on first submit attempt
+    setHasTriedSubmit(true);
 
-    // --- Pre-submit Checks ---
     const memberEmails = members.map((m) => m.email.trim().toLowerCase());
     if (new Set(memberEmails).size !== memberEmails.length) {
       toast.error('Each team member must have a unique email address.');
@@ -93,7 +91,6 @@ const RegistrationForm: React.FC = () => {
       return;
     }
 
-    // --- Comprehensive Form Validation ---
     const isFormValid = () => {
         if (!isNonEmpty(teamName) || !isNonEmpty(collegeName) || !isNonEmpty(projectTitle) || !isNonEmpty(projectDescription)) {
             return false;
@@ -158,7 +155,6 @@ const RegistrationForm: React.FC = () => {
         <p className={styles.subtitle}>The gates to Hackman V8 are opening. Dare to enter?</p>
 
         <form onSubmit={handleSubmit} className={styles.form} noValidate>
-          {/* --- Team & College Details --- */}
           <fieldset className={styles.fieldset}>
             <div className={styles.inputGroup}>
               <label htmlFor="teamName" className={styles.label}>Team Name</label>
@@ -197,7 +193,6 @@ const RegistrationForm: React.FC = () => {
             </div>
           </fieldset>
 
-          {/* --- Team Members --- */}
           <fieldset className={styles.fieldset}>
             <legend className={`${styles.legend} ${nosifer.className}`}>Team Members (2–4)</legend>
             {members.map((member, index) => (
@@ -311,7 +306,6 @@ const RegistrationForm: React.FC = () => {
             )}
           </fieldset>
 
-          {/* --- Project Idea --- */}
           <fieldset className={styles.fieldset}>
             <legend className={`${styles.legend} ${nosifer.className}`}>Project Idea</legend>
             <div className={styles.inputGroup}>
