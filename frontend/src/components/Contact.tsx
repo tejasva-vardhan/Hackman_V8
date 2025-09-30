@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Jolly_Lodger, Poppins } from "next/font/google";
 import Image from "next/image";
 
@@ -11,10 +11,36 @@ export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const elementsRef = useRef<HTMLDivElement[]>([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [message, setMessage] = React.useState("");
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus("error");
+      return;
+    }
+
+    try {
+      // ✨ for now just simulate sending (you can hook into EmailJS, Nodemailer, or an API later)
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      setStatus("error");
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -103,29 +129,55 @@ export default function Contact() {
           <h2 className={`${jollyLodger.className} text-[#FF0000] text-5xl md:text-7xl lg:text-8xl text-center mb-8 md:mb-12`}>
             Contact Us
           </h2>
-          <div className="w-full space-y-4 md:space-y-6">
+          {/* Contact Form */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const form = e.currentTarget;
+              const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+              const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+              const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+              if (!name || !email || !message) {
+                alert("❌ Please fill all fields.");
+                return;
+              }
+
+              // Simulate sending (hook this into EmailJS or API later)
+              setTimeout(() => {
+                alert("✅ Message Sent Successfully!");
+                form.reset();
+              }, 800);
+            }}
+            className="w-full space-y-4 md:space-y-6"
+          >
             <input
               type="text"
+              name="name"
               placeholder="Your Name"
-              className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500"
-              value={name}
-              onChange={e => setName(e.target.value)}
+              className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500"
             />
             <input
               type="email"
+              name="email"
               placeholder="Your Email Id"
-              className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500"
             />
             <textarea
+              name="message"
               placeholder="Message"
               rows={4}
-              className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500 resize-none"
-              value={message}
-              onChange={e => setMessage(e.target.value)}
+              className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500 resize-none"
             />
-          </div>
+
+            {/* 🔥 Button styled like Hero CTA */}
+            <button
+              type="submit"
+              className={`${jollyLodger.className} w-full md:w-[40%] mx-auto block bg-[#FE772D] text-gray-800 rounded-xl text-xl md:text-2xl py-3 md:py-4 transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl`}
+            >
+              Send Message
+            </button>
+          </form>
         </div>
 
         <footer 

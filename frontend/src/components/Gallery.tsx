@@ -52,6 +52,11 @@ export default function Gallery() {
             imagesRef.current.forEach((img, index) => {
               if (img) img.style.animationDelay = `${0.01 + index * 0.08}s`;
             });
+          } else {
+            entry.target.classList.remove("animate-in");
+            imagesRef.current.forEach((img) => {
+              if (img) img.style.animationDelay = "0s";
+            });
           }
         });
       },
@@ -202,7 +207,7 @@ export default function Gallery() {
                     alt={sponsor.alt}
                     width={200}
                     height={160}
-                    className="w-auto h-28 md:h-40 object-contain rounded-lg transform transition-transform duration-300 hover:scale-110 hover:-rotate-6"
+                    className="w-auto h-28 md:h-40 object-contain rounded-lg transform transition-transform duration-300 hover:scale-110 hover:rotate-6"
                     draggable={false}
                   />
                 </div>

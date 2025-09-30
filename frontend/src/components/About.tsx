@@ -26,6 +26,8 @@ export default function About() {
             imagesRef.current.forEach((img, index) => {
               if (img) (img as HTMLElement).style.animationDelay = `${0.2 + index * 0.15}s`;
             });
+          } else {
+            entry.target.classList.remove("animate-in");
           }
         });
       },
@@ -249,6 +251,8 @@ export function AboutHackman() {
             imagesRef.current.forEach((img, index) => {
               if (img) (img as HTMLElement).style.animationDelay = `${0.2 + index * 0.15}s`;
             });
+          } else {
+            entry.target.classList.remove("animate-in");
           }
         });
       },
