@@ -47,6 +47,11 @@ export default function Sponsors() {
             imagesRef.current.forEach((img, index) => {
               if (img) img.style.animationDelay = `${0.3 + index * 0.15}s`;
             });
+          } else {
+            entry.target.classList.remove("animate-in");  
+            imagesRef.current.forEach((img) => {
+              if (img) img.style.animationDelay = "0s";
+            });
           }
         });
       },
@@ -142,7 +147,20 @@ export default function Sponsors() {
             transform: translateX(0%);
           }
         }
-
+        .animate-in .sponsor-item:nth-child(1) { animation-delay: 0.3s; }
+        .animate-in .sponsor-item:nth-child(2) { animation-delay: 0.45s; }
+        .animate-in .sponsor-item:nth-child(3) { animation-delay: 0.6s; }
+        .animate-in .sponsor-item:nth-child(4) { animation-delay: 0.75s; }
+        .animate-in .sponsor-item:nth-child(5) { animation-delay: 0.9s; }
+        .animate-in .sponsor-item:nth-child(6) { animation-delay: 1.05s; }
+        .animate-in .sponsor-item:nth-child(7) { animation-delay: 1.2s; }
+        .animate-in .sponsor-item:nth-child(8) { animation-delay: 1.35s; }
+        .animate-in .sponsor-item:nth-child(9) { animation-delay: 1.5s; }
+        .animate-in .sponsor-item:nth-child(10) { animation-delay: 1.65s; }
+        .animate-in .sponsor-item:nth-child(11) { animation-delay: 1.8s; }
+        .animate-in .sponsor-item:nth-child(12) { animation-delay: 1.95s; }
+        .animate-in .sponsor-item:nth-child(13) { animation-delay: 2.1s; }
+        .animate-in .sponsor-item:nth-child(14) { animation-delay: 2.25s; }
         .item:hover img {
           filter: drop-shadow(0 0 12px var(--shadow-color));
         }

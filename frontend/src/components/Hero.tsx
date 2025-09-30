@@ -9,6 +9,25 @@ const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-in");
+          } else {
+            entry.target.classList.remove("animate-in");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
   return (
     <>
       <style jsx global>{`
@@ -89,6 +108,22 @@ export default function Hero() {
         .animate-house-glow {
           animation: houseGlow 8s ease-in-out infinite;
         }
+          
+        .animate-in .hero-title {
+          animation: fadeInUp 1.2s ease-out forwards;
+        }
+
+        .animate-in .hero-subtitle {
+          animation: fadeInUp 1.2s ease-out 0.3s forwards;
+        }
+
+        .animate-in .hero-button {
+          animation: fadeInUp 1.2s ease-out 0.6s forwards;
+        }
+
+        .animate-in .hero-text {
+          animation: fadeInUp 1.2s ease-out 0.9s forwards;
+        }
 
         .hover-lift {
           transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -99,6 +134,7 @@ export default function Hero() {
         }
       `}</style>
       <section
+        ref={sectionRef}
         className="relative w-full min-h-[120vh] h-screen bg-cover bg-center -mt-[1px] overflow-hidden"
         style={{
           backgroundImage: "url('/Hero/hero-bg.png')",
@@ -226,41 +262,26 @@ export default function Hero() {
         <div className="absolute top-[12%] left-1/2 -translate-x-1/2 flex flex-col items-center w-full px-4 lg:relative lg:top-[-8%] lg:left-[-15] lg:translate-x-0 lg:flex-row-reverse lg:justify-between lg:items-center lg:my-0 ">
           <div className="mt-40 flex flex-col items-center text-center lg:items-end lg:text-right pr-0 lg:pr-[8%] lg:pt-[15%]">
             <h1
-              className={`${nosifer.className} text-[#FF0700] text-[5vw] lg:text-[7vw] leading-none hover-lift`}
-              style={{
-                animation: "fadeInUp 1.2s ease-out forwards",
-              }}
+              className={`${nosifer.className} hero-title text-[#FF0700] text-[5vw] lg:text-[7vw] leading-none hover-lift opacity-0`}
             >
               Hackman
             </h1>
             <h1
-              className={`${nosifer.className} text-[4vw] lg:text-[4.6vw] mt-[2vw] lg:mt-[1.6vw] leading-none text-white hover-lift`}
-              style={{
-                animation: "fadeInUp 1.2s ease-out 0.3s forwards",
-                opacity: 0,
-              }}
+              className={`${nosifer.className} hero-subtitle text-[4vw] lg:text-[4.6vw] mt-[2vw] lg:mt-[1.6vw] leading-none text-white hover-lift opacity-0`}
             >
               v8.o
             </h1>
 
             <a
               href="/registration"
-              className={`${jolly.className} w-[18vw] h-[4vw] lg:w-[19vw] lg:h-[4.5vw] mt-[2vw] bg-[#FE772D] text-gray-800 rounded-[3vw] lg:rounded-[1rem] text-[3vw] lg:text-[2.8vw] flex items-center justify-center transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl lg:mt-[8%] hover-lift`}
-              style={{
-                animation: "fadeInUp 1.2s ease-out 0.6s forwards",
-                opacity: 0,
-              }}
+              className={`${jolly.className} hero-button w-[18vw] h-[4vw] lg:w-[19vw] lg:h-[4.5vw] mt-[2vw] bg-[#FE772D] text-gray-800 rounded-[3vw] lg:rounded-[1rem] text-[3vw] lg:text-[2.8vw] flex items-center justify-center transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl lg:mt-[8%] hover-lift opacity-0`}
             >
               Register Now
             </a>
           </div>
         </div>
         <p
-          className={`${poppins.className} absolute bottom-[10%] left-[16%] text-xl text-white hover-lift`}
-          style={{
-            animation: "fadeInUp 1.2s ease-out 0.9s forwards",
-            opacity: 0,
-          }}
+          className={`${poppins.className} hero-text absolute bottom-[10%] left-[16%] text-xl text-white hover-lift opacity-0`}
         >
           Where creativity meets technology. A community of thinkers, builders,
           and leaders shaping the future.
