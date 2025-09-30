@@ -22,8 +22,15 @@ export function handleError(error) {
   console.error('API Error:', error);
 
   if (isDuplicateKeyError(error)) {
+    // Check which field caused the duplicate key error
+    if (error.keyPattern && error.keyPattern.teamCode) {
+      return NextResponse.json(
+        { message: 'Team code already exists. Please try registering again.' },
+        { status: 400 }
+      );
+    }
     return NextResponse.json(
-      { message: 'A team with this name already exists.' },
+      { message: 'A team with this information already exists.' },
       { status: 400 }
     );
   }
@@ -37,7 +44,7 @@ export function handleError(error) {
   }
 
   return NextResponse.json(
-    { message: 'An error occurred on the server.' },
+    { message: 'An error occurred on the server. Please try again.' },
     { status: 500 }
   );
 }

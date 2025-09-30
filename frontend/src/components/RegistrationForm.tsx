@@ -36,16 +36,28 @@ const RegistrationForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
-  const isValidUsn = (usn: string) => /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
+  // Validation helpers
+  const isValidUsn = (usn: string) => {
+    if (!usn || usn.trim() === '') return true; // optional
+    return /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
+  };
   const isNonEmpty = (s: string) => s.trim().length > 0;
   const isValidEmail = (s: string) => /.+@.+\..+/.test(s.trim());
-  const isValidPhone = (s: string) => /^\d{10}$/.test(s);
-  const isLinkedInUrl = (s: string) => /^(https?:\/\/)?([a-z0-9-]+\.)*linkedin\.com\//i.test(s.trim());
-  const isGitHubUrl = (s: string) => /^(https?:\/\/)?([a-z0-9-]+\.)*github\.com\//i.test(s.trim());
+  const isValidPhone = (s: string) => {
+    const digits = s.replace(/\D/g, '');
+    return digits.length === 10;
+  };
+  const isLinkedInUrl = (s: string) =>
+    /^(https?:\/\/)?([a-z0-9-]+\.)*linkedin\.com\//i.test(s.trim());
+  const isGitHubUrl = (s: string) =>
+    /^(https?:\/\/)?([a-z0-9-]+\.)*github\.com\//i.test(s.trim());
 
   const handleMemberChange = (id: number, field: keyof TeamMember, value: string) => {
     const nextValue = (() => {
-      if (field === 'phone') return value.replace(/\D/g, '').slice(0, 10);
+      if (field === 'phone') {
+        const cleaned = value.replace(/[^\d\s\-\(\)]/g, '');
+        return cleaned.slice(0, 15);
+      }
       if (field === 'usn') return value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 10);
       if (field === 'linkedin' || field === 'github') return value.trim();
       return value;
@@ -76,7 +88,7 @@ const RegistrationForm: React.FC = () => {
       }
     }
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasTriedSubmit(true);
@@ -92,27 +104,32 @@ const RegistrationForm: React.FC = () => {
     }
 
     const isFormValid = () => {
-        if (!isNonEmpty(teamName) || !isNonEmpty(collegeName) || !isNonEmpty(projectTitle) || !isNonEmpty(projectDescription)) {
-            return false;
+      if (
+        !isNonEmpty(teamName) ||
+        !isNonEmpty(collegeName) ||
+        !isNonEmpty(projectTitle) ||
+        !isNonEmpty(projectDescription)
+      ) {
+        return false;
+      }
+      for (const m of members) {
+        if (
+          !isNonEmpty(m.name) ||
+          !isValidEmail(m.email) ||
+          !isValidPhone(m.phone) ||
+          !isValidUsn(m.usn || '') ||
+          !isLinkedInUrl(m.linkedin || '') ||
+          !isGitHubUrl(m.github || '')
+        ) {
+          return false;
         }
-        for (const m of members) {
-            if (
-                !isNonEmpty(m.name) ||
-                !isValidEmail(m.email) ||
-                !isValidPhone(m.phone) ||
-                !isValidUsn(m.usn || '') ||
-                !isLinkedInUrl(m.linkedin || '') ||
-                !isGitHubUrl(m.github || '')
-            ) {
-                return false;
-            }
-        }
-        return true;
+      }
+      return true;
     };
-    
+
     if (!isFormValid()) {
-        toast.error('Please fix the errors shown below before submitting.');
-        return;
+      toast.error('Please fix the errors shown below before submitting.');
+      return;
     }
 
     setIsSubmitting(true);
@@ -121,7 +138,7 @@ const RegistrationForm: React.FC = () => {
       collegeName,
       projectTitle,
       projectDescription,
-      teamLeadId,
+      teamLeadId: members.findIndex((m) => m.id === teamLeadId),
       members,
     };
 

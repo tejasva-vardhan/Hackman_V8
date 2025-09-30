@@ -12,6 +12,10 @@ export default function Contact() {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const elementsRef = useRef<HTMLDivElement[]>([]);
 
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -104,16 +108,22 @@ export default function Contact() {
               type="text"
               placeholder="Your Name"
               className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500"
+              value={name}
+              onChange={e => setName(e.target.value)}
             />
             <input
               type="email"
               placeholder="Your Email Id"
               className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
             <textarea
               placeholder="Message"
               rows={4}
               className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none placeholder-gray-500 resize-none"
+              value={message}
+              onChange={e => setMessage(e.target.value)}
             />
           </div>
         </div>
