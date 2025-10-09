@@ -369,7 +369,7 @@ export default function AdminPage() {
       </div>
 
 
-      {loading && <p>Loading...</p>}
+      {loading && <p style={{ color: 'white' }}>Loading...</p>}
       {error && (
         <div style={{ color: 'crimson', marginBottom: 12 }}>
           {error}
@@ -532,12 +532,6 @@ export default function AdminPage() {
                   </td>
                   <td style={{ padding: 12, borderTop: '1px solid #333' }}>
                     <div style={{ display: 'flex', gap: 8 }}>
-                      <button
-                        onClick={() => openEdit(r)}
-                        style={{ padding: '6px 10px', borderRadius: 6, background: '#f0f0f0', color: '#000', border: '1px solid #ccc' }}
-                      >
-                        View
-                      </button>
                       <button
                         onClick={() => openEdit(r)}
                         style={{ padding: '6px 10px', borderRadius: 6, background: '#ddffdd', color: '#050', border: '1px solid #aaffaa', opacity: !token ? 0.6 : 1 }}

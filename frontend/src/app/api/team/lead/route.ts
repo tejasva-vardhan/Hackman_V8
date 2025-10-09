@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     if (team) {
       return NextResponse.json(team, { status: 200 });
     }
-    return NextResponse.json({ message: 'Invalid credentials. Please check your team lead email and phone number.' }, { status: 404 });
+    return NextResponse.json(0, { status: 200 });
   } catch (error: unknown) {
     return handleError(error);
   }

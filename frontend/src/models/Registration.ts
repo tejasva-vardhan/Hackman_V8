@@ -1,6 +1,40 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-const MemberSchema = new mongoose.Schema({
+interface IMember {
+  name: string;
+  email: string;
+  phone: string;
+  usn?: string;
+  linkedin: string;
+  github: string;
+}
+
+interface ISubmissionDetails {
+  githubRepo: string;
+  liveDemo: string;
+  presentationLink: string;
+  additionalNotes: string;
+  submittedAt: Date | null;
+}
+
+interface IRegistration extends Document {
+  teamName: string;
+  collegeName: string;
+  projectTitle: string;
+  projectDescription: string;
+  teamLeadId: number;
+  members: IMember[];
+  teamCode: string;
+  submissionStatus: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
+  selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
+  submissionDetails: ISubmissionDetails;
+  reviewComments: string;
+  finalScore: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const MemberSchema = new Schema<IMember>({
   name: {
     type: String,
     required: [true, "Please provide the member's name."],
@@ -32,7 +66,7 @@ const MemberSchema = new mongoose.Schema({
   },
 });
 
-const RegistrationSchema = new mongoose.Schema({
+const RegistrationSchema = new Schema<IRegistration>({
   teamName: {
     type: String,
     required: [true, 'Please provide a team name.'],
@@ -43,7 +77,7 @@ const RegistrationSchema = new mongoose.Schema({
   },
   projectTitle: {
     type: String,
-  required: [true, 'Please provide a project title.'],
+    required: [true, 'Please provide a project title.'],
   },
   projectDescription: {
     type: String,
@@ -52,10 +86,14 @@ const RegistrationSchema = new mongoose.Schema({
   teamLeadId: {
     type: Number,
     required: true,
+    default: 0,
   },
   members: {
     type: [MemberSchema],
-    validate: [v => v.length >= 2 && v.length <= 4, 'Team must have between 2 and 4 members.']
+    validate: [
+      (v: IMember[]) => v.length >= 2 && v.length <= 4,
+      'Team must have between 2 and 4 members.'
+    ]
   },
   // Dashboard related fields
   teamCode: {
@@ -107,4 +145,5 @@ const RegistrationSchema = new mongoose.Schema({
   timestamps: true
 });
 
-export default mongoose.models.Registration || mongoose.model('Registration', RegistrationSchema);
+export default (mongoose.models.Registration as Model<IRegistration>) || 
+  mongoose.model<IRegistration>('Registration', RegistrationSchema);

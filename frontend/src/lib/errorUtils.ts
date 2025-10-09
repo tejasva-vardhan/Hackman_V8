@@ -1,24 +1,36 @@
 import { NextResponse } from 'next/server';
 
-export function isDuplicateKeyError(error) {
+interface DuplicateKeyError {
+  code: number;
+  keyPattern?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+interface ValidationError {
+  name: string;
+  errors: Record<string, { message: string }>;
+  [key: string]: unknown;
+}
+
+export function isDuplicateKeyError(error: unknown): error is DuplicateKeyError {
   return (
     typeof error === 'object' &&
     error !== null &&
     'code' in error &&
-    error.code === 11000
+    (error as DuplicateKeyError).code === 11000
   );
 }
 
-export function isValidationError(error) {
+export function isValidationError(error: unknown): error is ValidationError {
   return (
     typeof error === 'object' &&
     error !== null &&
     'name' in error &&
-    error.name === 'ValidationError'
+    (error as ValidationError).name === 'ValidationError'
   );
 }
 
-export function handleError(error) {
+export function handleError(error: unknown): NextResponse {
   console.error('API Error:', error);
 
   if (isDuplicateKeyError(error)) {
@@ -48,5 +60,3 @@ export function handleError(error) {
     { status: 500 }
   );
 }
-
-

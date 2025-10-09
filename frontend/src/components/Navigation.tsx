@@ -1,6 +1,6 @@
 "use client";
 import { Poppins, Jolly_Lodger } from "next/font/google";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({
@@ -31,6 +31,16 @@ export function OrangeStrip() {
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -64,7 +74,7 @@ export default function Navigation() {
       </div>
 
       <button
-        className={`fixed top-16 left-6 z-60 flex flex-col items-center justify-center w-10 h-10 bg-black/30 rounded-lg backdrop-blur-sm md:hidden ${poppins.className}`}
+        className={`fixed top-[6.5vh] left-6 z-60 flex flex-col items-center justify-center w-10 h-10 bg-black/30 rounded-lg backdrop-blur-sm md:hidden ${poppins.className}`}
         onClick={toggleMenu}
         aria-label="Toggle menu"
         style={{
@@ -141,7 +151,7 @@ export default function Navigation() {
       </div>
 
       <nav
-        className={`fixed left-4 right-4 top-12 bg-black/20 text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-40 animate-fade-in-up gap-4 md:gap-0 rounded-2xl shadow-lg`}
+        className={`fixed left-4 right-4 top-[6.5vh] md:top-[6.5vh] ${isScrolled ? 'bg-black/85 shadow-lg' : 'bg-transparent'} text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-40 animate-fade-in-up gap-4 md:gap-0 rounded-2xl transition-all duration-300`}
         style={{
           animation: "fadeInUp 0.8s ease-out 0.2s forwards",
           opacity: 0,

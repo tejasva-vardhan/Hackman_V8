@@ -65,3 +65,23 @@ h2 {
   margin-bottom: 50px;
   letter-spacing: 2px;
 }
+
+/* Toast notification limit to 2 */
+[data-toast-container] {
+  max-height: calc(100vh - 100px);
+}
+
+[data-toast-container] > div {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+  overflow: hidden;
+}
+
+[data-toast-container] > div > * {
+  flex-shrink: 0;
+}
+
+[data-toast-container] > div > *:nth-child(n+3) {
+  display: none !important;
+}

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '../../../lib/dbConnect';
 import Registration from '../../../models/Registration';
-import { handleError } from '../../../lib/errorUtils.js';
+import { handleError } from '../../../lib/errorUtils';
 import { z } from 'zod';
 import nodemailer from 'nodemailer';
 
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
           .trim()
           .min(1, 'Project description is required')
           .max(500, 'Project description must be at most 500 characters'),
-        teamLeadId: z.number().nullable(),
+        teamLeadId: z.number().nullable().default(0),
         members: z.array(teamMemberSchema).min(2).max(4),
       })
       .refine(({ members }) => {
@@ -90,7 +90,7 @@ export async function POST(request: Request) {
         path: ['members'],
       })
       .refine(({ teamLeadId, members }) => {
-        if (teamLeadId === null) return false;
+        if (teamLeadId === null || teamLeadId === 0) return true;
         return members.some((m) => m.id === teamLeadId);
       }, {
         message: 'teamLeadId must refer to one of the members',

@@ -44,12 +44,17 @@ export default function RootLayout({
         <Toaster 
           position="top-center" 
           reverseOrder={false}
+          containerStyle={{
+            top: 80,
+          }}
+          gutter={8}
           toastOptions={{
             duration: 4000,
             style: {
               background: '#1a1a1a',
               color: '#fff',
               border: '1px solid #333',
+              maxWidth: '500px',
             },
             success: {
               style: {
