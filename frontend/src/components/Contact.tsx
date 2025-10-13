@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Jolly_Lodger, Poppins } from "next/font/google";
 import Image from "next/image";
-import { toast } from 'react-hot-toast'; 
+import { Toaster, toast } from 'react-hot-toast'; // 
 
 const jollyLodger = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
@@ -30,13 +30,11 @@ export default function Contact() {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
-      toast.dismiss(); // Clear any existing toasts
       toast.error("Please fill out all fields.");
       return;
     }
 
     setIsSubmitting(true);
-    toast.dismiss(); // Clear any existing toasts before starting
 
     const submitPromise = fetch('/api/contact', {
       method: 'POST',
@@ -100,6 +98,19 @@ export default function Contact() {
 
   return (
     <>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            border: '1px solid #FF0700',
+            padding: '16px',
+            color: '#FFFFFF',
+            background: 'rgba(0,0,0,0.9)'
+          },
+        }}
+      />
+
       <style jsx global>{`
         /* --- Styles for browser autofill fix --- */
         input:-webkit-autofill,
@@ -132,7 +143,7 @@ export default function Contact() {
         </div>
 
         <div ref={contentRef} className="relative z-10 flex flex-col items-center max-w-[700px] mx-auto justify-start pt-10 md:pt-20 px-4 pb-10">
-          <h2 className={`${jollyLodger.className} text-[#FF0000] text-5xl md:text-7xl lg:text-8xl text-center mb-8 md:mb-12`}>
+          <h2 className={`${jollyLodger.className} text-[#FF0000] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center mb-8 md:mb-12`}>
             Contact Us
           </h2>
           <form
@@ -142,15 +153,22 @@ export default function Contact() {
             <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500" />
             <input type="email" name="email" placeholder="Your Email Id" value={formData.email} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500" />
             <textarea name="message" placeholder="Message" rows={4} value={formData.message} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500 resize-none" />
-            <button type="submit" disabled={isSubmitting} className={`${jollyLodger.className} w-full md:w-[45%] mx-auto block bg-gradient-to-r from-[#FF0500] to-[#FE772D] text-white font-bold rounded-xl text-xl md:text-2xl py-4 md:py-5 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/50 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed uppercase tracking-wider relative overflow-hidden group`} >
-              <span className="relative z-10">{isSubmitting ? "Sending..." : "Send Message"}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FE772D] to-[#FF0500] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <button type="submit" disabled={isSubmitting} className={`${jollyLodger.className} w-full md:w-[40%] mx-auto block bg-[#FE772D] text-gray-800 rounded-xl text-xl md:text-2xl py-3 md:py-4 transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed`} >
+              {isSubmitting ? "Sending..." : "Send Message"}
             </button>
           </form>
         </div>
 
         <footer ref={addToElementsRef} className="relative w-full h-[150px] md:h-[500px] z-20 flex flex-col justify-center items-center text-center" style={{ backgroundColor: 'rgba(0,0,0,0.1)', backgroundImage: "url('/grass.png')", backgroundSize: 'cover', backgroundPosition: 'bottom center', backgroundRepeat: 'no-repeat' }}>
-          <Image src="/genesis-2k25-logo.png" alt="Genesis 2025 Logo" width={188} height={188} className="mb-4 md:mb-6 mt-8 md:mt-50 w-[125px] md:w-[188px] h-auto filter brightness-75" />
+          <Image src="/genesis-2k25-logo.png" alt="Genesis 2025 Logo" width={150} height={150} className="mb-4 md:mb-6 mt-8 md:mt-50 w-[100px] md:w-[150px] h-auto filter brightness-75" />
+          <nav className={`${poppins.className} flex flex-wrap justify-center space-x-4 md:space-x-8 text-gray-300 text-xs md:text-sm`}>
+            <a href="#hero" className="hover:text-red-500 transition-colors duration-220">Home</a>
+            <a href="#events" className="hover:text-red-500 transition-colors duration-220">Events</a>
+            <a href="#sponsors" className="hover:text-red-500 transition-colors duration-220">Sponsors</a>
+            <a href="#leads" className="hover:text-red-500 transition-colors duration-220">Leads</a>
+            <a href="#gallery" className="hover:text-red-500 transition-colors duration-220">Gallery</a>
+            <a href="#members" className="hover:text-red-500 transition-colors duration-220">Members</a>
+          </nav>
           <p className="w-full text-center text-xs text-[#555555] py-2 md:mt-5">
             Made With <span className="text-red-500">❤️</span> By Genesis. All Rights Reserved.
           </p>
