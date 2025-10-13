@@ -93,6 +93,8 @@ const RegistrationForm: React.FC = () => {
     e.preventDefault();
     setHasTriedSubmit(true);
 
+    toast.dismiss(); // Clear any existing toasts
+
     const memberEmails = members.map((m) => m.email.trim().toLowerCase());
     if (new Set(memberEmails).size !== memberEmails.length) {
       toast.error('Each team member must have a unique email address.');
@@ -152,8 +154,20 @@ const RegistrationForm: React.FC = () => {
       const result = await response.json();
 
       if (response.ok) {
-        toast.success('Registration submitted successfully! 🎉');
-        router.push('/');
+        // Get team lead's credentials
+        const teamLeadIndex = members.findIndex((m) => m.id === teamLeadId);
+        const teamLead = members[teamLeadIndex];
+        
+        // Store credentials in sessionStorage for auto-login
+        sessionStorage.setItem('autoLoginEmail', teamLead.email.trim());
+        sessionStorage.setItem('autoLoginPhone', teamLead.phone.trim());
+        sessionStorage.setItem('isNewRegistration', 'true');
+        
+        // Show single success message and redirect
+        toast.success('Registration successful! Redirecting to dashboard...', { duration: 2000 });
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1500);
       } else {
         toast.error(`Registration failed: ${result.message}`);
       }

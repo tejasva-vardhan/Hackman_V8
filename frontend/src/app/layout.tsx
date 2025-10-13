@@ -46,6 +46,8 @@ export default function RootLayout({
           reverseOrder={false}
           containerStyle={{
             top: 80,
+            maxHeight: '80px',
+            overflow: 'hidden',
           }}
           gutter={8}
           toastOptions={{

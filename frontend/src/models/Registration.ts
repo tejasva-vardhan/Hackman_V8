@@ -27,6 +27,7 @@ interface IRegistration extends Document {
   teamCode: string;
   submissionStatus: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
   selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
+  paymentStatus: 'unpaid' | 'paid' | 'verified';
   submissionDetails: ISubmissionDetails;
   reviewComments: string;
   finalScore: number | null;
@@ -110,6 +111,11 @@ const RegistrationSchema = new Schema<IRegistration>({
     type: String,
     enum: ['pending', 'selected', 'waitlisted', 'rejected'],
     default: 'pending',
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['unpaid', 'paid', 'verified'],
+    default: 'unpaid',
   },
   submissionDetails: {
     githubRepo: {

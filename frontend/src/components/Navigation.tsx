@@ -52,6 +52,7 @@ export default function Navigation() {
     { href: "#about", label: "About Genesis", delay: 0.7 },
     { href: "#sponsors", label: "Sponsors", delay: 0.8 },
     { href: "#gallery", label: "Gallery", delay: 0.9 },
+    { href: "/dashboard", label: "Dashboard", delay: 1.0 },
   ];
 
   return (
@@ -74,7 +75,7 @@ export default function Navigation() {
       </div>
 
       <button
-        className={`fixed top-[6.5vh] left-6 z-60 flex flex-col items-center justify-center w-10 h-10 bg-black/30 rounded-lg backdrop-blur-sm md:hidden ${poppins.className}`}
+        className={`fixed top-[calc(6.5vh+1rem)] left-6 z-60 flex flex-col items-center justify-center w-10 h-10 bg-black/30 rounded-lg backdrop-blur-sm md:hidden ${poppins.className}`}
         onClick={toggleMenu}
         aria-label="Toggle menu"
         style={{

@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Jolly_Lodger, Poppins } from "next/font/google";
 import Image from "next/image";
-import { Toaster, toast } from 'react-hot-toast'; // 
+import { toast } from 'react-hot-toast'; 
 
 const jollyLodger = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
@@ -30,11 +30,13 @@ export default function Contact() {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
+      toast.dismiss(); // Clear any existing toasts
       toast.error("Please fill out all fields.");
       return;
     }
 
     setIsSubmitting(true);
+    toast.dismiss(); // Clear any existing toasts before starting
 
     const submitPromise = fetch('/api/contact', {
       method: 'POST',
@@ -98,19 +100,6 @@ export default function Contact() {
 
   return (
     <>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          style: {
-            border: '1px solid #FF0700',
-            padding: '16px',
-            color: '#FFFFFF',
-            background: 'rgba(0,0,0,0.9)'
-          },
-        }}
-      />
-
       <style jsx global>{`
         /* --- Styles for browser autofill fix --- */
         input:-webkit-autofill,
@@ -153,8 +142,9 @@ export default function Contact() {
             <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500" />
             <input type="email" name="email" placeholder="Your Email Id" value={formData.email} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500" />
             <textarea name="message" placeholder="Message" rows={4} value={formData.message} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500 resize-none" />
-            <button type="submit" disabled={isSubmitting} className={`${jollyLodger.className} w-full md:w-[40%] mx-auto block bg-[#FE772D] text-gray-800 rounded-xl text-xl md:text-2xl py-3 md:py-4 transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed`} >
-              {isSubmitting ? "Sending..." : "Send Message"}
+            <button type="submit" disabled={isSubmitting} className={`${jollyLodger.className} w-full md:w-[45%] mx-auto block bg-gradient-to-r from-[#FF0500] to-[#FE772D] text-white font-bold rounded-xl text-xl md:text-2xl py-4 md:py-5 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/50 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed uppercase tracking-wider relative overflow-hidden group`} >
+              <span className="relative z-10">{isSubmitting ? "Sending..." : "Send Message"}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FE772D] to-[#FF0500] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </button>
           </form>
         </div>

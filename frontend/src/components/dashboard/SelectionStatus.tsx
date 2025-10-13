@@ -21,6 +21,7 @@ interface TeamData {
   }>;
   submissionStatus: string;
   selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
+  paymentStatus?: 'unpaid' | 'paid' | 'verified';
   submissionDetails: {
     githubRepo: string;
     liveDemo: string;
@@ -116,6 +117,73 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
       <div className={styles.statusMessage}>
         <p>{getStatusMessage(teamData.selectionStatus)}</p>
       </div>
+
+      {/* Payment CTA when selected and unpaid */}
+      {teamData.selectionStatus === 'selected' && (teamData.paymentStatus === 'unpaid' || !teamData.paymentStatus) && (
+        <div style={{ marginTop: 16, display: 'grid', gap: 12 }}>
+          <span style={{ color: '#fbbf24', fontWeight: 600 }}>Action required: Complete payment to confirm your spot.</span>
+
+          {process.env.NEXT_PUBLIC_PAYMENT_URL ? (
+            <a
+              href={process.env.NEXT_PUBLIC_PAYMENT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.submitButton}`}
+              style={{ textDecoration: 'none', width: 'fit-content' }}
+            >
+              Pay Now
+            </a>
+          ) : (
+            <div style={{ display: 'grid', gap: 10 }}>
+              {/* UPI fallback if organizer UPI is provided */}
+              {process.env.NEXT_PUBLIC_UPI_ID ? (
+                <div style={{ display: 'grid', gap: 8 }}>
+                  <div style={{ color: '#a0aec0' }}>
+                    Online gateway isn’t configured yet. You can pay via UPI using the details below or at the venue.
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                    <code style={{ background: '#111', border: '1px solid #333', padding: '6px 10px', borderRadius: 8 }}>
+                      {process.env.NEXT_PUBLIC_UPI_ID}
+                    </code>
+                    <button
+                      className={styles.submitButton}
+                      style={{ padding: '8px 14px' }}
+                      onClick={() => navigator.clipboard?.writeText(process.env.NEXT_PUBLIC_UPI_ID || '')}
+                    >
+                      Copy UPI ID
+                    </button>
+                    {/* Open UPI intent link */}
+                    <a
+                      href={`upi://pay?pa=${encodeURIComponent(process.env.NEXT_PUBLIC_UPI_ID || '')}&pn=${encodeURIComponent(process.env.NEXT_PUBLIC_UPI_NAME || 'Organizer')}&am=${encodeURIComponent(process.env.NEXT_PUBLIC_FEES || '500')}&cu=INR`}
+                      className={styles.submitButton}
+                      style={{ textDecoration: 'none', padding: '8px 14px' }}
+                    >
+                      Pay via UPI App
+                    </a>
+                  </div>
+                  {/* QR via external service using UPI intent */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+                    <img
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(`upi://pay?pa=${process.env.NEXT_PUBLIC_UPI_ID || ''}&pn=${process.env.NEXT_PUBLIC_UPI_NAME || 'Organizer'}&am=${process.env.NEXT_PUBLIC_FEES || '500'}&cu=INR`)}`}
+                      alt="UPI QR"
+                      width={220}
+                      height={220}
+                      style={{ borderRadius: 12, border: '1px solid #222' }}
+                    />
+                    <div style={{ color: '#a0aec0' }}>
+                      Scan the QR with any UPI app. Suggested amount: ₹{process.env.NEXT_PUBLIC_FEES || '500'}.
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ color: '#f87171' }}>
+                  Online payment isn’t configured yet. Payment will be collected at the venue during check-in.
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {teamData.selectionStatus === 'selected' && (
         <div className={styles.selectedInfo}>

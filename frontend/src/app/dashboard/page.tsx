@@ -37,6 +37,7 @@ interface TeamData {
   members: TeamMember[];
   submissionStatus: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
   selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
+  paymentStatus: 'unpaid' | 'paid' | 'verified';
   submissionDetails: {
     githubRepo: string;
     liveDemo: string;
@@ -59,42 +60,63 @@ export default function DashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'submission' | 'status'>('overview');
 
-  // Check if user is already authenticated (credentials in localStorage)
+  // Check for auto-login after registration
   useEffect(() => {
-    const savedLeadEmail = localStorage.getItem('leadEmail');
-    const savedPhone = localStorage.getItem('phone');
-    if (savedLeadEmail && savedPhone) {
-      setLeadEmail(savedLeadEmail);
-      setPhone(savedPhone);
-      fetchTeamData(savedLeadEmail, savedPhone);
+    const autoLoginEmail = sessionStorage.getItem('autoLoginEmail');
+    const autoLoginPhone = sessionStorage.getItem('autoLoginPhone');
+    const isNewRegistration = sessionStorage.getItem('isNewRegistration');
+    
+    if (autoLoginEmail && autoLoginPhone) {
+      // Clear the auto-login credentials
+      sessionStorage.removeItem('autoLoginEmail');
+      sessionStorage.removeItem('autoLoginPhone');
+      sessionStorage.removeItem('isNewRegistration');
+      
+      // Set the form fields and fetch team data
+      setLeadEmail(autoLoginEmail);
+      setPhone(autoLoginPhone);
+      fetchTeamData(autoLoginEmail, autoLoginPhone, isNewRegistration === 'true');
     }
   }, []);
 
-  const fetchTeamData = async (leadEmail: string, phone: string) => {
+  const fetchTeamData = async (leadEmail: string, phone: string, isNewRegistration: boolean = false) => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/team/lead?email=${encodeURIComponent(leadEmail)}&phone=${encodeURIComponent(phone)}`);
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data && typeof data === 'object' && data._id) {
+        // Valid team data received
         setTeamData(data);
         setIsAuthenticated(true);
-        localStorage.setItem('projectName', data.projectTitle || '');
-        localStorage.setItem('phone', phone);
-        localStorage.setItem('leadEmail', leadEmail);
-        toast.success('Welcome to your team dashboard!');
+        // Store only for current session, not persistent
+        sessionStorage.setItem('projectName', data.projectTitle || '');
+        sessionStorage.setItem('phone', phone);
+        sessionStorage.setItem('leadEmail', leadEmail);
+        
+        // Show different message for new registrations vs returning users
+        if (isNewRegistration) {
+          toast.success('🎉 Registration complete! Welcome to your dashboard!');
+        } else {
+          toast.success('Welcome back to your dashboard!');
+        }
       } else {
-        toast.error(data.message || 'Failed to fetch team data');
+        // Invalid credentials or no team found
+        toast.error('❌ Invalid credentials! Please check your team lead email and phone number.');
         setIsAuthenticated(false);
-        localStorage.removeItem('projectName');
-        localStorage.removeItem('phone');
+        setTeamData(null);
+        sessionStorage.removeItem('projectName');
+        sessionStorage.removeItem('phone');
+        sessionStorage.removeItem('leadEmail');
       }
     } catch (error) {
       console.error('Error fetching team data:', error);
-      toast.error('An error occurred while fetching team data');
+      toast.error('⚠️ Connection error! Please check your internet and try again.');
       setIsAuthenticated(false);
-      localStorage.removeItem('projectName');
-      localStorage.removeItem('phone');
+      setTeamData(null);
+      sessionStorage.removeItem('projectName');
+      sessionStorage.removeItem('phone');
+      sessionStorage.removeItem('leadEmail');
     } finally {
       setIsLoading(false);
     }
@@ -114,14 +136,36 @@ export default function DashboardPage() {
     setIsAuthenticated(false);
     setLeadEmail('');
     setPhone('');
-    localStorage.removeItem('leadEmail');
-    localStorage.removeItem('phone');
+    sessionStorage.removeItem('leadEmail');
+    sessionStorage.removeItem('phone');
+    sessionStorage.removeItem('projectName');
     toast.success('Logged out successfully');
   };
 
   const updateTeamData = (updatedData: Partial<TeamData>) => {
     setTeamData(prev => prev ? { ...prev, ...updatedData } : null);
   };
+
+  // If team is selected but payment is unpaid, optionally auto-open payment link once per session
+  useEffect(() => {
+    if (!teamData) return;
+    const url = process.env.NEXT_PUBLIC_PAYMENT_URL;
+    const alreadyPrompted = typeof window !== 'undefined' ? sessionStorage.getItem('paymentPrompted') : '1';
+    if (
+      teamData.selectionStatus === 'selected' &&
+      teamData.paymentStatus === 'unpaid' &&
+      url &&
+      !alreadyPrompted
+    ) {
+      try {
+        sessionStorage.setItem('paymentPrompted', '1');
+        toast.loading('Opening payment page...', { duration: 1500 });
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } catch (e) {
+        // no-op
+      }
+    }
+  }, [teamData]);
 
   if (!isAuthenticated) {
     return (

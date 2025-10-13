@@ -274,9 +274,10 @@ export default function Hero() {
 
             <a
               href="/registration"
-              className={`${jolly.className} hero-button w-[18vw] h-[4vw] lg:w-[19vw] lg:h-[4.5vw] mt-[2vw] bg-[#FE772D] text-gray-800 rounded-[3vw] lg:rounded-[1rem] text-[3vw] lg:text-[2.8vw] flex items-center justify-center transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl lg:mt-[8%] hover-lift opacity-0`}
+              className={`${jolly.className} hero-button w-[22vw] h-[5vw] lg:w-[20vw] lg:h-[5vw] mt-[2vw] bg-gradient-to-r from-[#FF0500] to-[#FE772D] text-white font-bold rounded-[3vw] lg:rounded-[1.5rem] text-[3.2vw] lg:text-[2.5vw] flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-orange-500/50 lg:mt-[8%] hover-lift opacity-0 uppercase tracking-wider relative overflow-hidden group`}
             >
-              Register Now
+              <span className="relative z-10">Register Now</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FE772D] to-[#FF0500] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
             </a>
           </div>
         </div>

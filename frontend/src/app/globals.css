@@ -82,6 +82,46 @@ h2 {
   flex-shrink: 0;
 }
 
-[data-toast-container] > div > *:nth-child(n+3) {
+/* Limit to 1 visible toast notification at a time - Multiple selectors for maximum coverage */
+[data-toast-container] > div > *:nth-child(n+2),
+[data-toast-container] > *:nth-child(n+2),
+[data-toast-container] *[role="status"]:nth-child(n+2),
+[data-toast-container] div:nth-child(n+2) {
   display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  z-index: -9999 !important;
+}
+
+/* Global CTA cursor behavior */
+button,
+[type="button"],
+[type="submit"],
+[type="reset"],
+a[role="button"],
+.btn,
+.cta,
+.hero-button,
+.submitButton,
+.loginButton,
+.logoutButton,
+.tabButton {
+  cursor: pointer !important;
+}
+
+/* Disabled state should not be clickable */
+button:disabled,
+[type="button"]:disabled,
+[type="submit"]:disabled,
+[type="reset"]:disabled,
+.disabled,
+.is-disabled {
+  cursor: not-allowed !important;
 }

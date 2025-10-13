@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     if (team) {
       return NextResponse.json(team, { status: 200 });
     }
-    return NextResponse.json(0, { status: 200 });
+    return NextResponse.json({ message: 'Team not found or invalid credentials' }, { status: 404 });
   } catch (error: unknown) {
     return handleError(error);
   }
