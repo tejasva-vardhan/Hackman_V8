@@ -1,6 +1,6 @@
 "use client";
 import { Poppins, Jolly_Lodger } from "next/font/google";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({
@@ -31,16 +31,6 @@ export function OrangeStrip() {
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -48,11 +38,10 @@ export default function Navigation() {
 
   const navItems = [
     { href: "#hero", label: "Home", delay: 0.5 },
-    { href: "#about-hackman", label: "About Hackman", delay: 0.6 },
-    { href: "#about", label: "About Genesis", delay: 0.7 },
-    { href: "#sponsors", label: "Sponsors", delay: 0.8 },
-    { href: "#gallery", label: "Gallery", delay: 0.9 },
-    { href: "/dashboard", label: "Dashboard", delay: 1.0 },
+    { href: "#about", label: "About Genesis", delay: 0.6 },
+    { href: "#about-hackman", label: "About Hackman", delay: 0.7 },
+    { href: "#gallery", label: "Gallery", delay: 0.8 },
+    { href: "#sponsors", label: "Sponsors", delay: 0.9 },
   ];
 
   return (
@@ -75,7 +64,7 @@ export default function Navigation() {
       </div>
 
       <button
-        className={`fixed top-[calc(6.5vh+1rem)] left-6 z-60 flex flex-col items-center justify-center w-10 h-10 bg-black/30 rounded-lg backdrop-blur-sm md:hidden ${poppins.className}`}
+        className={`fixed top-16 left-6 z-60 flex flex-col items-center justify-center w-10 h-10 bg-black/30 rounded-lg backdrop-blur-sm md:hidden ${poppins.className}`}
         onClick={toggleMenu}
         aria-label="Toggle menu"
         style={{
@@ -152,7 +141,7 @@ export default function Navigation() {
       </div>
 
       <nav
-        className={`fixed left-4 right-4 top-[6.5vh] md:top-[6.5vh] ${isScrolled ? 'bg-black/85 shadow-lg' : 'bg-transparent'} text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-40 animate-fade-in-up gap-4 md:gap-0 rounded-2xl transition-all duration-300`}
+        className={`fixed left-4 right-4 top-12 bg-black/20 text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-40 animate-fade-in-up gap-4 md:gap-0 rounded-2xl shadow-lg`}
         style={{
           animation: "fadeInUp 0.8s ease-out 0.2s forwards",
           opacity: 0,
@@ -179,7 +168,7 @@ export default function Navigation() {
           ))}
         </ul>
         <div
-          className="order-1 md:order-2 flex-shrink-0"
+          className="order-1 md:order-2 flex-shrink-0 mt-0 sm:mt-0"
           style={{
             animation: "fadeIn 0.8s ease-out 1s forwards",
             opacity: 0,

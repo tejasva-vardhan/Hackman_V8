@@ -50,7 +50,7 @@ export default function Gallery() {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-in");
             imagesRef.current.forEach((img, index) => {
-              if (img) img.style.animationDelay = `${0.01 + index * 0.08}s`;
+              if (img) img.style.animationDelay = `${0.01 + index * 0.03}s`;
             });
           } else {
             entry.target.classList.remove("animate-in");
@@ -161,7 +161,7 @@ export default function Gallery() {
 
       <div className="container mx-auto px-4">
         <h2
-          className={`${jolly.className} gallery-title text-[#FF0700] text-[72px] text-center mb-12`}
+          className={`${jolly.className} gallery-title text-[#FF0700] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center mb-12`}
         >
           Gallery
         </h2>
