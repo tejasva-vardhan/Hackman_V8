@@ -1,44 +1,60 @@
+
 @import "tailwindcss";
+
 html, body {
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
 }
+
 :root {
   --background: #000000;
   --font-jolly: 'Jolly Lodger', cursive;
   --font-nosifer: 'Nosifer', cursive;
   --foreground: #171717;
 }
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
+
+
 body {
   background: #000000;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
 .font-jolly {
   font-family: var(--font-jolly);
 }
+
 .font-nosifer {
   font-family: var(--font-nosifer);
 }
+
+
 .font-nosifer {
   font-family: var(--font-nosifer);
   text-transform: uppercase; 
   font-weight: 800;         
   letter-spacing: 0.05em;    
 }
+
+
+
 h2 {
   font-family: var(--font-jolly), cursive; 
   font-size: 4rem; 
@@ -49,59 +65,30 @@ h2 {
   margin-bottom: 50px;
   letter-spacing: 2px;
 }
-[data-toast-container] {
-  max-height: 70px !important;
-  min-height: 70px !important;
-  overflow: hidden !important;
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 12px;
 }
-[data-toast-container] > div {
-  display: flex;
-  flex-direction: column;
-  max-height: 70px !important;
-  overflow: hidden !important;
+
+::-webkit-scrollbar-track {
+  background: #000000;
+  border-left: 1px solid rgba(255, 7, 0, 0.1);
 }
-[data-toast-container] > div > * {
-  flex-shrink: 0;
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #FF0700 0%, #c53030 100%);
+  border-radius: 6px;
+  border: 2px solid #000000;
 }
-[data-toast-container] > div > *:nth-child(n+2),
-[data-toast-container] > *:nth-child(n+2),
-[data-toast-container] *[role="status"]:nth-child(n+2),
-[data-toast-container] div:nth-child(n+2),
-div[data-sonner-toaster] > *:nth-child(n+2),
-div[class*="Toaster"] > *:nth-child(n+2),
-div[class*="toast"] > *:nth-child(n+2) {
-  display: none !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  height: 0 !important;
-  max-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  visibility: hidden !important;
-  position: absolute !important;
-  z-index: -9999 !important;
-  transform: scale(0) !important;
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff3333 0%, #FF0700 100%);
+  box-shadow: 0 0 10px rgba(255, 7, 0, 0.5);
 }
-button,
-[type="button"],
-[type="submit"],
-[type="reset"],
-a[role="button"],
-.btn,
-.cta,
-.hero-button,
-.submitButton,
-.loginButton,
-.logoutButton,
-.tabButton {
-  cursor: pointer !important;
-}
-button:disabled,
-[type="button"]:disabled,
-[type="submit"]:disabled,
-[type="reset"]:disabled,
-.disabled,
-.is-disabled {
-  cursor: not-allowed !important;
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FF0700 #000000;
 }

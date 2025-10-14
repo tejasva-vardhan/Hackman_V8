@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -8,11 +9,13 @@ import SubmissionStatus from '@/components/dashboard/SubmissionStatus';
 import SelectionStatus from '@/components/dashboard/SelectionStatus';
 import ProjectSubmission from '@/components/dashboard/ProjectSubmission';
 import styles from '@/styles/Dashboard.module.css';
+
 const nosifer = Nosifer({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
 });
+
 interface TeamMember {
   id: number;
   _id?: string;
@@ -23,6 +26,7 @@ interface TeamMember {
   linkedin?: string;
   github?: string;
 }
+
 interface TeamData {
   _id: string;
   teamName: string;
@@ -33,7 +37,6 @@ interface TeamData {
   members: TeamMember[];
   submissionStatus: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
   selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
-  paymentStatus: 'unpaid' | 'paid' | 'verified';
   submissionDetails: {
     githubRepo: string;
     liveDemo: string;
@@ -46,6 +49,7 @@ interface TeamData {
   createdAt: string;
   updatedAt: string;
 }
+
 export default function DashboardPage() {
   const router = useRouter();
   const [leadEmail, setLeadEmail] = useState('');
@@ -54,106 +58,85 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'submission' | 'status'>('overview');
+
+  
   useEffect(() => {
-    const autoLoginEmail = sessionStorage.getItem('autoLoginEmail');
-    const autoLoginPhone = sessionStorage.getItem('autoLoginPhone');
-    const isNewRegistration = sessionStorage.getItem('isNewRegistration');
-    if (autoLoginEmail && autoLoginPhone) {
-      sessionStorage.removeItem('autoLoginEmail');
-      sessionStorage.removeItem('autoLoginPhone');
-      sessionStorage.removeItem('isNewRegistration');
-      setLeadEmail(autoLoginEmail);
-      setPhone(autoLoginPhone);
-      fetchTeamData(autoLoginEmail, autoLoginPhone, isNewRegistration === 'true');
-    }
+    const savedLeadEmail = localStorage.getItem('leadEmail');
+    const savedPhone = localStorage.getItem('phone');
+    
   }, []);
-  const fetchTeamData = async (leadEmail: string, phone: string, isNewRegistration: boolean = false) => {
+
+  const fetchTeamData = async (leadEmail: string, phone: string) => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/team/lead?email=${encodeURIComponent(leadEmail)}&phone=${encodeURIComponent(phone)}`);
       const data = await response.json();
-      if (response.ok && data && typeof data === 'object' && data._id) {
+
+      if (response.ok) {
         setTeamData(data);
         setIsAuthenticated(true);
-        sessionStorage.setItem('projectName', data.projectTitle || '');
-        sessionStorage.setItem('phone', phone);
-        sessionStorage.setItem('leadEmail', leadEmail);
-        if (isNewRegistration) {
-          toast.dismiss();
-          setTimeout(() => toast.success('🎉 Registration complete! Welcome to your dashboard!'), 10);
-        } else {
-          toast.dismiss();
-          setTimeout(() => toast.success('Welcome back to your dashboard!'), 10);
-        }
+        localStorage.setItem('projectName', data.projectTitle || '');
+        localStorage.setItem('phone', phone);
+        localStorage.setItem('leadEmail', leadEmail);
+        toast.success('Welcome to your team dashboard!');
       } else {
-        toast.dismiss();
-        setTimeout(() => toast.error('❌ Invalid credentials! Please check your team lead email and phone number.'), 10);
+        toast.error(data.message || 'Failed to fetch team data');
         setIsAuthenticated(false);
-        setTeamData(null);
-        sessionStorage.removeItem('projectName');
-        sessionStorage.removeItem('phone');
-        sessionStorage.removeItem('leadEmail');
+        localStorage.removeItem('projectName');
+        localStorage.removeItem('phone');
       }
     } catch (error) {
       console.error('Error fetching team data:', error);
-      toast.dismiss();
-      setTimeout(() => toast.error('⚠️ Connection error! Please check your internet and try again.'), 10);
+      toast.error('An error occurred while fetching team data');
       setIsAuthenticated(false);
-      setTeamData(null);
-      sessionStorage.removeItem('projectName');
-      sessionStorage.removeItem('phone');
-      sessionStorage.removeItem('leadEmail');
+      localStorage.removeItem('projectName');
+      localStorage.removeItem('phone');
     } finally {
       setIsLoading(false);
     }
   };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!leadEmail.trim() || !phone.trim()) {
-      toast.dismiss();
-      setTimeout(() => toast.error('Please enter both team lead email and phone number'), 10);
+      toast.error('Please enter both team lead email and phone number');
       return;
     }
     await fetchTeamData(leadEmail.trim(), phone.trim());
   };
+
   const handleLogout = () => {
     setTeamData(null);
     setIsAuthenticated(false);
     setLeadEmail('');
     setPhone('');
-    sessionStorage.removeItem('leadEmail');
-    sessionStorage.removeItem('phone');
-    sessionStorage.removeItem('projectName');
-    toast.dismiss();
-    setTimeout(() => toast.success('Logged out successfully'), 10);
+    localStorage.removeItem('leadEmail');
+    localStorage.removeItem('phone');
+    toast.success('Logged out successfully');
   };
+
   const updateTeamData = (updatedData: Partial<TeamData>) => {
     setTeamData(prev => prev ? { ...prev, ...updatedData } : null);
   };
-  useEffect(() => {
-    if (!teamData) return;
-    const url = process.env.NEXT_PUBLIC_PAYMENT_URL;
-    const alreadyPrompted = typeof window !== 'undefined' ? sessionStorage.getItem('paymentPrompted') : '1';
-    if (
-      teamData.selectionStatus === 'selected' &&
-      teamData.paymentStatus === 'unpaid' &&
-      url &&
-      !alreadyPrompted
-    ) {
-      try {
-        sessionStorage.setItem('paymentPrompted', '1');
-        toast.loading('Opening payment page...', { duration: 1500 });
-        window.open(url, '_blank', 'noopener,noreferrer');
-      } catch (e) {
-      }
-    }
-  }, [teamData]);
+
   if (!isAuthenticated) {
     return (
       <div className={styles.dashboardContainer}>
+        <button 
+          onClick={() => router.push('/#hero')} 
+          className={styles.backToHomeButton}
+          title="Back to Home"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Back to Home</span>
+        </button>
         <div className={styles.loginContainer}>
           <h1 className={`${styles.title} ${nosifer.className}`}>Team Dashboard</h1>
           <p className={styles.subtitle}>Enter your project title and team code to access your dashboard</p>
+          
           <form onSubmit={handleLogin} className={styles.loginForm}>
             <div className={styles.inputGroup}>
               <label htmlFor="leadEmail" className={styles.label}>Team Lead Email</label>
@@ -188,6 +171,7 @@ export default function DashboardPage() {
               {isLoading ? 'Accessing...' : 'Access Dashboard'}
             </button>
           </form>
+          
           <div className={styles.helpText}>
             <p>Don&apos;t have your credentials? Check your registration confirmation email.</p>
             <p>Make sure to enter your project title exactly as you registered it.</p>
@@ -197,6 +181,7 @@ export default function DashboardPage() {
       </div>
     );
   }
+
   if (!teamData) {
     return (
       <div className={styles.dashboardContainer}>
@@ -207,6 +192,7 @@ export default function DashboardPage() {
       </div>
     );
   }
+
   return (
     <div className={styles.dashboardContainer}>
       <div className={styles.dashboardHeader}>
@@ -214,11 +200,25 @@ export default function DashboardPage() {
           <h1 className={`${styles.dashboardTitle} ${nosifer.className}`}>
             {teamData.teamName}
           </h1>
-          <button onClick={handleLogout} className={styles.logoutButton}>
-            Logout
-          </button>
+          <div className={styles.buttonGroup}>
+            <button 
+              onClick={() => router.push('/#hero')} 
+              className={styles.homeButton}
+              title="Back to Home"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              <span>Home</span>
+            </button>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
+
       <div className={styles.dashboardContent}>
         <nav className={styles.tabNavigation}>
           <button
@@ -240,6 +240,7 @@ export default function DashboardPage() {
             Selection Status
           </button>
         </nav>
+
         <div className={styles.tabContent}>
           {activeTab === 'overview' && teamData && (
             <TeamInfo 

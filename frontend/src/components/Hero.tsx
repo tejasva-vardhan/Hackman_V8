@@ -353,7 +353,7 @@ export default function Hero() {
       </div>
       {}
       </section>
-      <div className="block sm:hidden absolute bottom-0 left-0 right-0 p-4 z-50">
+      <div className="block sm:hidden absolute bottom-0 left-0 right-0 p-4 z-25 bg-black bg-opacity-50">
         <p className={`${poppins.className} text-white text-center text-[10px]`}>
           Where creativity meets technology. A community of thinkers, builders, and leaders shaping the future.
         </p>
