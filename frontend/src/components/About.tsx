@@ -1,20 +1,16 @@
 "use client";
-
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-
 export default function About() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const imagesRef = useRef<HTMLDivElement[]>([]);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-in");
-
             const content = contentRef.current;
             if (content) {
               const paragraphs = content.querySelectorAll("p");
@@ -22,7 +18,6 @@ export default function About() {
                 (p as HTMLElement).style.animationDelay = `${0.3 + index * 0.2}s`;
               });
             }
-
             imagesRef.current.forEach((img, index) => {
               if (img) (img as HTMLElement).style.animationDelay = `${0.2 + index * 0.15}s`;
             });
@@ -33,15 +28,12 @@ export default function About() {
       },
       { threshold: 0.3 }
     );
-
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
   const addToImagesRef = (el: HTMLDivElement | null) => {
     if (el && !imagesRef.current.includes(el)) imagesRef.current.push(el);
   };
-
   return (
     <>
       <style jsx global>{`
@@ -95,7 +87,6 @@ export default function About() {
             transform: scale(1);
           }
         }
-
         .animate-in .about-title {
           animation: slideInFromTop 0.8s ease-out forwards,
             glowPulse 2s ease-in-out infinite 1s;
@@ -135,7 +126,6 @@ export default function About() {
           animation: slideInFromBottom 0.8s ease-out forwards;
           animation-delay: 0.3s;
         }
-
         .about-title,
         .about-image-left,
         .about-image-right,
@@ -157,7 +147,6 @@ export default function About() {
             transform: translateY(0);
           }
         }
-
         @keyframes floatSpiderNet {
           0% {
             transform: translateY(0);
@@ -170,7 +159,6 @@ export default function About() {
           }
         } 
       `}</style>
-
       <section ref={sectionRef} className="relative -mb-32 bg-black text-white" id="about">
         <div
           ref={addToImagesRef}
@@ -184,7 +172,6 @@ export default function About() {
             className="opacity-60 w-28 sm:w-40 md:w-52 lg:w-60 h-auto object-contain"
           />
         </div>
-
         <div
           ref={addToImagesRef}
           className="about-image-top absolute left-1/2 -translate-x-1/2 top-0 block"
@@ -197,7 +184,6 @@ export default function About() {
             className="w-40 sm:w-64 md:w-80 lg:w-[520px] h-auto object-contain"
           />
         </div>
-
         <div
           ref={addToImagesRef}
           className="about-image-right absolute right-0 top-60 sm:top-72 md:top-80 transform block"
@@ -210,15 +196,12 @@ export default function About() {
             className="opacity-80 mt-20 w-28 sm:w-40 md:w-52 lg:w-[296px] h-auto object-contain"
           />
         </div>
-
-
        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-20 md:py-28 lg:py-40">
           <div className="mb-12 sm:mb-16 md:mb-20 lg:mb-32">
             <h2 
             className="font-jolly about-title text-center text-[#ff0500] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6">
               About Genesis
             </h2>
-
             <div ref={contentRef} className="about-content max-w-4xl sm:max-w-5xl md:max-w-6xl mx-auto text-center px-2 sm:px-4">
               <p className="font-poppins text-white mb-4 text-xs sm:text-sm md:text-base lg:text-lg">
                 GENESIS is much more than just a team, it&apos;s a close-knit family. With a diverse group of 50 individuals,
@@ -228,7 +211,6 @@ export default function About() {
                 cultural, and social. But these aren&apos;t just categories or labels, but also &mdash; they&apos;re a reflection of the
                 unique passions and interests that each team member brings.
               </p>
-
               <p className="font-poppins text-white text-xs sm:text-sm md:text-base lg:text-lg">
                 Some are creative minds with a knack for design, others are passionate athletes, and some are tech
                 experts. There are also those who are deeply committed to making a social impact. What truly makes GENESIS
@@ -238,7 +220,6 @@ export default function About() {
               </p>
             </div>
           </div>
-
           <div className="mb-16 lg:mb-32">
             <div className="relative mx-auto max-w-4xl">
               <Image
@@ -261,19 +242,16 @@ export default function About() {
     </>
   );
 }
-
 export function AboutHackman() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const imagesRef = useRef<HTMLDivElement[]>([]);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-in");
-
             const content = contentRef.current;
             if (content) {
               const paragraphs = content.querySelectorAll("p, h1, h2");
@@ -281,7 +259,6 @@ export function AboutHackman() {
                 (el as HTMLElement).style.animationDelay = `${0.3 + index * 0.2}s`;
               });
             }
-
             imagesRef.current.forEach((img, index) => {
               if (img) (img as HTMLElement).style.animationDelay = `${0.2 + index * 0.15}s`;
             });
@@ -292,15 +269,12 @@ export function AboutHackman() {
       },
       { threshold: 0.3 }
     );
-
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
   const addToImagesRef = (el: HTMLDivElement | null) => {
     if (el && !imagesRef.current.includes(el)) imagesRef.current.push(el);
   };
-
   return (
     <>
       <style jsx global>{`
@@ -322,7 +296,6 @@ export function AboutHackman() {
           animation: floatBat 5s ease-in-out infinite 0.5s;
         }
       `}</style>
-
       <section ref={sectionRef} className="relative bg-black text-white mb-24" id="about-hackman">
         <div className="relative py-10 sm:py-12 lg:py-16">
           <div
@@ -337,12 +310,10 @@ export function AboutHackman() {
           >
             <Image src="/images/right_bat.png" alt="Bats" width={400} height={200} />
           </div>
-
           <div className="container mx-auto px-4 text-center" ref={contentRef}>
             <h2 className="font-jolly about-title text-[#ff0500] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-10">
               About Hackman V8
             </h2>
-
             <div
               ref={addToImagesRef}
               className="hackman-card max-w-5xl mx-auto rounded-[2rem] sm:rounded-[3rem] bg-[#151515] p-6 sm:p-10 lg:p-12 shadow-lg"
@@ -350,11 +321,9 @@ export function AboutHackman() {
               <p className="font-poppins text-white text-base sm:text-lg mb-2">
                 Code. Create. Conquer The Dark.
               </p>
-
               <h1 className="font-nosifer tracking-tight text-4xl sm:text-5xl lg:text-[60px] xl:text-[64px] mb-4 leading-tight">
                 HACKMAN 2025
               </h1>
-
               <p className="font-poppins text-[#747474] text-sm sm:text-base mb-6 leading-relaxed">
                 Our Grand Ritual, Hackman 2025, rises from the shadows as a 36-Hour Haunted Hackathon, where
                 restless minds gather to code, create, and conquer the dark. Guided by the wisdom of the

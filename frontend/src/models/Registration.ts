@@ -1,5 +1,4 @@
 import mongoose, { Schema, Model, Document } from 'mongoose';
-
 interface IMember {
   name: string;
   email: string;
@@ -8,7 +7,6 @@ interface IMember {
   linkedin: string;
   github: string;
 }
-
 interface ISubmissionDetails {
   githubRepo: string;
   liveDemo: string;
@@ -16,7 +14,6 @@ interface ISubmissionDetails {
   additionalNotes: string;
   submittedAt: Date | null;
 }
-
 interface IRegistration extends Document {
   teamName: string;
   collegeName: string;
@@ -34,7 +31,6 @@ interface IRegistration extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
-
 const MemberSchema = new Schema<IMember>({
   name: {
     type: String,
@@ -66,7 +62,6 @@ const MemberSchema = new Schema<IMember>({
     match: [/^(https?:\/\/)?([a-z0-9-]+\.)*github\.com\//i, 'GitHub URL must be from github.com'],
   },
 });
-
 const RegistrationSchema = new Schema<IRegistration>({
   teamName: {
     type: String,
@@ -96,7 +91,6 @@ const RegistrationSchema = new Schema<IRegistration>({
       'Team must have between 2 and 4 members.'
     ]
   },
-  // Dashboard related fields
   teamCode: {
     type: String,
     unique: true,
@@ -150,6 +144,5 @@ const RegistrationSchema = new Schema<IRegistration>({
 }, { 
   timestamps: true
 });
-
 export default (mongoose.models.Registration as Model<IRegistration>) || 
   mongoose.model<IRegistration>('Registration', RegistrationSchema);

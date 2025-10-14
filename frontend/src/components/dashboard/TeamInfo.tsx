@@ -1,27 +1,22 @@
 "use client";
-
 import React from "react";
 import styles from '@/styles/Dashboard.module.css';
-
 interface Member {
   name: string;
   email: string;
   phone: string;
   isLead?: boolean;
 }
-
 interface TeamInfoProps {
   projectTitle: string;
   teamLeadPhone: string;
   members: Member[];
   teamLeadIndex: number;
 }
-
 const TeamInfo: React.FC<TeamInfoProps> = ({ projectTitle, teamLeadPhone, members, teamLeadIndex }) => {
   return (
     <div className={styles.teamOverviewSection}>
       <h2 className={styles.sectionTitle}>Team Overview</h2>
-      
       <div className={styles.projectInfoCard}>
         <h3>Project Information</h3>
         <div className={styles.projectDetails}>
@@ -29,10 +24,9 @@ const TeamInfo: React.FC<TeamInfoProps> = ({ projectTitle, teamLeadPhone, member
             <span className={styles.detailLabel}>Project Title</span>
             <span className={styles.detailValue}>{projectTitle}</span>
           </div>
-          {/* Removed team lead phone number from project information */}
+          {}
         </div>
       </div>
-
       <div className={styles.teamMembersSection}>
         <h3>Team Members</h3>
         <div className={styles.membersGrid}>
@@ -63,5 +57,4 @@ const TeamInfo: React.FC<TeamInfoProps> = ({ projectTitle, teamLeadPhone, member
     </div>
   );
 };
-
 export default TeamInfo;

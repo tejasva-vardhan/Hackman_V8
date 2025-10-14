@@ -1,13 +1,11 @@
 "use client";
 import { Poppins, Jolly_Lodger } from "next/font/google";
 import { useState, useEffect } from "react";
-
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({
   weight: ["400"],
   subsets: ["latin"],
 });
-
 export function OrangeStrip() {
   return (
     <div
@@ -28,24 +26,19 @@ export function OrangeStrip() {
     </div>
   );
 }
-
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
   const navItems = [
     { href: "#hero", label: "Home", delay: 0.5 },
     { href: "#about", label: "About Genesis", delay: 0.6 },
@@ -54,7 +47,6 @@ export default function Navigation() {
     { href: "#sponsors", label: "Sponsors", delay: 0.9 },
     { href: "/dashboard", label: "Dashboard", delay: 1.0 },
   ];
-
   return (
     <>
       <div
@@ -73,7 +65,6 @@ export default function Navigation() {
           Registrations Are Now Open For Hackman… If You Dare To Enter.
         </p>
       </div>
-
       <button
         className={`fixed top-[calc(6.5vh+1rem)] left-6 z-60 flex flex-col items-center justify-center w-10 h-10 bg-black/30 rounded-lg backdrop-blur-sm md:hidden ${poppins.className}`}
         onClick={toggleMenu}
@@ -99,14 +90,12 @@ export default function Navigation() {
           }`}
         />
       </button>
-
       {isMenuOpen && (
         <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 md:hidden"
           onClick={toggleMenu}
         />
       )}
-
       <div
         className={`fixed left-0 top-[6.5vh] h-[calc(100%-6.5vh)] w-64 bg-black/50 backdrop-blur-md z-50 md:hidden transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -120,7 +109,6 @@ export default function Navigation() {
           >
             ×
           </button>
-          
           <ul className="flex flex-col gap-4">
             {navItems.map((item, idx) => (
               <li
@@ -138,7 +126,6 @@ export default function Navigation() {
               </li>
             ))}
           </ul>
-
           <div className="mt-auto pb-8">
             <div className="border-t border-gray-600 pt-4">
               <img
@@ -150,7 +137,6 @@ export default function Navigation() {
           </div>
         </div>
       </div>
-
       <nav
         className={`fixed left-4 right-4 top-[calc(6.5vh+1rem)] md:top-[6.5vh] ${isScrolled ? 'bg-black/85 shadow-lg' : 'bg-transparent'} text-white ${poppins.className} px-6 py-3 md:px-16 md:py-2 flex flex-col md:flex-row items-center justify-between z-40 animate-fade-in-up gap-4 md:gap-0 rounded-2xl transition-all duration-300`}
         style={{
@@ -192,7 +178,6 @@ export default function Navigation() {
           />
         </div>
       </nav>
-
       <style jsx>{`
         @keyframes slideDown {
           from {
@@ -204,7 +189,6 @@ export default function Navigation() {
             transform: translateY(0);
           }
         }
-
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -215,7 +199,6 @@ export default function Navigation() {
             transform: translateY(0);
           }
         }
-
         @keyframes fadeIn {
           from {
             opacity: 0;
@@ -224,12 +207,10 @@ export default function Navigation() {
             opacity: 1;
           }
         }
-
         nav ul li a {
           position: relative;
           z-index: 10;
         }
-
         nav ul li a::after {
           content: '';
           position: absolute;
@@ -239,23 +220,19 @@ export default function Navigation() {
           bottom: -10px;
           z-index: -1;
         }
-
         @media (max-width: 768px) {
           nav {
             padding-left: 1rem;
             padding-right: 1rem;
           }
-          
           nav ul {
             gap: 0.5rem;
           }
-          
           nav ul li a {
             padding: 0.75rem 1rem;
             font-size: clamp(12px, 3.5vw, 16px);
           }
         }
-
         @media (max-width: 480px) {
           nav {
             left: 2px;

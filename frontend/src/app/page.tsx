@@ -6,12 +6,11 @@ import Sponsors from '@/components/Sponsors';
 import Contact from '@/components/Contact';
 import Gallery from '@/components/Gallery';
 import { AboutHackman } from '@/components/About';
-
 export default function Home() {
   return (
     <>
       <Navigation />
-      {/* <OrangeStrip /> */}
+      {}
       <main className="min-h-screen">
         <section id="hero">
           <Hero />

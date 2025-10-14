@@ -4,7 +4,6 @@ import Registration from '../../../models/Registration';
 import { handleError } from '../../../lib/errorUtils';
 import { z } from 'zod';
 import nodemailer from 'nodemailer';
-
 interface TeamMember {
   id: number;
   name: string;
@@ -14,7 +13,6 @@ interface TeamMember {
   linkedin?: string;
   github?: string;
 }
-
 interface RegistrationData {
   teamName: string;
   collegeName: string;
@@ -23,15 +21,11 @@ interface RegistrationData {
   teamLeadId: number | null;
   members: TeamMember[];
 }
-
 export async function POST(request: Request) {
   try {
     await dbConnect();
     const data: RegistrationData = await request.json();
-    
-    // Debug logging
     console.log('Received registration data:', JSON.stringify(data, null, 2));
-
     const teamMemberSchema = z.object({
       id: z.number(),
       name: z.string().trim().min(1, 'Member name is required'),
@@ -68,7 +62,6 @@ export async function POST(request: Request) {
           path: ['github'],
         }),
     });
-
     const registrationSchema = z
       .object({
         teamName: z.string().trim().min(1, 'Team name is required'),
@@ -96,9 +89,7 @@ export async function POST(request: Request) {
         message: 'teamLeadId must refer to one of the members',
         path: ['teamLeadId'],
       });
-
     const parsed = registrationSchema.safeParse(data);
-
     if (!parsed.success) {
       const { fieldErrors, formErrors } = parsed.error.flatten();
       console.log('Validation failed:', { fieldErrors, formErrors });
@@ -110,8 +101,6 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-      // Check for duplicate member emails across all teams
       const allEmails = parsed.data.members.map((m: TeamMember) => m.email.trim().toLowerCase());
       const duplicateEmail = await Registration.findOne({
         'members.email': { $in: allEmails }
@@ -121,8 +110,6 @@ export async function POST(request: Request) {
           message: 'One or more member emails are already registered with another team/project. Each email can only be used for one project.',
         }, { status: 400 });
       }
-
-    // Generate unique team code
     const generateTeamCode = () => {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       let result = '';
@@ -131,7 +118,6 @@ export async function POST(request: Request) {
       }
       return result;
     };
-
     let teamCode;
     let isUnique = false;
     while (!isUnique) {
@@ -141,14 +127,11 @@ export async function POST(request: Request) {
         isUnique = true;
       }
     }
-
     const registrationData = {
       ...parsed.data,
       teamCode,
     };
-
     const newRegistration = await Registration.create(registrationData);
-
     try {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -157,7 +140,6 @@ export async function POST(request: Request) {
           pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       });
-
       const emailPromises = parsed.data.members.map((member) => {
         return transporter.sendMail({
           from: `"Hackathon Team" <${process.env.EMAIL_SERVER_USER}>`,
@@ -174,18 +156,14 @@ export async function POST(request: Request) {
           `,
         });
       });
-
       await Promise.all(emailPromises);
-
     } catch (emailError) {
       console.error('Failed to send one or more confirmation emails:', emailError);
     }
-
     return NextResponse.json(
       { message: 'Registration successful!', registrationId: newRegistration._id },
       { status: 201 }
     );
-
   } catch (error: unknown) {
     return handleError(error);
   }

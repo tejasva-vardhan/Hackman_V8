@@ -1,8 +1,6 @@
 "use client";
-
 import React from 'react';
 import styles from '@/styles/Dashboard.module.css';
-
 interface TeamData {
   _id: string;
   teamName: string;
@@ -34,11 +32,9 @@ interface TeamData {
   createdAt: string;
   updatedAt: string;
 }
-
 interface SelectionStatusProps {
   teamData: TeamData;
 }
-
 const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -54,7 +50,6 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
         return styles.statusPending;
     }
   };
-
   const getStatusText = (status: string) => {
     switch (status) {
       case 'pending':
@@ -69,7 +64,6 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
         return 'Unknown';
     }
   };
-
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pending':
@@ -84,7 +78,6 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
         return '❓';
     }
   };
-
   const getStatusMessage = (status: string) => {
     switch (status) {
       case 'pending':
@@ -99,11 +92,9 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
         return 'Status information is not available.';
     }
   };
-
   return (
     <div className={styles.statusCard}>
       <h3 className={styles.cardTitle}>Selection Status</h3>
-      
       <div className={styles.statusHeader}>
         <div className={styles.statusInfo}>
           <div className={styles.statusLabel}>Current Status</div>
@@ -113,16 +104,13 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
           </div>
         </div>
       </div>
-
       <div className={styles.statusMessage}>
         <p>{getStatusMessage(teamData.selectionStatus)}</p>
       </div>
-
-      {/* Payment CTA when selected and unpaid */}
+      {}
       {teamData.selectionStatus === 'selected' && (teamData.paymentStatus === 'unpaid' || !teamData.paymentStatus) && (
         <div style={{ marginTop: 16, display: 'grid', gap: 12 }}>
           <span style={{ color: '#fbbf24', fontWeight: 600 }}>Action required: Complete payment to confirm your spot.</span>
-
           {process.env.NEXT_PUBLIC_PAYMENT_URL ? (
             <a
               href={process.env.NEXT_PUBLIC_PAYMENT_URL}
@@ -135,7 +123,7 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
             </a>
           ) : (
             <div style={{ display: 'grid', gap: 10 }}>
-              {/* UPI fallback if organizer UPI is provided */}
+              {}
               {process.env.NEXT_PUBLIC_UPI_ID ? (
                 <div style={{ display: 'grid', gap: 8 }}>
                   <div style={{ color: '#a0aec0' }}>
@@ -152,7 +140,7 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
                     >
                       Copy UPI ID
                     </button>
-                    {/* Open UPI intent link */}
+                    {}
                     <a
                       href={`upi://pay?pa=${encodeURIComponent(process.env.NEXT_PUBLIC_UPI_ID || '')}&pn=${encodeURIComponent(process.env.NEXT_PUBLIC_UPI_NAME || 'Organizer')}&am=${encodeURIComponent(process.env.NEXT_PUBLIC_FEES || '500')}&cu=INR`}
                       className={styles.submitButton}
@@ -161,7 +149,7 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
                       Pay via UPI App
                     </a>
                   </div>
-                  {/* QR via external service using UPI intent */}
+                  {}
                   <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
                     <img
                       src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(`upi://pay?pa=${process.env.NEXT_PUBLIC_UPI_ID || ''}&pn=${process.env.NEXT_PUBLIC_UPI_NAME || 'Organizer'}&am=${process.env.NEXT_PUBLIC_FEES || '500'}&cu=INR`)}`}
@@ -184,7 +172,6 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
           )}
         </div>
       )}
-
       {teamData.selectionStatus === 'selected' && (
         <div className={styles.selectedInfo}>
           <h4 className={styles.infoTitle}>Next Steps</h4>
@@ -197,7 +184,6 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
           </ul>
         </div>
       )}
-
       {teamData.selectionStatus === 'waitlisted' && (
         <div className={styles.waitlistedInfo}>
           <h4 className={styles.infoTitle}>What&apos;s Next?</h4>
@@ -209,7 +195,6 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
           </ul>
         </div>
       )}
-
       {teamData.selectionStatus === 'rejected' && (
         <div className={styles.rejectedInfo}>
           <h4 className={styles.infoTitle}>Keep Going!</h4>
@@ -222,12 +207,11 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
           </ul>
         </div>
       )}
-
       {teamData.selectionStatus === 'pending' && (
         <div className={styles.pendingInfo}>
           <h4 className={styles.infoTitle}>Selection Timeline</h4>
           <div className={styles.timeline}>
-            {/* Step 1: Registration Closed (completed) */}
+            {}
             <div className={styles.timelineItem}>
               <div className={`${styles.timelineDot} ${styles.completed}`}></div>
               <div className={`${styles.timelineContent} ${styles.completed}`}>
@@ -235,7 +219,7 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
                 <p>All teams have been registered</p>
               </div>
             </div>
-            {/* Step 2: Review in Progress (current) */}
+            {}
             <div className={styles.timelineItem}>
               <div className={`${styles.timelineDot} ${styles.current}`}></div>
               <div className={`${styles.timelineContent} ${styles.current}`}>
@@ -243,7 +227,7 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
                 <p>Our judges are evaluating all submissions</p>
               </div>
             </div>
-            {/* Step 3: Results Announcement (upcoming) */}
+            {}
             <div className={styles.timelineItem}>
               <div className={`${styles.timelineDot} ${styles.upcoming}`}></div>
               <div className={`${styles.timelineContent} ${styles.upcoming}`}>
@@ -257,5 +241,4 @@ const SelectionStatus: React.FC<SelectionStatusProps> = ({ teamData }) => {
     </div>
   );
 };
-
 export default SelectionStatus;

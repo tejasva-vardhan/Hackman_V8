@@ -1,7 +1,5 @@
 "use client";
-
 import { useEffect, useMemo, useState } from 'react';
-
 type Member = {
   name: string;
   email: string;
@@ -10,7 +8,6 @@ type Member = {
   linkedin: string;
   github: string;
 };
-
 type SubmissionDetails = {
   githubRepo: string;
   liveDemo: string;
@@ -18,9 +15,6 @@ type SubmissionDetails = {
   additionalNotes: string;
   submittedAt: string | null;
 };
-
-
-
 type EditFormType = {
   teamName: string;
   collegeName: string;
@@ -36,7 +30,6 @@ type EditFormType = {
   submissionDetails: SubmissionDetails;
   members: Member[];
 };
-
 type Registration = {
   _id: string;
   teamName: string;
@@ -61,7 +54,6 @@ type Registration = {
   reviewComments?: string;
   finalScore?: number | null;
 };
-
 export default function AdminPage() {
   const [token, setToken] = useState<string>("");
   const [inputToken, setInputToken] = useState<string>("");
@@ -69,21 +61,18 @@ export default function AdminPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [query, setQuery] = useState<string>("");
-
   const [editTarget, setEditTarget] = useState<Registration | null>(null);
   const [editForm, setEditForm] = useState<EditFormType | null>(null);
   const [savingEdit, setSavingEdit] = useState<boolean>(false);
   const [selectionFilter, setSelectionFilter] = useState<string>('all');
   const [submissionFilter, setSubmissionFilter] = useState<string>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
-
   useEffect(() => {
     const saved = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
     if (saved) {
       setToken(saved);
     }
   }, []);
-
   useEffect(() => {
     if (!token) return;
     setLoading(true);
@@ -102,7 +91,6 @@ export default function AdminPage() {
       .catch((e) => setError(e.message || 'Failed to load'))
       .finally(() => setLoading(false));
   }, [token]);
-
   const filtered = useMemo(() => {
     if (!data) return [] as Registration[];
     const text = query.trim().toLowerCase();
@@ -117,15 +105,12 @@ export default function AdminPage() {
         r.paymentStatus,
         ...r.members.flatMap((m) => [m.name, m.email, m.phone]),
       ].filter(Boolean).some((field) => String(field).toLowerCase().includes(text));
-
       const matchesSelection = selectionFilter === 'all' || r.selectionStatus === selectionFilter;
       const matchesSubmission = submissionFilter === 'all' || r.submissionStatus === submissionFilter;
       const matchesPayment = paymentFilter === 'all' || (r.paymentStatus || 'unpaid') === paymentFilter;
-
       return matchesText && matchesSelection && matchesSubmission && matchesPayment;
     });
   }, [data, query, selectionFilter, submissionFilter, paymentFilter]);
-
   function handleSubmitToken(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = inputToken.trim();
@@ -133,13 +118,11 @@ export default function AdminPage() {
     localStorage.setItem('admin_token', trimmed);
     setToken(trimmed);
   }
-
   function handleLogout() {
     localStorage.removeItem('admin_token');
     setToken("");
     setData(null);
   }
-
   function openEdit(reg: Registration) {
     setEditTarget(reg);
     setEditForm({
@@ -171,21 +154,14 @@ export default function AdminPage() {
       })),
     });
   }
-
-  
-
   function updateEditField(path: string, value: string | number | null) {
     setEditForm((prev: EditFormType | null) => {
       if (!prev) return prev;
       const next = { ...prev };
       const parts = path.split('.');
-
-      // Handle top-level updates
       if (parts.length === 1) {
         return { ...next, [path]: value };
       }
-
-      // Handle submissionDetails updates
       if (parts[0] === 'submissionDetails') {
         return {
           ...next,
@@ -195,8 +171,6 @@ export default function AdminPage() {
           }
         };
       }
-
-      // Handle members updates
       if (parts[0] === 'members') {
         const index = parseInt(parts[1]);
         const field = parts[2];
@@ -209,11 +183,9 @@ export default function AdminPage() {
         }
         return { ...next, members: updatedMembers };
       }
-
       return next;
     });
   }
-
   function addMember() {
     setEditForm((prev: EditFormType | null) => {
       if (!prev) return prev;
@@ -226,7 +198,6 @@ export default function AdminPage() {
       };
     });
   }
-
   function removeMember(index: number) {
     setEditForm((prev: EditFormType | null) => {
       if (!prev) return prev;
@@ -236,7 +207,6 @@ export default function AdminPage() {
       };
     });
   }
-
   async function saveEdit() {
     if (!editTarget || !token) {
       setError('Admin token required to save edits.');
@@ -276,17 +246,14 @@ export default function AdminPage() {
       setSavingEdit(false);
     }
   }
-
   async function handleDelete(registrationId: string) {
     if (!window.confirm('Are you sure you want to delete this team? This action cannot be undone.')) {
       return;
     }
-
     if (!token) {
       setError('Admin token required to delete.');
       return;
     }
-
     try {
       const res = await fetch(`/api/admin/registrations/${registrationId}`, {
         method: 'DELETE',
@@ -294,7 +261,6 @@ export default function AdminPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (res.status === 401) {
         throw new Error('Unauthorized');
       }
@@ -302,7 +268,6 @@ export default function AdminPage() {
         const t = await res.text();
         throw new Error(t || 'Failed to delete');
       }
-
       setData(prev => (prev || []).filter(r => r._id !== registrationId));
     } catch (e) {
       if ((e as Error).message === 'Unauthorized') {
@@ -314,7 +279,6 @@ export default function AdminPage() {
       }
     }
   }
-
   if (!token) {
     return (
       <div style={{ maxWidth: 420, margin: '64px auto', padding: 24 }}>
@@ -358,7 +322,6 @@ export default function AdminPage() {
       </div>
     );
   }
-
   return (
     <div style={{ padding: '12px', color: '#000000ff', maxWidth: '100vw', overflowX: 'hidden' }}>
       <style jsx>{`
@@ -502,15 +465,12 @@ export default function AdminPage() {
         </button>
         </div>
       </div>
-
-
       {loading && <p style={{ color: 'white' }}>Loading...</p>}
       {error && (
         <div style={{ color: 'crimson', marginBottom: 12 }}>
           {error}
         </div>
       )}
-
       {editTarget && editForm && (
         <div
           role="dialog"
@@ -559,7 +519,6 @@ export default function AdminPage() {
                 {savingEdit ? 'Saving...' : 'Save'}
               </button>
             </div>
-
             <div className="edit-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Team Info</div>
@@ -569,13 +528,11 @@ export default function AdminPage() {
                   <input placeholder="Team Code" value={editForm.teamCode} onChange={(e) => updateEditField('teamCode', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', gridColumn: '1 / -1' }} />
                 </div>
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Project</div>
                 <input placeholder="Project Title" value={editForm.projectTitle} onChange={(e) => updateEditField('projectTitle', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', marginBottom: 8 }} />
                 <textarea placeholder="Project Description" value={editForm.projectDescription} onChange={(e) => updateEditField('projectDescription', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', minHeight: 100 }} />
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Statuses</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -601,7 +558,6 @@ export default function AdminPage() {
                 </div>
                 <textarea placeholder="Review Comments" value={editForm.reviewComments} onChange={(e) => updateEditField('reviewComments', e.target.value)} style={{ marginTop: 8, padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', minHeight: 80 }} />
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Submission Links</div>
                 <input placeholder="GitHub Repo" value={editForm.submissionDetails.githubRepo} onChange={(e) => updateEditField('submissionDetails.githubRepo', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', marginBottom: 8 }} />
@@ -610,7 +566,6 @@ export default function AdminPage() {
                 <input placeholder="Submitted At (ISO)" value={editForm.submissionDetails.submittedAt ?? ''} onChange={(e) => updateEditField('submissionDetails.submittedAt', e.target.value || null)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff' }} />
                 <textarea placeholder="Additional Notes" value={editForm.submissionDetails.additionalNotes} onChange={(e) => updateEditField('submissionDetails.additionalNotes', e.target.value)} style={{ marginTop: 8, padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', minHeight: 80 }} />
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div style={{ fontWeight: 700, marginBottom: 8, marginRight: 'auto' }}>Members</div>

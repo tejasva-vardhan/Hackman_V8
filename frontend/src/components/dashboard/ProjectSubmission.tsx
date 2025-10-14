@@ -1,9 +1,7 @@
 "use client";
-
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import styles from '@/styles/Dashboard.module.css';
-
 interface TeamData {
   _id: string;
   teamName: string;
@@ -34,12 +32,10 @@ interface TeamData {
   createdAt: string;
   updatedAt: string;
 }
-
 interface ProjectSubmissionProps {
   teamData: TeamData;
   onUpdate: (updatedData: Partial<TeamData>) => void;
 }
-
 const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdate }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -48,23 +44,19 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
     presentationLink: teamData.submissionDetails.presentationLink || '',
     additionalNotes: teamData.submissionDetails.additionalNotes || '',
   });
-
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!formData.githubRepo.trim()) {
       toast.dismiss();
       setTimeout(() => toast.error('GitHub repository URL is required'), 10);
       return;
     }
-
     setIsSubmitting(true);
     try {
   const teamLeadPhone = teamData.members[0]?.phone || '';
@@ -77,9 +69,7 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
         },
         body: JSON.stringify(formData),
       });
-
       const result = await response.json();
-
       if (response.ok) {
         toast.success('Project submitted successfully! 🎉');
         onUpdate({
@@ -105,15 +95,12 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
       setIsSubmitting(false);
     }
   };
-
   const canSubmit = teamData.submissionStatus === 'not_submitted';
   const isSubmitted = teamData.submissionStatus === 'submitted' || teamData.submissionStatus === 'under_review';
-
   return (
     <div className={styles.submissionContainer}>
       <div className={styles.statusCard}>
         <h3 className={styles.cardTitle}>Project Submission</h3>
-        
         {canSubmit ? (
           <form onSubmit={handleSubmit} className={styles.submissionForm}>
             <div className={styles.formGroup}>
@@ -133,7 +120,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                 Make sure your repository is public and contains your project code
               </small>
             </div>
-
             <div className={styles.formGroup}>
               <label htmlFor="liveDemo" className={styles.formLabel}>
                 Live Demo URL (Optional)
@@ -150,7 +136,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                 Link to your deployed application or demo
               </small>
             </div>
-
             <div className={styles.formGroup}>
               <label htmlFor="presentationLink" className={styles.formLabel}>
                 Presentation Link (Optional)
@@ -167,7 +152,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                 Link to your project presentation or documentation
               </small>
             </div>
-
             <div className={styles.formGroup}>
               <label htmlFor="additionalNotes" className={styles.formLabel}>
                 Additional Notes (Optional)
@@ -185,7 +169,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                 {1000 - formData.additionalNotes.length} characters remaining
               </small>
             </div>
-
             <div className={styles.submissionWarning}>
               <h4>⚠️ Important Notes:</h4>
               <ul>
@@ -195,7 +178,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                 <li>Make sure your demo link works and is accessible.</li>
               </ul>
             </div>
-
             <button
               type="submit"
               className={styles.submitButton}
@@ -209,13 +191,11 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
             <div className={styles.submittedInfo}>
               <h4>Project Already Submitted</h4>
               <p>Your project has been submitted and is currently under review.</p>
-              
               {teamData.submissionDetails.submittedAt && (
                 <div className={styles.submissionTime}>
                   <strong>Submitted on:</strong> {new Date(teamData.submissionDetails.submittedAt).toLocaleString()}
                 </div>
               )}
-
               <div className={styles.submittedDetails}>
                 <h5>Submission Details:</h5>
                 <div className={styles.detailRow}>
@@ -229,7 +209,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                     View Repository
                   </a>
                 </div>
-                
                 {teamData.submissionDetails.liveDemo && (
                   <div className={styles.detailRow}>
                     <span className={styles.detailLabel}>Live Demo:</span>
@@ -243,7 +222,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                     </a>
                   </div>
                 )}
-                
                 {teamData.submissionDetails.presentationLink && (
                   <div className={styles.detailRow}>
                     <span className={styles.detailLabel}>Presentation:</span>
@@ -257,7 +235,6 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
                     </a>
                   </div>
                 )}
-                
                 {teamData.submissionDetails.additionalNotes && (
                   <div className={styles.detailRow}>
                     <span className={styles.detailLabel}>Additional Notes:</span>
@@ -272,5 +249,4 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
     </div>
   );
 };
-
 export default ProjectSubmission;

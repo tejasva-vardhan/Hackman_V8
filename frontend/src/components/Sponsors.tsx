@@ -2,9 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { Jolly_Lodger } from "next/font/google";
 import Image from "next/image";
-
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
-
 const sponsors = [
   { id: 1, src: "/sponsor1.png", alt: "Sponsor 1" },
   { id: 3, src: "/sponsor3.jpeg", alt: "Sponsor 3" },
@@ -20,11 +18,9 @@ const sponsors = [
   { id: 13, src: "/sponsor13.png", alt: "Sponsor 13" },
   { id: 14, src: "/sponsor14.jpg", alt: "Sponsor 14" },
 ];
-
 export default function Sponsors() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const imagesRef = useRef<HTMLDivElement[]>([]);
-
   const hoverShadowColors = [
     "rgba(173, 216, 230, 1)",
     "rgba(255, 255, 255, 0.9)",
@@ -37,7 +33,6 @@ export default function Sponsors() {
     "rgba(135, 206, 235, 1)",
     "rgba(144, 238, 144, 1)",
   ];
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -57,15 +52,12 @@ export default function Sponsors() {
       },
       { threshold: 0.3 }
     );
-
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
   const addToImagesRef = (el: HTMLDivElement | null) => {
     if (el && !imagesRef.current.includes(el)) imagesRef.current.push(el);
   };
-
   return (
     <section ref={sectionRef} className="py-16 bg-black relative overflow-hidden">
       <style jsx global>{`
@@ -79,7 +71,6 @@ export default function Sponsors() {
             transform: translateY(0) scale(1);
           }
         }
-
         @keyframes slideInFromBottom {
           0% {
             opacity: 0;
@@ -90,7 +81,6 @@ export default function Sponsors() {
             transform: translateY(0);
           }
         }
-
         @keyframes glowPulse {
           0%,
           100% {
@@ -100,36 +90,29 @@ export default function Sponsors() {
             filter: drop-shadow(0 0 20px rgba(255, 7, 0, 0.8));
           }
         }
-
         .animate-in .sponsors-title {
           animation: slideInFromTop 0.8s ease-out forwards,
             glowPulse 2s ease-in-out infinite 1s;
         }
-
         .animate-in .sponsor-item {
           opacity: 0;
           animation: slideInFromBottom 0.8s ease-out forwards;
         }
-
         .sponsors-title,
         .sponsor-item {
           opacity: 0;
         }
-
         .marquee-inner-left,
         .marquee-inner-right {
           will-change: transform;
           width: max-content;
         }
-
         .marquee-inner-left {
           animation: marquee-scroll-left 36s linear infinite;
         }
-
         .marquee-inner-right {
           animation: marquee-scroll-right 36s linear infinite;
         }
-
         @keyframes marquee-scroll-left {
           0% {
             transform: translateX(0);
@@ -138,7 +121,6 @@ export default function Sponsors() {
             transform: translateX(-50%);
           }
         }
-
         @keyframes marquee-scroll-right {
           0% {
             transform: translateX(-50%);
@@ -165,14 +147,12 @@ export default function Sponsors() {
           filter: drop-shadow(0 0 12px var(--shadow-color));
         }
       `}</style>
-
       <div className="container mx-auto px-4">
         <h2
           className={`${jolly.className} sponsors-title text-[#FF0700] text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center mb-12`}
         >
           Previous Year Sponsors
         </h2>
-
         <div className="relative">
           <div className="marquee mb-6">
             <div className="marquee-inner-left flex flex-nowrap items-center gap-8">

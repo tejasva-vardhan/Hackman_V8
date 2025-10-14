@@ -1,8 +1,6 @@
 "use client";
-
 import React from 'react';
 import styles from '@/styles/Dashboard.module.css';
-
 interface TeamData {
   _id: string;
   teamName: string;
@@ -33,11 +31,9 @@ interface TeamData {
   createdAt: string;
   updatedAt: string;
 }
-
 interface SubmissionStatusProps {
   teamData: TeamData;
 }
-
 const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -55,7 +51,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
         return styles.statusNotSubmitted;
     }
   };
-
   const getStatusText = (status: string) => {
     switch (status) {
       case 'not_submitted':
@@ -72,7 +67,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
         return 'Unknown';
     }
   };
-
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'not_submitted':
@@ -89,11 +83,9 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
         return '❓';
     }
   };
-
   return (
     <div className={styles.statusCard}>
       <h3 className={styles.cardTitle}>Submission Status</h3>
-      
       <div className={styles.statusHeader}>
         <div className={styles.statusInfo}>
           <div className={styles.statusLabel}>Current Status</div>
@@ -103,7 +95,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           </div>
         </div>
       </div>
-
       {teamData.submissionStatus !== 'not_submitted' && (
         <div className={styles.statusDetails}>
           <div className={styles.detailRow}>
@@ -115,7 +106,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
               }
             </span>
           </div>
-
           {teamData.submissionDetails.githubRepo && (
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>GitHub Repository:</span>
@@ -129,7 +119,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
               </a>
             </div>
           )}
-
           {teamData.submissionDetails.liveDemo && (
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Live Demo:</span>
@@ -143,7 +132,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
               </a>
             </div>
           )}
-
           {teamData.submissionDetails.presentationLink && (
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Presentation:</span>
@@ -157,7 +145,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
               </a>
             </div>
           )}
-
           {teamData.submissionDetails.additionalNotes && (
             <div className={styles.detailRow}>
               <span className={styles.detailLabel}>Additional Notes:</span>
@@ -166,7 +153,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           )}
         </div>
       )}
-
       {teamData.reviewComments && (
         <div className={styles.reviewSection}>
           <h4 className={styles.reviewTitle}>Review Comments</h4>
@@ -175,7 +161,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           </div>
         </div>
       )}
-
       {teamData.finalScore !== null && (
         <div className={styles.scoreSection}>
           <h4 className={styles.scoreTitle}>Final Score</h4>
@@ -184,7 +169,6 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
           </div>
         </div>
       )}
-
       {teamData.submissionStatus === 'not_submitted' && (
         <div className={styles.notSubmittedMessage}>
           <p>Your project has not been submitted yet.</p>
@@ -194,5 +178,4 @@ const SubmissionStatus: React.FC<SubmissionStatusProps> = ({ teamData }) => {
     </div>
   );
 };
-
 export default SubmissionStatus;

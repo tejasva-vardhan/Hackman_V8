@@ -1,4 +1,3 @@
-/* CSS Variables for Consistent Theme */
 :root {
   --primary-red: #FF0500;
   --primary-red-dark: #c53030;
@@ -19,8 +18,6 @@
   --border-radius: 12px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* Dashboard Container */
 .dashboardContainer {
   width: 100%;
   min-height: 100vh;
@@ -29,8 +26,6 @@
   position: relative;
   overflow-x: hidden;
 }
-
-/* Animated Background Elements */
 .dashboardContainer::before {
   content: '';
   position: fixed;
@@ -46,13 +41,10 @@
   z-index: 0;
   animation: backgroundShift 20s ease-in-out infinite;
 }
-
 @keyframes backgroundShift {
   0%, 100% { transform: scale(1) rotate(0deg); }
   50% { transform: scale(1.05) rotate(1deg); }
 }
-
-/* Login Container */
 .loginContainer {
   min-height: 100vh;
   display: flex;
@@ -65,7 +57,6 @@
   position: relative;
   z-index: 1;
 }
-
 .title {
   color: var(--primary-red);
   font-size: 3.5rem;
@@ -86,7 +77,6 @@ input:-webkit-autofill:active {
   color: var(--text-primary) !important;
   transition: background-color 5000s ease-in-out 0s;
 }
-
 .title::after {
   content: '';
   position: absolute;
@@ -98,7 +88,6 @@ input:-webkit-autofill:active {
   background: linear-gradient(90deg, transparent, var(--primary-red), transparent);
   border-radius: 2px;
 }
-
 .subtitle {
   text-align: center;
   color: var(--text-secondary);
@@ -107,21 +96,18 @@ input:-webkit-autofill:active {
   line-height: 1.6;
   font-size: 1.1rem;
 }
-
 .loginForm {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
-
 .inputGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
   position: relative;
 }
-
 .label {
   font-family: var(--font-geist-sans);
   font-weight: 500;
@@ -129,7 +115,6 @@ input:-webkit-autofill:active {
   font-size: 0.95rem;
   margin-bottom: 4px;
 }
-
 .input {
   background: rgba(13, 13, 13, 0.8);
   border: 1.5px solid #2d3748;
@@ -141,7 +126,6 @@ input:-webkit-autofill:active {
   transition: var(--transition);
   backdrop-filter: blur(10px);
 }
-
 .input:focus {
   outline: none;
   border-color: var(--primary-red);
@@ -149,11 +133,9 @@ input:-webkit-autofill:active {
   background: rgba(13, 13, 13, 0.9);
   transform: translateY(-1px);
 }
-
 .input::placeholder {
   color: #4a5568;
 }
-
 .loginButton {
   background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
   color: var(--text-primary);
@@ -169,7 +151,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .loginButton::before {
   content: '';
   position: absolute;
@@ -180,27 +161,22 @@ input:-webkit-autofill:active {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   transition: left 0.5s;
 }
-
 .loginButton:hover::before {
   left: 100%;
 }
-
 .loginButton:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
-
 .loginButton:active {
   transform: translateY(0);
 }
-
 .loginButton:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
-
 .helpText {
   margin-top: 30px;
   text-align: center;
@@ -212,12 +188,9 @@ input:-webkit-autofill:active {
   border-radius: var(--border-radius);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
-
 .helpText p {
   margin-bottom: 8px;
 }
-
-/* Loading Container */
 .loadingContainer {
   min-height: 100vh;
   display: flex;
@@ -229,7 +202,6 @@ input:-webkit-autofill:active {
   position: relative;
   z-index: 1;
 }
-
 .loader {
   width: 48px;
   height: 48px;
@@ -239,7 +211,6 @@ input:-webkit-autofill:active {
   animation: spin 1s linear infinite;
   position: relative;
 }
-
 .loader::after {
   content: '';
   position: absolute;
@@ -252,13 +223,10 @@ input:-webkit-autofill:active {
   border-radius: 50%;
   animation: spin 1.5s linear infinite;
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-/* Dashboard Header */
 .dashboardHeader {
   background: rgba(17, 17, 17, 0.95);
   border-bottom: 1px solid var(--border-dark);
@@ -270,7 +238,6 @@ input:-webkit-autofill:active {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
-
 .headerContent {
   max-width: 1200px;
   margin: 0 auto;
@@ -281,7 +248,6 @@ input:-webkit-autofill:active {
   flex-wrap: wrap;
   gap: 20px;
 }
-
 .dashboardTitle {
   color: var(--primary-red);
   font-size: 2.5rem;
@@ -291,7 +257,6 @@ input:-webkit-autofill:active {
   text-shadow: 0 2px 8px rgba(255, 5, 0, 0.3);
   position: relative;
 }
-
 .dashboardTitle::after {
   content: '';
   position: absolute;
@@ -302,7 +267,6 @@ input:-webkit-autofill:active {
   background: var(--primary-red);
   border-radius: 1px;
 }
-
 .teamCode {
   color: var(--text-secondary);
   font-family: var(--font-geist-mono);
@@ -314,12 +278,10 @@ input:-webkit-autofill:active {
   margin: 0;
   backdrop-filter: blur(10px);
 }
-
 .teamCode span {
   color: var(--primary-red);
   font-weight: bold;
 }
-
 .logoutButton {
   background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
   border: 2px solid #4a5568;
@@ -337,7 +299,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .logoutButton::before {
   content: '';
   position: absolute;
@@ -348,11 +309,9 @@ input:-webkit-autofill:active {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   transition: left 0.5s;
 }
-
 .logoutButton:hover::before {
   left: 100%;
 }
-
 .logoutButton:hover {
   background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
   border-color: var(--primary-red);
@@ -360,8 +319,6 @@ input:-webkit-autofill:active {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 5, 0, 0.5);
 }
-
-/* Dashboard Content */
 .dashboardContent {
   max-width: 1200px;
   margin: 0 auto;
@@ -370,8 +327,6 @@ input:-webkit-autofill:active {
   position: relative;
   z-index: 1;
 }
-
-/* Tab Navigation */
 .tabNavigation {
   display: flex;
   gap: 8px;
@@ -383,7 +338,6 @@ input:-webkit-autofill:active {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-
 .tabButton {
   background: transparent;
   border: none;
@@ -400,7 +354,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .tabButton::before {
   content: '';
   position: absolute;
@@ -411,30 +364,23 @@ input:-webkit-autofill:active {
   background: linear-gradient(90deg, transparent, rgba(255, 5, 0, 0.1), transparent);
   transition: left 0.5s;
 }
-
 .tabButton:hover::before {
   left: 100%;
 }
-
 .tabButton:hover {
   color: var(--text-primary);
   background: rgba(255, 5, 0, 0.05);
   transform: translateY(-1px);
 }
-
 .tabButton.active {
   color: var(--text-primary);
   background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
   box-shadow: 0 4px 15px rgba(255, 5, 0, 0.3);
   transform: translateY(-1px);
 }
-
-/* Tab Content */
 .tabContent {
   min-height: 500px;
 }
-
-/* Enhanced Team Overview Section */
 .teamOverviewSection {
   background: rgba(17, 17, 17, 0.8);
   border: 1px solid var(--border-dark);
@@ -447,7 +393,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .teamOverviewSection::before {
   content: '';
   position: absolute;
@@ -457,7 +402,6 @@ input:-webkit-autofill:active {
   height: 2px;
   background: linear-gradient(90deg, var(--primary-red), var(--primary-red-dark));
 }
-
 .sectionTitle {
   color: var(--primary-red);
   font-size: 2.2rem;
@@ -468,7 +412,6 @@ input:-webkit-autofill:active {
   position: relative;
   padding-bottom: 15px;
 }
-
 .sectionTitle::after {
   content: '';
   position: absolute;
@@ -480,8 +423,6 @@ input:-webkit-autofill:active {
   background: linear-gradient(90deg, transparent, var(--primary-red), transparent);
   border-radius: 2px;
 }
-
-/* Project Info Card */
 .projectInfoCard {
   background: rgba(26, 26, 26, 0.8);
   border: 1px solid var(--border-dark);
@@ -494,7 +435,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .projectInfoCard::before {
   content: '';
   position: absolute;
@@ -504,12 +444,10 @@ input:-webkit-autofill:active {
   height: 2px;
   background: linear-gradient(90deg, var(--primary-red), transparent);
 }
-
 .projectInfoCard:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
-
 .projectInfoCard h3 {
   color: var(--primary-red);
   font-size: 1.6rem;
@@ -519,7 +457,6 @@ input:-webkit-autofill:active {
   position: relative;
   padding-bottom: 12px;
 }
-
 .projectInfoCard h3::after {
   content: '';
   position: absolute;
@@ -531,13 +468,11 @@ input:-webkit-autofill:active {
   background: var(--primary-red);
   border-radius: 1px;
 }
-
 .projectDetails {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
-
 .detailItem {
   display: flex;
   justify-content: space-between;
@@ -546,23 +481,19 @@ input:-webkit-autofill:active {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: var(--transition);
 }
-
 .detailItem:hover {
   background: rgba(255, 255, 255, 0.02);
   border-radius: 8px;
   padding: 16px 12px;
 }
-
 .detailItem:last-child {
   border-bottom: none;
 }
-
 .detailLabel {
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 1rem;
 }
-
 .detailValue {
   color: var(--text-primary);
   font-weight: 600;
@@ -571,8 +502,6 @@ input:-webkit-autofill:active {
   word-break: break-word;
   font-size: 1rem;
 }
-
-/* Team Members Section */
 .teamMembersSection {
   background: rgba(26, 26, 26, 0.8);
   border: 1px solid var(--border-dark);
@@ -583,7 +512,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .teamMembersSection::before {
   content: '';
   position: absolute;
@@ -593,7 +521,6 @@ input:-webkit-autofill:active {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--primary-red));
 }
-
 .teamMembersSection h3 {
   color: var(--primary-red);
   font-size: 1.6rem;
@@ -603,7 +530,6 @@ input:-webkit-autofill:active {
   position: relative;
   padding-bottom: 12px;
 }
-
 .teamMembersSection h3::after {
   content: '';
   position: absolute;
@@ -615,14 +541,11 @@ input:-webkit-autofill:active {
   background: var(--primary-red);
   border-radius: 1px;
 }
-
 .membersGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 24px;
 }
-
-/* Enhanced Member Card */
 .memberCard {
   background: linear-gradient(145deg, rgba(17, 17, 17, 0.9), rgba(26, 26, 26, 0.9));
   border: 1px solid var(--border-dark);
@@ -634,7 +557,6 @@ input:-webkit-autofill:active {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-
 .memberCard::before {
   content: '';
   position: absolute;
@@ -646,17 +568,14 @@ input:-webkit-autofill:active {
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
-
 .memberCard:hover::before {
   transform: scaleX(1);
 }
-
 .memberCard:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: var(--shadow-hover);
   border-color: var(--primary-red);
 }
-
 .memberHeader {
   display: flex;
   justify-content: space-between;
@@ -666,14 +585,12 @@ input:-webkit-autofill:active {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
 }
-
 .memberName {
   color: var(--text-primary);
   font-size: 1.3rem;
   font-weight: 600;
   margin: 0;
 }
-
 .leadBadge {
   background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
   color: var(--text-primary);
@@ -685,13 +602,11 @@ input:-webkit-autofill:active {
   letter-spacing: 0.5px;
   box-shadow: 0 2px 8px rgba(255, 5, 0, 0.3);
 }
-
 .memberDetails {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
-
 .memberDetail {
   display: flex;
   align-items: center;
@@ -699,13 +614,11 @@ input:-webkit-autofill:active {
   padding: 8px 0;
   transition: var(--transition);
 }
-
 .memberDetail:hover {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
   padding: 8px 12px;
 }
-
 .detailIcon {
   color: var(--primary-red);
   font-size: 1.2rem;
@@ -713,18 +626,15 @@ input:-webkit-autofill:active {
   text-align: center;
   filter: drop-shadow(0 2px 4px rgba(255, 5, 0, 0.3));
 }
-
 .detailText {
   color: var(--text-primary);
   font-size: 0.95rem;
   flex: 1;
 }
-
 .detailText strong {
   color: var(--text-secondary);
   font-weight: 500;
 }
-
 .memberLinks {
   display: flex;
   gap: 12px;
@@ -732,7 +642,6 @@ input:-webkit-autofill:active {
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .socialLink {
   color: var(--primary-red);
   text-decoration: none;
@@ -746,23 +655,18 @@ input:-webkit-autofill:active {
   gap: 6px;
   font-weight: 500;
 }
-
 .socialLink:hover {
   background: var(--primary-red);
   color: var(--text-primary);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 5, 0, 0.3);
 }
-
-/* Status Container */
 .statusContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
   gap: 30px;
   margin-top: 0;
 }
-
-/* Enhanced Status Cards */
 .statusCard {
   background: rgba(17, 17, 17, 0.8);
   border: 1px solid var(--border-dark);
@@ -775,7 +679,6 @@ input:-webkit-autofill:active {
   overflow: hidden;
   transition: var(--transition);
 }
-
 .statusCard::before {
   content: '';
   position: absolute;
@@ -785,12 +688,10 @@ input:-webkit-autofill:active {
   height: 3px;
   background: linear-gradient(90deg, var(--primary-red), var(--primary-red-dark));
 }
-
 .statusCard:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
 }
-
 .cardTitle {
   color: var(--primary-red);
   font-size: 1.5rem;
@@ -800,7 +701,6 @@ input:-webkit-autofill:active {
   position: relative;
   padding-bottom: 12px;
 }
-
 .cardTitle::after {
   content: '';
   position: absolute;
@@ -812,8 +712,6 @@ input:-webkit-autofill:active {
   background: var(--primary-red);
   border-radius: 1px;
 }
-
-/* Status Badges Enhancement */
 .statusHeader {
   display: flex;
   justify-content: space-between;
@@ -827,23 +725,19 @@ input:-webkit-autofill:active {
   -webkit-backdrop-filter: blur(10px);
   transition: var(--transition);
 }
-
 .statusHeader:hover {
   background: rgba(255, 5, 0, 0.12);
   transform: translateY(-1px);
 }
-
 .statusInfo {
   flex: 1;
 }
-
 .statusLabel {
   color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: 6px;
   font-weight: 500;
 }
-
 .statusBadge {
   display: inline-flex;
   align-items: center;
@@ -859,72 +753,58 @@ input:-webkit-autofill:active {
   -webkit-backdrop-filter: blur(10px);
   transition: var(--transition);
 }
-
 .statusBadge:hover {
   transform: scale(1.05);
 }
-
 .statusIcon {
   font-size: 1.3rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
-
-/* Status-specific styles with gradients */
 .statusNotSubmitted {
   background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 193, 7, 0.05));
   color: #ffc107;
   border-color: #ffc107;
 }
-
 .statusSubmitted {
   background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.05));
   color: #28a745;
   border-color: #28a745;
 }
-
 .statusUnderReview {
   background: linear-gradient(135deg, rgba(0, 123, 255, 0.15), rgba(0, 123, 255, 0.05));
   color: #007bff;
   border-color: #007bff;
 }
-
 .statusAccepted {
   background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.05));
   color: #28a745;
   border-color: #28a745;
 }
-
 .statusRejected {
   background: linear-gradient(135deg, rgba(220, 53, 69, 0.15), rgba(220, 53, 69, 0.05));
   color: #dc3545;
   border-color: #dc3545;
 }
-
 .statusPending {
   background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 193, 7, 0.05));
   color: #ffc107;
   border-color: #ffc107;
 }
-
 .statusSelected {
   background: linear-gradient(135deg, rgba(40, 167, 69, 0.15), rgba(40, 167, 69, 0.05));
   color: #28a745;
   border-color: #28a745;
 }
-
 .statusWaitlisted {
   background: linear-gradient(135deg, rgba(108, 117, 125, 0.15), rgba(108, 117, 125, 0.05));
   color: #6c757d;
   border-color: #6c757d;
 }
-
-/* Status Details */
 .statusDetails {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-
 .detailRow {
   display: flex;
   justify-content: space-between;
@@ -933,23 +813,19 @@ input:-webkit-autofill:active {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: var(--transition);
 }
-
 .detailRow:hover {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
   padding: 14px 12px;
 }
-
 .detailRow:last-child {
   border-bottom: none;
 }
-
 .detailLabel {
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 0.95rem;
 }
-
 .detailValue {
   color: var(--text-primary);
   font-weight: 600;
@@ -958,7 +834,6 @@ input:-webkit-autofill:active {
   word-break: break-word;
   font-size: 0.95rem;
 }
-
 .detailLink {
   color: var(--primary-red);
   text-decoration: none;
@@ -967,7 +842,6 @@ input:-webkit-autofill:active {
   font-weight: 500;
   position: relative;
 }
-
 .detailLink::after {
   content: '';
   position: absolute;
@@ -978,16 +852,12 @@ input:-webkit-autofill:active {
   background: var(--primary-red);
   transition: width 0.3s ease;
 }
-
 .detailLink:hover {
   color: var(--primary-red-light);
 }
-
 .detailLink:hover::after {
   width: 100%;
 }
-
-/* Review and Score Sections */
 .reviewSection, .scoreSection {
   background: rgba(255, 5, 0, 0.06);
   border: 1px solid rgba(255, 5, 0, 0.15);
@@ -998,26 +868,22 @@ input:-webkit-autofill:active {
   -webkit-backdrop-filter: blur(10px);
   transition: var(--transition);
 }
-
 .reviewSection:hover, .scoreSection:hover {
   background: rgba(255, 5, 0, 0.08);
   transform: translateY(-1px);
 }
-
 .reviewTitle, .scoreTitle {
   color: var(--primary-red);
   font-size: 1.15rem;
   margin: 0 0 12px 0;
   font-weight: 600;
 }
-
 .reviewComments {
   color: var(--text-primary);
   line-height: 1.7;
   white-space: pre-wrap;
   font-size: 0.95rem;
 }
-
 .scoreValue {
   color: var(--text-primary);
   font-size: 2.4rem;
@@ -1029,8 +895,6 @@ input:-webkit-autofill:active {
   background-clip: text;
   text-shadow: 0 2px 10px rgba(255, 5, 0, 0.3);
 }
-
-/* Not Submitted Message */
 .notSubmittedMessage {
   background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.05));
   border: 1px solid rgba(255, 193, 7, 0.3);
@@ -1041,18 +905,14 @@ input:-webkit-autofill:active {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-
 .notSubmittedMessage p {
   margin: 0 0 8px 0;
   color: #ffc107;
   font-size: 0.95rem;
 }
-
 .notSubmittedMessage p:last-child {
   margin-bottom: 0;
 }
-
-/* Status Message */
 .statusMessage {
   background: rgba(255, 5, 0, 0.06);
   border: 1px solid rgba(255, 5, 0, 0.15);
@@ -1062,15 +922,12 @@ input:-webkit-autofill:active {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-
 .statusMessage p {
   margin: 0;
   color: var(--text-primary);
   line-height: 1.7;
   font-size: 0.95rem;
 }
-
-/* Info Sections */
 .selectedInfo, .waitlistedInfo, .rejectedInfo, .pendingInfo {
   background: rgba(255, 5, 0, 0.06);
   border: 1px solid rgba(255, 5, 0, 0.15);
@@ -1081,42 +938,34 @@ input:-webkit-autofill:active {
   -webkit-backdrop-filter: blur(10px);
   transition: var(--transition);
 }
-
 .selectedInfo:hover, .waitlistedInfo:hover, .rejectedInfo:hover, .pendingInfo:hover {
   background: rgba(255, 5, 0, 0.08);
   transform: translateY(-1px);
 }
-
 .infoTitle {
   color: var(--primary-red);
   font-size: 1.15rem;
   margin: 0 0 12px 0;
   font-weight: 600;
 }
-
 .stepsList {
   margin: 0;
   padding-left: 20px;
   color: var(--text-primary);
 }
-
 .stepsList li {
   margin-bottom: 8px;
   line-height: 1.5;
   font-size: 0.95rem;
   position: relative;
 }
-
 .stepsList li::marker {
   color: var(--primary-red);
 }
-
-/* Timeline */
 .timeline {
   position: relative;
   padding-left: 24px;
 }
-
 .timeline::before {
   content: '';
   position: absolute;
@@ -1127,12 +976,10 @@ input:-webkit-autofill:active {
   background: linear-gradient(to bottom, var(--primary-red), var(--primary-red-dark));
   border-radius: 1px;
 }
-
 .timelineItem {
   position: relative;
   margin-bottom: 24px;
 }
-
 .timelineDot {
   position: absolute;
   left: -20px;
@@ -1145,7 +992,6 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 2px var(--primary-red);
   animation: pulse 2s infinite;
 }
-
 @keyframes pulse {
   0%, 100% { box-shadow: 0 0 0 2px var(--primary-red); }
   50% { box-shadow: 0 0 0 4px rgba(255, 5, 0, 0.3); }
@@ -1179,7 +1025,6 @@ input:-webkit-autofill:active {
 .timelineContent.upcoming {
   border-left: 4px solid #a0aec0;
 }
-
 .timelineContent h5 {
   color: var(--primary-red);
   margin: 0 0 6px 0;
@@ -1187,40 +1032,32 @@ input:-webkit-autofill:active {
   font-family: var(--font-geist-sans);
   font-weight: 600;
 }
-
 .timelineContent p {
   color: var(--text-secondary);
   margin: 0;
   font-size: 0.9rem;
   line-height: 1.5;
 }
-
-/* Submission Container */
 .submissionContainer {
   position: relative;
 }
-
-/* Submission Form */
 .submissionForm {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
-
 .formGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
   position: relative;
 }
-
 .formLabel {
   color: var(--text-secondary);
   font-weight: 500;
   font-family: var(--font-geist-sans);
   font-size: 0.95rem;
 }
-
 .formInput, .formTextarea {
   background: rgba(13, 13, 13, 0.8);
   border: 1.5px solid #2d3748;
@@ -1232,7 +1069,6 @@ input:-webkit-autofill:active {
   transition: var(--transition);
   backdrop-filter: blur(10px);
 }
-
 .formInput:focus, .formTextarea:focus {
   outline: none;
   border-color: var(--primary-red);
@@ -1240,20 +1076,16 @@ input:-webkit-autofill:active {
   background: rgba(13, 13, 13, 0.9);
   transform: translateY(-1px);
 }
-
 .formTextarea {
   resize: vertical;
   min-height: 120px;
   line-height: 1.5;
 }
-
 .formHelp {
   color: var(--text-muted);
   font-size: 0.8rem;
   margin-top: 4px;
 }
-
-/* Submission Warning */
 .submissionWarning {
   background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.05));
   border: 1px solid rgba(255, 193, 7, 0.3);
@@ -1263,7 +1095,6 @@ input:-webkit-autofill:active {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-
 .submissionWarning h4 {
   color: #ffc107;
   margin: 0 0 12px 0;
@@ -1271,20 +1102,16 @@ input:-webkit-autofill:active {
   font-family: var(--font-geist-sans);
   font-weight: 600;
 }
-
 .submissionWarning ul {
   margin: 0;
   padding-left: 20px;
   color: #ffc107;
 }
-
 .submissionWarning li {
   margin-bottom: 8px;
   line-height: 1.5;
   font-size: 0.9rem;
 }
-
-/* Submit Button */
 .submitButton {
   background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
   color: var(--text-primary);
@@ -1301,7 +1128,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .submitButton::before {
   content: '';
   position: absolute;
@@ -1312,28 +1138,22 @@ input:-webkit-autofill:active {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   transition: left 0.5s;
 }
-
 .submitButton:hover::before {
   left: 100%;
 }
-
 .submitButton:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
-
 .submitButton:active {
   transform: translateY(0);
 }
-
 .submitButton:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
-
-/* Already Submitted */
 .alreadySubmitted {
   background: rgba(26, 26, 26, 0.8);
   border: 1px solid var(--border-dark);
@@ -1344,7 +1164,6 @@ input:-webkit-autofill:active {
   position: relative;
   overflow: hidden;
 }
-
 .alreadySubmitted::before {
   content: '';
   position: absolute;
@@ -1354,7 +1173,6 @@ input:-webkit-autofill:active {
   height: 2px;
   background: linear-gradient(90deg, var(--primary-red), transparent);
 }
-
 .submittedInfo h4 {
   color: var(--primary-red);
   font-size: 1.4rem;
@@ -1364,7 +1182,6 @@ input:-webkit-autofill:active {
   position: relative;
   padding-bottom: 10px;
 }
-
 .submittedInfo h4::after {
   content: '';
   position: absolute;
@@ -1375,14 +1192,12 @@ input:-webkit-autofill:active {
   background: var(--primary-red);
   border-radius: 1px;
 }
-
 .submittedInfo p {
   color: var(--text-secondary);
   margin: 0 0 22px 0;
   line-height: 1.6;
   font-size: 1rem;
 }
-
 .submissionTime {
   background: linear-gradient(135deg, rgba(40, 167, 69, 0.12), rgba(40, 167, 69, 0.05));
   border: 1px solid rgba(40, 167, 69, 0.3);
@@ -1394,7 +1209,6 @@ input:-webkit-autofill:active {
   font-size: 0.95rem;
   font-weight: 600;
 }
-
 .submittedDetails h5 {
   color: var(--primary-red);
   font-size: 1.2rem;
@@ -1404,7 +1218,6 @@ input:-webkit-autofill:active {
   position: relative;
   padding-bottom: 8px;
 }
-
 .submittedDetails h5::after {
   content: '';
   position: absolute;
@@ -1415,232 +1228,180 @@ input:-webkit-autofill:active {
   background: var(--primary-red);
   border-radius: 1px;
 }
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .dashboardContainer {
     padding: 0;
   }
-
   .loginContainer {
     padding: 30px 15px;
     min-height: 100vh;
   }
-
   .loadingContainer {
     padding: 30px 15px;
     min-height: 100vh;
   }
-
   .title {
     font-size: 2.5rem;
     line-height: 1.2;
   }
-
   .dashboardTitle {
     font-size: 2rem;
   }
-  
   .headerContent {
     flex-direction: column;
     text-align: center;
     gap: 15px;
     padding: 0 15px;
   }
-  
   .tabNavigation {
     flex-direction: column;
     gap: 8px;
     margin-bottom: 30px;
   }
-  
   .tabButton {
     border-radius: 10px;
     padding: 14px 20px;
   }
-  
   .teamOverviewSection {
     padding: 25px 20px;
     margin: 0;
   }
-  
   .projectDetails {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
   .membersGrid {
     grid-template-columns: 1fr;
     gap: 18px;
   }
-  
   .statusContainer {
     grid-template-columns: 1fr;
     gap: 25px;
   }
-  
   .statusHeader {
     flex-direction: column;
     gap: 12px;
     text-align: center;
   }
-  
   .detailRow, .detailItem {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
   .detailValue {
     text-align: left;
     max-width: 100%;
   }
-  
   .memberHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-
   .dashboardContent {
     padding: 30px 15px;
   }
-
   .projectInfoCard, .teamMembersSection {
     padding: 25px 20px;
     margin-bottom: 25px;
   }
-
   .sectionTitle {
     font-size: 1.8rem;
   }
-
   .cardTitle {
     font-size: 1.3rem;
   }
-
   .statusCard {
     padding: 25px 20px;
   }
 }
-
 @media (max-width: 480px) {
   .dashboardContent {
     padding: 20px 10px;
   }
-  
   .teamOverviewSection {
     padding: 20px 15px;
   }
-  
   .projectInfoCard, .teamMembersSection {
     padding: 20px 15px;
   }
-  
   .sectionTitle {
     font-size: 1.6rem;
     margin-bottom: 25px;
   }
-  
   .cardTitle {
     font-size: 1.2rem;
   }
-  
   .membersGrid {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
   .statusContainer {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-
   .statusCard {
     padding: 20px 15px;
   }
-
   .memberCard {
     padding: 18px 15px;
   }
-
   .loginButton, .submitButton {
     font-size: 1.1rem;
     padding: 14px;
   }
-
   .tabButton {
     padding: 12px 16px;
     font-size: 0.95rem;
   }
-
   .title {
     font-size: 2.2rem;
   }
 }
-
-/* Additional mobile enhancements for very small devices */
 @media (max-width: 360px) {
   .dashboardTitle {
     font-size: 1.8rem;
   }
-  
   .sectionTitle {
     font-size: 1.4rem;
   }
-  
   .tabButton {
     padding: 10px 12px;
     font-size: 0.9rem;
   }
-  
   .membersGrid {
     gap: 12px;
   }
-  
   .statusContainer {
     gap: 15px;
   }
-
   .statusCard {
     padding: 18px 12px;
   }
-
   .memberCard {
     padding: 15px 12px;
   }
 }
-
-/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg-dark);
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--primary-red);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-red-dark);
 }
-
-/* Selection Styling */
 ::selection {
   background: rgba(255, 5, 0, 0.3);
   color: var(--text-primary);
 }
-
 ::-moz-selection {
   background: rgba(255, 5, 0, 0.3);
   color: var(--text-primary);
 }
-
-/* Focus Visible for Accessibility */
 *:focus-visible {
   outline: 2px solid var(--primary-red);
   outline-offset: 2px;
