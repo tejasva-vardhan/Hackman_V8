@@ -6,7 +6,6 @@ export type Member = {
   linkedin: string;
   github: string;
 };
-
 export type Registration = {
   _id: string;
   teamName: string;
@@ -31,5 +30,4 @@ export type Registration = {
   reviewComments?: string;
   finalScore?: number | null;
 };
-
 export type EditFormData = Omit<Registration, '_id' | 'createdAt' | 'updatedAt'>;

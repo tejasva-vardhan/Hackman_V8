@@ -1,17 +1,14 @@
 "use client";
-
 import React, { useState } from 'react';
 import styles from '../styles/RegistrationForm.module.css';
 import { Nosifer } from 'next/font/google';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
 const nosifer = Nosifer({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
 });
-
 interface TeamMember {
   id: number;
   name: string;
@@ -21,7 +18,6 @@ interface TeamMember {
   linkedin?: string;
   github?: string;
 }
-
 const RegistrationForm: React.FC = () => {
   const router = useRouter();
   const [teamName, setTeamName] = useState('');
@@ -35,8 +31,6 @@ const RegistrationForm: React.FC = () => {
   const [teamLeadId, setTeamLeadId] = useState<number | null>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
-
-  // Validation helpers
   const isValidUsn = (usn: string) => {
     if (!usn || usn.trim() === '') return true; // optional
     return /^1[a-z]{2}2[1-5][a-z]{2}\d{3}$/i.test(usn);
@@ -51,7 +45,6 @@ const RegistrationForm: React.FC = () => {
     /^(https?:\/\/)?([a-z0-9-]+\.)*linkedin\.com\//i.test(s.trim());
   const isGitHubUrl = (s: string) =>
     /^(https?:\/\/)?([a-z0-9-]+\.)*github\.com\//i.test(s.trim());
-
   const handleMemberChange = (id: number, field: keyof TeamMember, value: string) => {
     const nextValue = (() => {
       if (field === 'phone') {
@@ -62,14 +55,12 @@ const RegistrationForm: React.FC = () => {
       if (field === 'linkedin' || field === 'github') return value.trim();
       return value;
     })();
-
     setMembers(
       members.map((member) =>
         member.id === id ? { ...member, [field]: nextValue } : member
       )
     );
   };
-
   const addMember = () => {
     if (members.length < 4) {
       const newId = Date.now();
@@ -79,7 +70,6 @@ const RegistrationForm: React.FC = () => {
       ]);
     }
   };
-
   const removeMember = (id: number) => {
     if (members.length > 2) {
       setMembers(members.filter((member) => member.id !== id));
@@ -88,21 +78,21 @@ const RegistrationForm: React.FC = () => {
       }
     }
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasTriedSubmit(true);
-
+    toast.dismiss(); // Clear any existing toasts
     const memberEmails = members.map((m) => m.email.trim().toLowerCase());
     if (new Set(memberEmails).size !== memberEmails.length) {
-      toast.error('Each team member must have a unique email address.');
+      toast.dismiss();
+      setTimeout(() => toast.error('Each team member must have a unique email address.'), 10);
       return;
     }
     if (teamLeadId === null || !members.some((m) => m.id === teamLeadId)) {
-      toast.error('Please select a valid team lead.');
+      toast.dismiss();
+      setTimeout(() => toast.error('Please select a valid team lead.'), 10);
       return;
     }
-
     const isFormValid = () => {
       if (
         !isNonEmpty(teamName) ||
@@ -126,12 +116,11 @@ const RegistrationForm: React.FC = () => {
       }
       return true;
     };
-
     if (!isFormValid()) {
-      toast.error('Please fix the errors shown below before submitting.');
+      toast.dismiss();
+      setTimeout(() => toast.error('Please fix the errors shown below before submitting.'), 10);
       return;
     }
-
     setIsSubmitting(true);
     const formData = {
       teamName,
@@ -141,19 +130,23 @@ const RegistrationForm: React.FC = () => {
       teamLeadId: members.findIndex((m) => m.id === teamLeadId),
       members,
     };
-
     try {
       const response = await fetch('/api/registration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
       const result = await response.json();
-
       if (response.ok) {
-        toast.success('Registration submitted successfully! 🎉');
-        router.push('/');
+        const teamLeadIndex = members.findIndex((m) => m.id === teamLeadId);
+        const teamLead = members[teamLeadIndex];
+        sessionStorage.setItem('autoLoginEmail', teamLead.email.trim());
+        sessionStorage.setItem('autoLoginPhone', teamLead.phone.trim());
+        sessionStorage.setItem('isNewRegistration', 'true');
+        toast.success('Registration successful! Redirecting to dashboard...', { duration: 2000 });
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 1500);
       } else {
         toast.error(`Registration failed: ${result.message}`);
       }
@@ -164,13 +157,11 @@ const RegistrationForm: React.FC = () => {
       setIsSubmitting(false);
     }
   };
-
   return (
     <section className={styles.registrationSection}>
       <div className={styles.formContainer}>
         <h2 className={`${styles.title} ${nosifer.className}`}>Register Your Team</h2>
         <p className={styles.subtitle}>The gates to Hackman V8 are opening. Dare to enter?</p>
-
         <form onSubmit={handleSubmit} className={styles.form} noValidate>
           <fieldset className={styles.fieldset}>
             <div className={styles.inputGroup}>
@@ -190,7 +181,6 @@ const RegistrationForm: React.FC = () => {
                 )}
               </div>
             </div>
-
             <div className={styles.inputGroup}>
               <label htmlFor="collegeName" className={styles.label}>College Name</label>
               <div className={styles.fieldControl}>
@@ -209,7 +199,6 @@ const RegistrationForm: React.FC = () => {
               </div>
             </div>
           </fieldset>
-
           <fieldset className={styles.fieldset}>
             <legend className={`${styles.legend} ${nosifer.className}`}>Team Members (2–4)</legend>
             {members.map((member, index) => (
@@ -233,7 +222,6 @@ const RegistrationForm: React.FC = () => {
                     </button>
                   )}
                 </div>
-
                 <div className={styles.memberInputs}>
                   <div className={styles.fieldControl}>
                     <input
@@ -322,7 +310,6 @@ const RegistrationForm: React.FC = () => {
               </button>
             )}
           </fieldset>
-
           <fieldset className={styles.fieldset}>
             <legend className={`${styles.legend} ${nosifer.className}`}>Project Idea</legend>
             <div className={styles.inputGroup}>
@@ -362,7 +349,6 @@ const RegistrationForm: React.FC = () => {
                 </div>
             </div>
           </fieldset>
-
           <button type="submit" className={`${styles.submitButton} ${nosifer.className}`} disabled={isSubmitting}>
             {isSubmitting ? 'Submitting…' : 'Submit Registration'}
           </button>
@@ -371,5 +357,4 @@ const RegistrationForm: React.FC = () => {
     </section>
   );
 };
-
 export default RegistrationForm;

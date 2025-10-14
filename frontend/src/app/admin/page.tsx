@@ -1,7 +1,5 @@
 "use client";
-
 import { useEffect, useMemo, useState } from 'react';
-
 type Member = {
   name: string;
   email: string;
@@ -10,7 +8,6 @@ type Member = {
   linkedin: string;
   github: string;
 };
-
 type SubmissionDetails = {
   githubRepo: string;
   liveDemo: string;
@@ -18,9 +15,6 @@ type SubmissionDetails = {
   additionalNotes: string;
   submittedAt: string | null;
 };
-
-
-
 type EditFormType = {
   teamName: string;
   collegeName: string;
@@ -36,7 +30,6 @@ type EditFormType = {
   submissionDetails: SubmissionDetails;
   members: Member[];
 };
-
 type Registration = {
   _id: string;
   teamName: string;
@@ -61,7 +54,6 @@ type Registration = {
   reviewComments?: string;
   finalScore?: number | null;
 };
-
 export default function AdminPage() {
   const [token, setToken] = useState<string>("");
   const [inputToken, setInputToken] = useState<string>("");
@@ -69,21 +61,18 @@ export default function AdminPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [query, setQuery] = useState<string>("");
-
   const [editTarget, setEditTarget] = useState<Registration | null>(null);
   const [editForm, setEditForm] = useState<EditFormType | null>(null);
   const [savingEdit, setSavingEdit] = useState<boolean>(false);
   const [selectionFilter, setSelectionFilter] = useState<string>('all');
   const [submissionFilter, setSubmissionFilter] = useState<string>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
-
   useEffect(() => {
     const saved = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
     if (saved) {
       setToken(saved);
     }
   }, []);
-
   useEffect(() => {
     if (!token) return;
     setLoading(true);
@@ -102,7 +91,6 @@ export default function AdminPage() {
       .catch((e) => setError(e.message || 'Failed to load'))
       .finally(() => setLoading(false));
   }, [token]);
-
   const filtered = useMemo(() => {
     if (!data) return [] as Registration[];
     const text = query.trim().toLowerCase();
@@ -117,15 +105,12 @@ export default function AdminPage() {
         r.paymentStatus,
         ...r.members.flatMap((m) => [m.name, m.email, m.phone]),
       ].filter(Boolean).some((field) => String(field).toLowerCase().includes(text));
-
       const matchesSelection = selectionFilter === 'all' || r.selectionStatus === selectionFilter;
       const matchesSubmission = submissionFilter === 'all' || r.submissionStatus === submissionFilter;
       const matchesPayment = paymentFilter === 'all' || (r.paymentStatus || 'unpaid') === paymentFilter;
-
       return matchesText && matchesSelection && matchesSubmission && matchesPayment;
     });
   }, [data, query, selectionFilter, submissionFilter, paymentFilter]);
-
   function handleSubmitToken(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = inputToken.trim();
@@ -133,13 +118,11 @@ export default function AdminPage() {
     localStorage.setItem('admin_token', trimmed);
     setToken(trimmed);
   }
-
   function handleLogout() {
     localStorage.removeItem('admin_token');
     setToken("");
     setData(null);
   }
-
   function openEdit(reg: Registration) {
     setEditTarget(reg);
     setEditForm({
@@ -171,21 +154,14 @@ export default function AdminPage() {
       })),
     });
   }
-
-  
-
   function updateEditField(path: string, value: string | number | null) {
     setEditForm((prev: EditFormType | null) => {
       if (!prev) return prev;
       const next = { ...prev };
       const parts = path.split('.');
-
-      // Handle top-level updates
       if (parts.length === 1) {
         return { ...next, [path]: value };
       }
-
-      // Handle submissionDetails updates
       if (parts[0] === 'submissionDetails') {
         return {
           ...next,
@@ -195,8 +171,6 @@ export default function AdminPage() {
           }
         };
       }
-
-      // Handle members updates
       if (parts[0] === 'members') {
         const index = parseInt(parts[1]);
         const field = parts[2];
@@ -209,11 +183,9 @@ export default function AdminPage() {
         }
         return { ...next, members: updatedMembers };
       }
-
       return next;
     });
   }
-
   function addMember() {
     setEditForm((prev: EditFormType | null) => {
       if (!prev) return prev;
@@ -226,7 +198,6 @@ export default function AdminPage() {
       };
     });
   }
-
   function removeMember(index: number) {
     setEditForm((prev: EditFormType | null) => {
       if (!prev) return prev;
@@ -236,7 +207,6 @@ export default function AdminPage() {
       };
     });
   }
-
   async function saveEdit() {
     if (!editTarget || !token) {
       setError('Admin token required to save edits.');
@@ -276,17 +246,14 @@ export default function AdminPage() {
       setSavingEdit(false);
     }
   }
-
   async function handleDelete(registrationId: string) {
     if (!window.confirm('Are you sure you want to delete this team? This action cannot be undone.')) {
       return;
     }
-
     if (!token) {
       setError('Admin token required to delete.');
       return;
     }
-
     try {
       const res = await fetch(`/api/admin/registrations/${registrationId}`, {
         method: 'DELETE',
@@ -294,7 +261,6 @@ export default function AdminPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (res.status === 401) {
         throw new Error('Unauthorized');
       }
@@ -302,7 +268,6 @@ export default function AdminPage() {
         const t = await res.text();
         throw new Error(t || 'Failed to delete');
       }
-
       setData(prev => (prev || []).filter(r => r._id !== registrationId));
     } catch (e) {
       if ((e as Error).message === 'Unauthorized') {
@@ -314,7 +279,6 @@ export default function AdminPage() {
       }
     }
   }
-
   if (!token) {
     return (
       <div style={{ maxWidth: 420, margin: '64px auto', padding: 24 }}>
@@ -328,22 +292,128 @@ export default function AdminPage() {
             onChange={(e) => setInputToken(e.target.value)}
             style={{ flex: 1, padding: '10px 12px', border: '1px solid #ddd', borderRadius: 8 }}
           />
-          <button type="submit" style={{ padding: '10px 16px', borderRadius: 8, background: 'black', color: 'white' }}>Continue</button>
+          <button 
+            type="submit" 
+            style={{ 
+              padding: '12px 32px', 
+              borderRadius: 12, 
+              background: 'linear-gradient(135deg, #FF0500 0%, #c53030 100%)', 
+              color: 'white',
+              border: 'none',
+              fontWeight: 'bold',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(255, 5, 0, 0.4)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 5, 0, 0.6)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 5, 0, 0.4)';
+            }}
+          >
+            Continue
+          </button>
         </form>
       </div>
     );
   }
-
   return (
-    <div style={{ padding: 24, color: '#000000ff' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-        <h2 style={{ fontSize: 24, fontWeight: 700, marginRight: 'auto', color: '#FF0000' }}>Admin Dashboard</h2>
+    <div style={{ padding: '12px', color: '#000000ff', maxWidth: '100vw', overflowX: 'hidden' }}>
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .admin-header {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 8px !important;
+          }
+          .admin-header h2 {
+            font-size: 18px !important;
+          }
+          .admin-header input {
+            min-width: 100% !important;
+            width: 100% !important;
+          }
+          .admin-filters {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 8px !important;
+            width: 100% !important;
+          }
+          .admin-filters select {
+            width: 100% !important;
+            font-size: 14px !important;
+          }
+          .admin-filters button {
+            grid-column: 1 / -1 !important;
+            width: 100% !important;
+          }
+          .table-wrapper {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            margin: 0 -12px !important;
+            padding: 0 12px !important;
+            width: calc(100vw - 24px) !important;
+            max-width: 100% !important;
+          }
+          .admin-table {
+            min-width: 1200px !important;
+            font-size: 11px !important;
+            display: table !important;
+          }
+          .admin-table th,
+          .admin-table td {
+            padding: 6px 4px !important;
+            font-size: 11px !important;
+            white-space: nowrap !important;
+          }
+          .admin-table th {
+            position: sticky !important;
+            top: 0 !important;
+            background: #f5f5f5 !important;
+            z-index: 10 !important;
+          }
+          .admin-table button {
+            font-size: 10px !important;
+            padding: 4px 6px !important;
+          }
+          .mobile-scroll-hint {
+            display: block !important;
+            text-align: center !important;
+          }
+          .edit-modal {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            overflow-y: auto !important;
+          }
+          .edit-content {
+            padding: 12px !important;
+          }
+          .edit-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+      <div className="admin-header" style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 700, marginRight: 'auto', color: '#FF0000', minWidth: 'fit-content' }}>Admin Dashboard</h2>
         <input
           placeholder="Search teams, members, codes..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          style={{ padding: '8px 10px', border: '1px solid #000000ff', borderRadius: 8, minWidth: 260, color: '#fff', background: '#111' }}
+          style={{ padding: '8px 10px', border: '1px solid #000000ff', borderRadius: 8, minWidth: '200px', color: '#fff', background: '#111', flex: '1' }}
         />
+        <div className="admin-filters" style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <select value={selectionFilter} onChange={(e) => setSelectionFilter(e.target.value)} style={{ padding: '8px 10px', border: '1px solid #ddd', borderRadius: 8, color: '#fff', background: '#111' }}>
           <option value="all">All Selections</option>
           <option value="pending">pending</option>
@@ -365,54 +435,104 @@ export default function AdminPage() {
           <option value="paid">paid</option>
           <option value="verified">verified</option>
         </select>
-        <button onClick={handleLogout} style={{ padding: '8px 12px', borderRadius: 8, background: '#eee' }}>Logout</button>
+        <button 
+          onClick={handleLogout} 
+          style={{ 
+            padding: '10px 20px', 
+            borderRadius: 8, 
+            background: 'linear-gradient(135deg, #4a5568 0%, #2d3748 100%)', 
+            color: '#fff',
+            border: 'none',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #FF0500 0%, #c53030 100%)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 5, 0, 0.5)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #4a5568 0%, #2d3748 100%)';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+          }}
+        >
+          Logout
+        </button>
+        </div>
       </div>
-
-
-      {loading && <p>Loading...</p>}
+      {loading && <p style={{ color: 'white' }}>Loading...</p>}
       {error && (
         <div style={{ color: 'crimson', marginBottom: 12 }}>
           {error}
         </div>
       )}
-
       {editTarget && editForm && (
         <div
           role="dialog"
           aria-modal="true"
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+          className="edit-modal"
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, zIndex: 1000 }}
           onClick={() => { if (!savingEdit) { setEditTarget(null); setEditForm(null); } }}
         >
-          <div onClick={(e) => e.stopPropagation()} style={{ width: 'min(980px, 98%)', background: '#0b0b0b', color: '#fff', borderRadius: 12, border: '1px solid #222', padding: 20, maxHeight: '90vh', overflow: 'auto' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-              <h3 style={{ fontSize: 20, fontWeight: 700, marginRight: 'auto' }}>Edit Team: {editTarget.teamName}</h3>
-              <button onClick={() => { if (!savingEdit) { setEditTarget(null); setEditForm(null); } }} style={{ padding: '6px 10px', borderRadius: 6, background: '#111', color: '#fff', border: '1px solid #333' }}>Close</button>
-              <button onClick={saveEdit} disabled={savingEdit} style={{ padding: '6px 10px', borderRadius: 6, background: '#2563eb', color: '#fff', border: '1px solid #1d4ed8' }}>{savingEdit ? 'Saving...' : 'Save'}</button>
+          <div className="edit-content" onClick={(e) => e.stopPropagation()} style={{ width: 'min(980px, 98%)', background: '#0b0b0b', color: '#fff', borderRadius: 12, border: '1px solid #222', padding: 20, maxHeight: '90vh', overflow: 'auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12, flexWrap: 'wrap' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, marginRight: 'auto' }}>Edit Team: {editTarget.teamName}</h3>
+              <button 
+                onClick={() => { if (!savingEdit) { setEditTarget(null); setEditForm(null); } }} 
+                style={{ 
+                  padding: '8px 16px', 
+                  borderRadius: 8, 
+                  background: 'linear-gradient(135deg, #4a5568 0%, #2d3748 100%)', 
+                  color: '#fff', 
+                  border: 'none',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                Close
+              </button>
+              <button 
+                onClick={saveEdit} 
+                disabled={savingEdit} 
+                style={{ 
+                  padding: '8px 20px', 
+                  borderRadius: 8, 
+                  background: 'linear-gradient(135deg, #FF0500 0%, #c53030 100%)', 
+                  color: '#fff', 
+                  border: 'none',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  cursor: savingEdit ? 'not-allowed' : 'pointer',
+                  opacity: savingEdit ? 0.7 : 1,
+                  boxShadow: '0 4px 15px rgba(255, 5, 0, 0.4)',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                {savingEdit ? 'Saving...' : 'Save'}
+              </button>
             </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+            <div className="edit-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Team Info</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
                   <input placeholder="Team Name" value={editForm.teamName} onChange={(e) => updateEditField('teamName', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff' }} />
                   <input placeholder="College Name" value={editForm.collegeName} onChange={(e) => updateEditField('collegeName', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff' }} />
-                  <input placeholder="Team Code" value={editForm.teamCode} onChange={(e) => updateEditField('teamCode', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff' }} />
-                  <input 
-                    placeholder="Team Lead ID" 
-                    type="number" 
-                    value={editForm.teamLeadId ?? ''} 
-                    onChange={(e) => updateEditField('teamLeadId', e.target.value ? Number(e.target.value) : null)} 
-                    style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff' }} 
-                  />
+                  <input placeholder="Team Code" value={editForm.teamCode} onChange={(e) => updateEditField('teamCode', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', gridColumn: '1 / -1' }} />
                 </div>
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Project</div>
                 <input placeholder="Project Title" value={editForm.projectTitle} onChange={(e) => updateEditField('projectTitle', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', marginBottom: 8 }} />
                 <textarea placeholder="Project Description" value={editForm.projectDescription} onChange={(e) => updateEditField('projectDescription', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', minHeight: 100 }} />
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Statuses</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -438,7 +558,6 @@ export default function AdminPage() {
                 </div>
                 <textarea placeholder="Review Comments" value={editForm.reviewComments} onChange={(e) => updateEditField('reviewComments', e.target.value)} style={{ marginTop: 8, padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', minHeight: 80 }} />
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ fontWeight: 700, marginBottom: 8 }}>Submission Links</div>
                 <input placeholder="GitHub Repo" value={editForm.submissionDetails.githubRepo} onChange={(e) => updateEditField('submissionDetails.githubRepo', e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', marginBottom: 8 }} />
@@ -447,11 +566,25 @@ export default function AdminPage() {
                 <input placeholder="Submitted At (ISO)" value={editForm.submissionDetails.submittedAt ?? ''} onChange={(e) => updateEditField('submissionDetails.submittedAt', e.target.value || null)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff' }} />
                 <textarea placeholder="Additional Notes" value={editForm.submissionDetails.additionalNotes} onChange={(e) => updateEditField('submissionDetails.additionalNotes', e.target.value)} style={{ marginTop: 8, padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff', minHeight: 80 }} />
               </div>
-
               <div style={{ border: '1px solid #1f1f1f', borderRadius: 10, padding: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div style={{ fontWeight: 700, marginBottom: 8, marginRight: 'auto' }}>Members</div>
-                  <button onClick={addMember} style={{ padding: '6px 10px', borderRadius: 6, background: '#111', color: '#fff', border: '1px solid #333' }}>Add</button>
+                  <button 
+                    onClick={addMember} 
+                    style={{ 
+                      padding: '8px 16px', 
+                      borderRadius: 8, 
+                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
+                      color: '#fff', 
+                      border: 'none',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    Add
+                  </button>
                 </div>
                 <div style={{ display: 'grid', gap: 8 }}>
                   {editForm.members.map((m: Member, idx: number) => (
@@ -465,17 +598,25 @@ export default function AdminPage() {
                         <input placeholder="GitHub URL" value={m.github} onChange={(e) => updateEditField(`members.${idx}.github`, e.target.value)} style={{ padding: '8px 10px', borderRadius: 8, border: '1px solid #333', background: '#0f0f0f', color: '#fff' }} />
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 8, gap: 8 }}>
-                        {editForm.teamLeadId === idx ? (
-                          <span style={{ marginRight: 'auto', fontWeight: 'bold' }}>⭐ Leader</span>
-                        ) : (
-                          <button
-                            onClick={() => updateEditField('teamLeadId', idx)}
-                            style={{ marginRight: 'auto', padding: '6px 10px', borderRadius: 6, background: '#333', color: '#fff', border: '1px solid #555' }}
-                          >
-                            Set as Leader
-                          </button>
+                        {editForm.teamLeadId === idx && (
+                          <span style={{ marginRight: 'auto', fontWeight: 'bold', color: '#ffa500' }}>⭐ Team Leader</span>
                         )}
-                        <button onClick={() => removeMember(idx)} style={{ padding: '6px 10px', borderRadius: 6, background: '#3a0e00', color: '#fff', border: '1px solid #663300' }}>Remove</button>
+                        <button 
+                          onClick={() => removeMember(idx)} 
+                          style={{ 
+                            padding: '8px 16px', 
+                            borderRadius: 8, 
+                            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', 
+                            color: '#fff', 
+                            border: 'none',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 15px rgba(239, 68, 68, 0.4)',
+                            transition: 'all 0.3s ease'
+                          }}
+                        >
+                          Remove
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -486,9 +627,22 @@ export default function AdminPage() {
         </div>
       )}
       {!loading && !error && (
-        <div style={{ overflowX: 'auto', border: '1px solid #eee', borderRadius: 8 }}>
-          <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, color: '#000' }}>
-            <thead>
+        <>
+          <div style={{ 
+            display: 'none', 
+            background: '#fff3cd', 
+            color: '#856404', 
+            padding: '8px 12px', 
+            borderRadius: 6, 
+            marginBottom: 8, 
+            fontSize: 13,
+            border: '1px solid #ffeeba'
+          }} className="mobile-scroll-hint">
+            ← Swipe left to see all columns →
+          </div>
+          <div className="table-wrapper" style={{ overflowX: 'auto', border: '1px solid #eee', borderRadius: 8 }}>
+            <table className="admin-table" style={{ width: '100%', borderCollapse: 'separate', borderSpacing: 0, color: '#000' }}>
+              <thead>
               <tr style={{ background: '#fafafa' }}>
                 <th style={{ textAlign: 'left', padding: 12, color: '#000000' }}>Team</th>
                 <th style={{ textAlign: 'left', padding: 12, color: '#000000' }}>College</th>
@@ -534,20 +688,36 @@ export default function AdminPage() {
                     <div style={{ display: 'flex', gap: 8 }}>
                       <button
                         onClick={() => openEdit(r)}
-                        style={{ padding: '6px 10px', borderRadius: 6, background: '#f0f0f0', color: '#000', border: '1px solid #ccc' }}
-                      >
-                        View
-                      </button>
-                      <button
-                        onClick={() => openEdit(r)}
-                        style={{ padding: '6px 10px', borderRadius: 6, background: '#ddffdd', color: '#050', border: '1px solid #aaffaa', opacity: !token ? 0.6 : 1 }}
+                        style={{ 
+                          padding: '8px 16px', 
+                          borderRadius: 8, 
+                          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
+                          color: '#fff', 
+                          border: 'none',
+                          fontWeight: 'bold',
+                          cursor: !token ? 'not-allowed' : 'pointer',
+                          opacity: !token ? 0.5 : 1,
+                          boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)',
+                          transition: 'all 0.3s ease'
+                        }}
                         disabled={!token}
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(r._id)}
-                        style={{ padding: '6px 10px', borderRadius: 6, background: '#ffdddd', color: '#c00', border: '1px solid #fbb', opacity: !token ? 0.6 : 1 }}
+                        style={{ 
+                          padding: '8px 16px', 
+                          borderRadius: 8, 
+                          background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', 
+                          color: '#fff', 
+                          border: 'none',
+                          fontWeight: 'bold',
+                          cursor: !token ? 'not-allowed' : 'pointer',
+                          opacity: !token ? 0.5 : 1,
+                          boxShadow: '0 4px 15px rgba(239, 68, 68, 0.4)',
+                          transition: 'all 0.3s ease'
+                        }}
                         disabled={!token}
                       >
                         Delete
@@ -559,6 +729,7 @@ export default function AdminPage() {
             </tbody>
           </table>
         </div>
+        </>
       )}
     </div>
   );

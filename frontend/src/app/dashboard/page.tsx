@@ -59,15 +59,11 @@ export default function DashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'submission' | 'status'>('overview');
 
-  // Check if user is already authenticated (credentials in localStorage)
+  
   useEffect(() => {
     const savedLeadEmail = localStorage.getItem('leadEmail');
     const savedPhone = localStorage.getItem('phone');
-    if (savedLeadEmail && savedPhone) {
-      setLeadEmail(savedLeadEmail);
-      setPhone(savedPhone);
-      fetchTeamData(savedLeadEmail, savedPhone);
-    }
+    
   }, []);
 
   const fetchTeamData = async (leadEmail: string, phone: string) => {
@@ -126,6 +122,17 @@ export default function DashboardPage() {
   if (!isAuthenticated) {
     return (
       <div className={styles.dashboardContainer}>
+        <button 
+          onClick={() => router.push('/#hero')} 
+          className={styles.backToHomeButton}
+          title="Back to Home"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Back to Home</span>
+        </button>
         <div className={styles.loginContainer}>
           <h1 className={`${styles.title} ${nosifer.className}`}>Team Dashboard</h1>
           <p className={styles.subtitle}>Enter your project title and team code to access your dashboard</p>
@@ -193,9 +200,22 @@ export default function DashboardPage() {
           <h1 className={`${styles.dashboardTitle} ${nosifer.className}`}>
             {teamData.teamName}
           </h1>
-          <button onClick={handleLogout} className={styles.logoutButton}>
-            Logout
-          </button>
+          <div className={styles.buttonGroup}>
+            <button 
+              onClick={() => router.push('/#hero')} 
+              className={styles.homeButton}
+              title="Back to Home"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              <span>Home</span>
+            </button>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
 

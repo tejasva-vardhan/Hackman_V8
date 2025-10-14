@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-
 export async function POST(request: Request) {
   try {
     const { name, email, message } = await request.json();
-
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Please fill all fields.' }, { status: 400 });
     }
-
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -16,7 +13,6 @@ export async function POST(request: Request) {
         pass: process.env.EMAIL_PASS,
       },
     });
-
     const mailOptions = {
       from: `"${name}" <${email}>`,
       to: process.env.EMAIL_USER,
@@ -28,11 +24,8 @@ export async function POST(request: Request) {
              <p><strong>Message:</strong></p>
              <p>${message}</p>`,
     };
-
     await transporter.sendMail(mailOptions);
-    
     return NextResponse.json({ message: 'Email sent successfully!' }, { status: 200 });
-
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Failed to send email.' }, { status: 500 });
