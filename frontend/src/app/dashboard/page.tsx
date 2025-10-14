@@ -96,13 +96,16 @@ export default function DashboardPage() {
         
         // Show different message for new registrations vs returning users
         if (isNewRegistration) {
-          toast.success('🎉 Registration complete! Welcome to your dashboard!');
+          toast.dismiss();
+          setTimeout(() => toast.success('🎉 Registration complete! Welcome to your dashboard!'), 10);
         } else {
-          toast.success('Welcome back to your dashboard!');
+          toast.dismiss();
+          setTimeout(() => toast.success('Welcome back to your dashboard!'), 10);
         }
       } else {
         // Invalid credentials or no team found
-        toast.error('❌ Invalid credentials! Please check your team lead email and phone number.');
+        toast.dismiss();
+        setTimeout(() => toast.error('❌ Invalid credentials! Please check your team lead email and phone number.'), 10);
         setIsAuthenticated(false);
         setTeamData(null);
         sessionStorage.removeItem('projectName');
@@ -111,7 +114,8 @@ export default function DashboardPage() {
       }
     } catch (error) {
       console.error('Error fetching team data:', error);
-      toast.error('⚠️ Connection error! Please check your internet and try again.');
+      toast.dismiss();
+      setTimeout(() => toast.error('⚠️ Connection error! Please check your internet and try again.'), 10);
       setIsAuthenticated(false);
       setTeamData(null);
       sessionStorage.removeItem('projectName');
@@ -125,7 +129,8 @@ export default function DashboardPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!leadEmail.trim() || !phone.trim()) {
-      toast.error('Please enter both team lead email and phone number');
+      toast.dismiss();
+      setTimeout(() => toast.error('Please enter both team lead email and phone number'), 10);
       return;
     }
     await fetchTeamData(leadEmail.trim(), phone.trim());
@@ -139,7 +144,8 @@ export default function DashboardPage() {
     sessionStorage.removeItem('leadEmail');
     sessionStorage.removeItem('phone');
     sessionStorage.removeItem('projectName');
-    toast.success('Logged out successfully');
+    toast.dismiss();
+    setTimeout(() => toast.success('Logged out successfully'), 10);
   };
 
   const updateTeamData = (updatedData: Partial<TeamData>) => {

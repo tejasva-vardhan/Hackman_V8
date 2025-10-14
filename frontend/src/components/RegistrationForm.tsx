@@ -97,11 +97,13 @@ const RegistrationForm: React.FC = () => {
 
     const memberEmails = members.map((m) => m.email.trim().toLowerCase());
     if (new Set(memberEmails).size !== memberEmails.length) {
-      toast.error('Each team member must have a unique email address.');
+      toast.dismiss();
+      setTimeout(() => toast.error('Each team member must have a unique email address.'), 10);
       return;
     }
     if (teamLeadId === null || !members.some((m) => m.id === teamLeadId)) {
-      toast.error('Please select a valid team lead.');
+      toast.dismiss();
+      setTimeout(() => toast.error('Please select a valid team lead.'), 10);
       return;
     }
 
@@ -130,7 +132,8 @@ const RegistrationForm: React.FC = () => {
     };
 
     if (!isFormValid()) {
-      toast.error('Please fix the errors shown below before submitting.');
+      toast.dismiss();
+      setTimeout(() => toast.error('Please fix the errors shown below before submitting.'), 10);
       return;
     }
 

@@ -60,7 +60,8 @@ const ProjectSubmission: React.FC<ProjectSubmissionProps> = ({ teamData, onUpdat
     e.preventDefault();
     
     if (!formData.githubRepo.trim()) {
-      toast.error('GitHub repository URL is required');
+      toast.dismiss();
+      setTimeout(() => toast.error('GitHub repository URL is required'), 10);
       return;
     }
 

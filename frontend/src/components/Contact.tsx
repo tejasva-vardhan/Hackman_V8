@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Jolly_Lodger, Poppins } from "next/font/google";
 import Image from "next/image";
-import { Toaster, toast } from 'react-hot-toast'; // 
+import toast from 'react-hot-toast';
 
 const jollyLodger = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({ weight: "400", subsets: ["latin"] });
@@ -30,7 +30,8 @@ export default function Contact() {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please fill out all fields.");
+      toast.dismiss();
+      setTimeout(() => toast.error("Please fill out all fields."), 10);
       return;
     }
 
@@ -98,19 +99,6 @@ export default function Contact() {
 
   return (
     <>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          style: {
-            border: '1px solid #FF0700',
-            padding: '16px',
-            color: '#FFFFFF',
-            background: 'rgba(0,0,0,0.9)'
-          },
-        }}
-      />
-
       <style jsx global>{`
         /* --- Styles for browser autofill fix --- */
         input:-webkit-autofill,
@@ -159,19 +147,13 @@ export default function Contact() {
           </form>
         </div>
 
-        <footer ref={addToElementsRef} className="relative w-full h-[150px] md:h-[500px] z-20 flex flex-col justify-center items-center text-center" style={{ backgroundColor: 'rgba(0,0,0,0.1)', backgroundImage: "url('/grass.png')", backgroundSize: 'cover', backgroundPosition: 'bottom center', backgroundRepeat: 'no-repeat' }}>
-          <Image src="/genesis-2k25-logo.png" alt="Genesis 2025 Logo" width={150} height={150} className="mb-4 md:mb-6 mt-8 md:mt-50 w-[100px] md:w-[150px] h-auto filter brightness-75" />
-          <nav className={`${poppins.className} flex flex-wrap justify-center space-x-4 md:space-x-8 text-gray-300 text-xs md:text-sm`}>
-            <a href="#hero" className="hover:text-red-500 transition-colors duration-220">Home</a>
-            <a href="#events" className="hover:text-red-500 transition-colors duration-220">Events</a>
-            <a href="#sponsors" className="hover:text-red-500 transition-colors duration-220">Sponsors</a>
-            <a href="#leads" className="hover:text-red-500 transition-colors duration-220">Leads</a>
-            <a href="#gallery" className="hover:text-red-500 transition-colors duration-220">Gallery</a>
-            <a href="#members" className="hover:text-red-500 transition-colors duration-220">Members</a>
-          </nav>
-          <p className="w-full text-center text-xs text-[#555555] py-2 md:mt-5">
-            Made With <span className="text-red-500">❤️</span> By Genesis. All Rights Reserved.
-          </p>
+        <footer ref={addToElementsRef} className="relative w-full h-[200px] md:h-[400px] z-20 flex flex-col justify-center items-center text-center bg-[#0000000]" style={{ backgroundImage: "url('/grass.png')", backgroundSize: 'contain', backgroundPosition: 'bottom center', backgroundRepeat: 'repeat-x' }}>
+          <div className="relative z-10 flex flex-col items-center">
+            <Image src="/genesis-2k25-logo.png" alt="Genesis 2025 Logo" width={150} height={150} className="mb-4 md:mb-6 w-[100px] md:w-[150px] h-auto filter brightness-75" />
+            <p className="w-full text-center text-xs text-[#555555] py-2 md:mt-5">
+              Made With <span className="text-red-500">❤️</span> By Genesis. All Rights Reserved.
+            </p>
+          </div>
         </footer>
       </section>
     </>

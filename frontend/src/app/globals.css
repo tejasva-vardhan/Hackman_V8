@@ -68,14 +68,16 @@ h2 {
 
 /* Toast notification limit to 2 */
 [data-toast-container] {
-  max-height: calc(100vh - 100px);
+  max-height: 70px !important;
+  min-height: 70px !important;
+  overflow: hidden !important;
 }
 
 [data-toast-container] > div {
   display: flex;
   flex-direction: column;
-  max-height: inherit;
-  overflow: hidden;
+  max-height: 70px !important;
+  overflow: hidden !important;
 }
 
 [data-toast-container] > div > * {
@@ -86,7 +88,10 @@ h2 {
 [data-toast-container] > div > *:nth-child(n+2),
 [data-toast-container] > *:nth-child(n+2),
 [data-toast-container] *[role="status"]:nth-child(n+2),
-[data-toast-container] div:nth-child(n+2) {
+[data-toast-container] div:nth-child(n+2),
+div[data-sonner-toaster] > *:nth-child(n+2),
+div[class*="Toaster"] > *:nth-child(n+2),
+div[class*="toast"] > *:nth-child(n+2) {
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
@@ -98,6 +103,7 @@ h2 {
   visibility: hidden !important;
   position: absolute !important;
   z-index: -9999 !important;
+  transform: scale(0) !important;
 }
 
 /* Global CTA cursor behavior */

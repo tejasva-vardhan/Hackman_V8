@@ -46,10 +46,11 @@ export default function RootLayout({
           reverseOrder={false}
           containerStyle={{
             top: 80,
-            maxHeight: '80px',
+            maxHeight: '70px',
+            minHeight: '70px',
             overflow: 'hidden',
           }}
-          gutter={8}
+          gutter={0}
           toastOptions={{
             duration: 4000,
             style: {

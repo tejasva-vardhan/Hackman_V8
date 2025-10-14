@@ -181,21 +181,21 @@ export default function Hero() {
             alt="" 
             width={70} 
             height={20} 
-            className="absolute size-10 sm:size-auto right-[220px] top-[140px] sm:right-155 sm:top-54 animate-fly" 
+            className="absolute size-10 sm:size-auto right-[220px] top-[calc(6.5vh+140px)] sm:right-155 sm:top-54 animate-fly" 
           /> 
           <Image 
             src="/Hero/witch.png" 
             alt="" 
             width={70} 
             height={20} 
-            className="absolute size-10 sm:size-auto right-[30px] top-[100px] sm:right-50 sm:top-32 animate-fly" 
+            className="absolute size-10 sm:size-auto right-[30px] top-[calc(6.5vh+100px)] sm:right-50 sm:top-32 animate-fly" 
           /> 
           <Image 
             src="/Hero/moon.png" 
             alt="" 
             width={90} 
             height={20} 
-            className="absolute right-[25%] top-[20%] sm:right-73 sm:top-[10%] w-[13%] animate-float" 
+            className="absolute right-[25%] top-[calc(6.5vh+20%)] sm:right-73 sm:top-[10%] w-[13%] animate-float" 
           />
           <Image 
             src="/Hero/pumpkin evil.png" 
