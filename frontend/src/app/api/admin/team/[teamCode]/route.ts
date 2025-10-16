@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import Registration from '@/models/Registration';
+// Admin endpoints rely on strong token auth; no rate limiting applied
+import { sanitizeString } from '@/lib/security';
 
 function isAuthorized(request: NextRequest): boolean {
   const header = request.headers.get('authorization') || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : '';
   const expected = process.env.ADMIN_TOKEN || '';
+  
   return Boolean(expected) && token === expected;
 }
 
@@ -18,7 +21,7 @@ export async function GET(
   }
 
   const params = await context.params;
-  const teamCode = params.teamCode;
+  const teamCode = sanitizeString(params.teamCode).substring(0, 20);
 
   try {
     await dbConnect();
@@ -45,7 +48,7 @@ export async function PUT(
   }
 
   const params = await context.params;
-  const teamCode = params.teamCode;
+  const teamCode = sanitizeString(params.teamCode).substring(0, 20);
 
   try {
     const body = await request.json();

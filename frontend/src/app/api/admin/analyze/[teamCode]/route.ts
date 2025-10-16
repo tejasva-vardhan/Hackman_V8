@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dbConnect from '@/lib/dbConnect';
 import Registration from '@/models/Registration';
+// Admin endpoints rely on strong token auth; no rate limiting applied
+import { sanitizeString } from '@/lib/security';
 
 function isAuthorized(request: NextRequest): boolean {
   const header = request.headers.get('authorization') || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : '';
   const expected = process.env.ADMIN_TOKEN || '';
+  
   return Boolean(expected) && token === expected;
 }
 
@@ -46,7 +49,7 @@ export async function POST(
   }
 
   const params = await context.params;
-  const teamCode = params.teamCode;
+  const teamCode = sanitizeString(params.teamCode).substring(0, 20);
 
   try {
     // Check if Gemini API key is configured
@@ -78,7 +81,7 @@ export async function POST(
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     // Prepare the analysis prompt
-    let prompt = `You are an expert hackathon judge and AI content detector. Analyze the following project submission in extreme detail.
+    const prompt = `You are an expert hackathon judge and AI content detector. Analyze the following project submission in extreme detail.
 
 **Project Title:** ${team.projectTitle}
 
@@ -159,7 +162,7 @@ Do NOT include any markdown formatting, code blocks, or additional text. Return 
         ...parsedAnalysis,
         analyzedAt: new Date().toISOString(),
       };
-    } catch (parseError) {
+    } catch (_parseError) {
       console.error('Failed to parse Gemini response:', analysisText);
       return NextResponse.json(
         { message: 'Failed to parse AI analysis. Please try again.' },
