@@ -49,18 +49,33 @@ export async function GET(request: Request) {
     // Sanitize inputs
     const sanitizedEmail = sanitizeString(email).toLowerCase().substring(0, 254);
     const sanitizedPhone = sanitizeString(phone).substring(0, 15);
+
+    // Query for team using sanitized inputs
     const team = await Registration.findOne({
       $expr: {
         $and: [
-          { $eq: [ { $arrayElemAt: [ "$members.email", "$teamLeadId" ] }, sanitizedEmail ] },
-          { $eq: [ { $arrayElemAt: [ "$members.phone", "$teamLeadId" ] }, sanitizedPhone ] }
+          { 
+            $eq: [
+              { $toLower: { $arrayElemAt: [ "$members.email", "$teamLeadId" ] } },
+              sanitizedEmail
+            ]
+          },
+          { 
+            $eq: [
+              { $arrayElemAt: [ "$members.phone", "$teamLeadId" ] },
+              sanitizedPhone
+            ]
+          }
         ]
       }
     }).select('-__v');
+
     if (team) {
       return NextResponse.json(team, { status: 200 });
     }
+
     return NextResponse.json({ message: 'Team not found or invalid credentials' }, { status: 404 });
+    
   } catch (error: unknown) {
     return handleError(error);
   }

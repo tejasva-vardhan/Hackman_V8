@@ -81,13 +81,30 @@ const RegistrationForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasTriedSubmit(true);
-    toast.dismiss(); // Clear any existing toasts
+    toast.dismiss(); 
     const memberEmails = members.map((m) => m.email.trim().toLowerCase());
     if (new Set(memberEmails).size !== memberEmails.length) {
       toast.dismiss();
       setTimeout(() => toast.error('Each team member must have a unique email address.'), 10);
       return;
     }
+
+    
+    const memberGitHub = members.map((m) => m.github?.trim().toLowerCase()).filter(Boolean);
+    if (new Set(memberGitHub).size !== memberGitHub.length) {
+      toast.dismiss();
+      setTimeout(() => toast.error('Each team member must have a unique GitHub profile.'), 10);
+      return;
+    }
+
+    
+    const memberLinkedIn = members.map((m) => m.linkedin?.trim().toLowerCase()).filter(Boolean);
+    if (new Set(memberLinkedIn).size !== memberLinkedIn.length) {
+      toast.dismiss();
+      setTimeout(() => toast.error('Each team member must have a unique LinkedIn profile.'), 10);
+      return;
+    }
+
     if (teamLeadId === null || !members.some((m) => m.id === teamLeadId)) {
       toast.dismiss();
       setTimeout(() => toast.error('Please select a valid team lead.'), 10);
@@ -140,9 +157,9 @@ const RegistrationForm: React.FC = () => {
       if (response.ok) {
         const teamLeadIndex = members.findIndex((m) => m.id === teamLeadId);
         const teamLead = members[teamLeadIndex];
-        sessionStorage.setItem('autoLoginEmail', teamLead.email.trim());
-        sessionStorage.setItem('autoLoginPhone', teamLead.phone.trim());
-        sessionStorage.setItem('isNewRegistration', 'true');
+        localStorage.setItem('leadEmail', teamLead.email.trim());
+        localStorage.setItem('phone', teamLead.phone.trim());
+        localStorage.setItem('isNewRegistration', 'true');
         toast.success('Registration successful! Redirecting to dashboard...', { duration: 2000 });
         setTimeout(() => {
           router.push('/dashboard');
@@ -278,7 +295,7 @@ const RegistrationForm: React.FC = () => {
                   <div className={styles.fieldControl}>
                     <input
                       type="text"
-                      placeholder="USN"
+                      placeholder="USN (optional)"
                       className={styles.input}
                       value={member.usn || ''}
                       onChange={(e) => handleMemberChange(member.id, 'usn', e.target.value)}
@@ -350,7 +367,7 @@ const RegistrationForm: React.FC = () => {
             </div>
           </fieldset>
           <button type="submit" className={`${styles.submitButton} ${nosifer.className}`} disabled={isSubmitting}>
-            {isSubmitting ? 'Submitting…' : 'Submit Registration'}
+            {isSubmitting ? 'Registering…' : 'Register'}
           </button>
         </form>
       </div>
