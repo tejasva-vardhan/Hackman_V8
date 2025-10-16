@@ -11,6 +11,10 @@ RUN npm install
 # Copy source code
 COPY . .
 
+# Accept build argument
+ARG NEXT_PUBLIC_URL
+ENV NEXT_PUBLIC_URL=$NEXT_PUBLIC_URL
+
 # Build the application
 RUN npm run build
 
