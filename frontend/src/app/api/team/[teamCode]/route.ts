@@ -138,7 +138,7 @@ export async function PUT(
       updateData.projectTitle = sanitizeString(data.projectTitle).substring(0, 200);
     }
     if (data.projectDescription && typeof data.projectDescription === 'string') {
-      updateData.projectDescription = sanitizeString(data.projectDescription).substring(0, 500);
+      updateData.projectDescription = sanitizeString(data.projectDescription).substring(0, 1500);
     }
     if (data.submissionStatus && ['pending', 'submitted', 'under_review'].includes(data.submissionStatus)) {
       updateData.submissionStatus = data.submissionStatus;

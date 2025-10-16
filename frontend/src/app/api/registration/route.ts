@@ -99,7 +99,7 @@ export async function POST(request: Request) {
           .string()
           .trim()
           .min(1, 'Project description is required')
-          .max(500, 'Project description must be at most 500 characters'),
+          .max(1500, 'Project description must be at most 1500 characters'),
         teamLeadId: z.number().nullable().default(0),
         members: z.array(teamMemberSchema).min(2).max(4),
       })
