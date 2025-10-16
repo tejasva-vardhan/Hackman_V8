@@ -11,9 +11,12 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Accept build argument
+# Only build-time public variables
 ARG NEXT_PUBLIC_URL
+ARG NEXT_PUBLIC_PAYMENT_URL
+
 ENV NEXT_PUBLIC_URL=$NEXT_PUBLIC_URL
+ENV NEXT_PUBLIC_PAYMENT_URL=$NEXT_PUBLIC_PAYMENT_URL
 
 # Build the application
 RUN npm run build
