@@ -3,6 +3,7 @@ import dbConnect from '@/lib/dbConnect';
 import Registration from '@/models/Registration';
 // Admin endpoints rely on strong token auth; no rate limiting applied
 import { sanitizeString } from '@/lib/security';
+import { sendSelectionEmail } from '@/lib/selectionEmail';
 
 function isAuthorized(request: NextRequest): boolean {
   const header = request.headers.get('authorization') || '';
@@ -60,6 +61,8 @@ export async function PUT(
     }
 
     await dbConnect();
+    // Fetch existing doc to detect status transition
+    const existing = await Registration.findOne({ teamCode: teamCode.toUpperCase() }).lean();
     const update: Record<string, unknown> = {};
     if (selectionStatus) update.selectionStatus = selectionStatus;
     if (typeof reviewComments === 'string') update.reviewComments = reviewComments;
@@ -73,6 +76,17 @@ export async function PUT(
 
     if (!team) {
       return NextResponse.json({ message: 'Team not found' }, { status: 404 });
+    }
+
+    // If transitioning to selected, send email notification to team members
+    const transitionedToSelected = selectionStatus === 'selected' && existing && existing.selectionStatus !== 'selected';
+    if (transitionedToSelected && team) {
+      try {
+        const recipients = (team.members || []).map((m: any) => m.email).filter(Boolean);
+        await sendSelectionEmail({ teamName: team.teamName, teamCode: team.teamCode, recipients });
+      } catch (emailErr) {
+        console.error('Failed to send selection email(s):', emailErr);
+      }
     }
 
     return NextResponse.json({ data: team });
