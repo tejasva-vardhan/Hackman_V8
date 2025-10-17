@@ -23,7 +23,33 @@ const nosifer = Nosifer({
 export const metadata: Metadata = {
   title: "Hackman V8 - The Ultimate Hackathon Experience",
   description:
-    "Join Hackman V8, the ultimate 48-hour hackathon where innovation meets collaboration. Build amazing projects, win prizes, and connect with fellow developers.",
+    "Join Hackman V8, the ultimate 24-hour hackathon where innovation meets collaboration. Build amazing projects, win prizes, and connect with fellow developers.",
+  keywords: [
+    "hackathon",
+    "Hackman V8",
+    "coding competition",
+    "tech event",
+    "hackathon Bengaluru",
+    "ISE",
+    "genesis",
+    "information science and engineering",
+    "codefest India",
+    "hackathon for students",
+    "software development",
+    "win prizes",
+    "hackathon registration 2025",
+    "innovation challenge",
+    "programming",
+    "Dayananda Sagar College Of Engineering",
+    "Bangalore",
+  ],
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+  authors: [{ name: 'GENESIS' }],
+  creator: 'GENESIS',
 }
 export default function RootLayout({
   children,
