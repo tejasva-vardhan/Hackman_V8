@@ -155,8 +155,12 @@ export async function POST(request: Request) {
         isUnique = true;
       }
     }
+    // Remove id fields from members before saving to database
+    const membersForDb = parsed.data.members.map(({ id, ...member }) => member);
+    
     const registrationData = {
       ...parsed.data,
+      members: membersForDb,
       teamCode,
     };
     const newRegistration = await Registration.create(registrationData);
@@ -170,17 +174,52 @@ export async function POST(request: Request) {
       });
       const emailPromises = parsed.data.members.map((member) => {
         return transporter.sendMail({
-          from: `"Hackathon Team" <${process.env.EMAIL_SERVER_USER}>`,
+          from: `"Genesis 2K25 Hackathon" <${process.env.EMAIL_SERVER_USER}>`,
           to: member.email,
-          subject: '✅ Your Hackathon Registration is Confirmed!',
+          subject: '🎉 Registration Confirmed | HackmanV8',
           html: `
-            <h1>Hi ${member.name},</h1>
-            <p>Your team, <strong>${parsed.data.teamName}</strong>, has been successfully registered for the hackathon!</p>
-            <p><strong>Project Title:</strong> ${parsed.data.projectTitle}</p>
-            <p>We're excited to have you on board. We'll be in touch with more information soon.</p>
-            <br/>
-            <p>Best of luck!</p>
-            <p>The Hackathon Organizers</p>
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h2 style="color: #333; text-align: center; margin-bottom: 30px;">
+                🎉 HackmanV8
+              </h2>
+              
+              <h3>Hello ${member.name}!</h3>
+              
+              <p>Your registration for <strong><a href="https://hackman.dsce.in/">HackmanV8</a></strong> has been confirmed!</p>
+              
+              <div style="background-color: #f5f5f5; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                <h4 style="margin-top: 0; color: #333;">Registration Details:</h4>
+                <p><strong>Team Name:</strong> ${parsed.data.teamName}</p>
+                <p><strong>Project Title:</strong> ${parsed.data.projectTitle}</p>
+                <p><strong>College:</strong> ${parsed.data.collegeName}</p>
+                <p><strong>Team Lead:</strong> ${parsed.data.teamLeadId !== null && parsed.data.teamLeadId !== 0 && parsed.data.members[parsed.data.teamLeadId] ? parsed.data.members[parsed.data.teamLeadId].name : parsed.data.members[0]?.name || 'Not assigned'}</p>
+                <p><strong>Team Lead Email:</strong> ${parsed.data.teamLeadId !== null && parsed.data.teamLeadId !== 0 && parsed.data.members[parsed.data.teamLeadId] ? parsed.data.members[parsed.data.teamLeadId].email : parsed.data.members[0]?.email || 'Not assigned'}</p>
+                <p><strong>Team Lead Phone:</strong> ${parsed.data.teamLeadId !== null && parsed.data.teamLeadId !== 0 && parsed.data.members[parsed.data.teamLeadId] ? parsed.data.members[parsed.data.teamLeadId].phone : parsed.data.members[0]?.phone || 'Not assigned'}</p>
+              </div>
+              
+              <h4>Dashboard Access:</h4>
+              <p>You can access your team dashboard <a href="https://hackman.dsce.in/">here</a> using these credentials:</p>
+              <ul>
+                <li><strong>Login Email:</strong> ${parsed.data.teamLeadId !== null && parsed.data.teamLeadId !== 0 && parsed.data.members[parsed.data.teamLeadId] ? parsed.data.members[parsed.data.teamLeadId].email : parsed.data.members[0]?.email || 'Not assigned'}</li>
+                <li><strong>Login Phone:</strong> ${parsed.data.teamLeadId !== null && parsed.data.teamLeadId !== 0 && parsed.data.members[parsed.data.teamLeadId] ? parsed.data.members[parsed.data.teamLeadId].phone : parsed.data.members[0]?.phone || 'Not assigned'}</li>
+              </ul>
+              
+              <h4>Important:</h4>
+              <ul>
+                <li>Use the dashboard to track your registration status and submit your project</li>
+                <li>Check your email for further instructions</li>
+                <li>Join our community channels for updates</li>
+              </ul>
+              
+              <p>Good luck with your project!</p>
+              
+              <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+              
+              <p style="font-size: 12px; color: #666; text-align: center;">
+                HackmanV8<br>
+                Questions? Contact us at ise.genesis.dsce@gmail.com
+              </p>
+            </div>
           `,
         });
       });
