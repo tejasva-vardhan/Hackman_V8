@@ -384,11 +384,11 @@ export default function Hero() {
             </a>
           </div>
           <div className={`${jolly.className} hero-subtitle flex justify-start mt-4 mb-6 opacity-0`}>
-            <div className="relative inline-block animate-date-glow w-[35vw] sm:w-[19vw]">
+            <div className="relative inline-block animate-date-glow w-[70vw] sm:w-[40vw] md:w-[28vw] lg:w-[22vw] xl:w-[19vw]">
               <div className="absolute -inset-2 bg-gradient-to-r from-[#FF0700] via-[#FE772D] to-[#FF0700] rounded-xl blur-md opacity-90"></div>
               <div className="absolute -inset-1 bg-gradient-to-r from-[#FE772D] via-[#FF0700] to-[#FE772D] rounded-lg blur-sm opacity-60"></div>
-              <div className="relative bg-gradient-to-br from-black/90 via-gray-900/90 to-black/90 px-8 py-4 rounded-xl border-2 border-[#FE772D] backdrop-blur-sm flex items-center justify-center">
-                <span className="animate-text-shimmer text-[3.5vw] sm:text-[1.8vw] font-bold tracking-wider drop-shadow-2xl text-center">
+              <div className="relative bg-gradient-to-br from-black/90 via-gray-900/90 to-black/90 px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 rounded-xl border-2 border-[#FE772D] backdrop-blur-sm flex items-center justify-center">
+                <span className="animate-text-shimmer text-[5vw] sm:text-[3vw] md:text-[2.2vw] lg:text-[1.6vw] xl:text-[1.4vw] leading-tight font-bold tracking-wider drop-shadow-2xl text-center whitespace-nowrap overflow-hidden text-ellipsis">
                   31st October 2025
                 </span>
                 <div className="absolute -top-2 -left-2 w-4 h-4 bg-gradient-to-br from-[#FF0700] to-[#FE772D] rounded-full animate-corner-pulse"></div>
