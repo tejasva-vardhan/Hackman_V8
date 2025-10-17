@@ -55,7 +55,13 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
     const transitionedToSelected = selectionStatus === 'selected' && existing.selectionStatus !== 'selected';
     if (transitionedToSelected) {
       try {
-        const recipients = (updated.members || []).map((m: any) => m.email).filter(Boolean);
+        type MemberLike = { email?: string };
+        const membersUnknown: unknown = (updated as unknown as { members?: unknown }).members;
+        const recipients: string[] = Array.isArray(membersUnknown)
+          ? (membersUnknown as MemberLike[])
+              .map((m) => m.email)
+              .filter((e): e is string => typeof e === 'string' && e.length > 0)
+          : [];
         await sendSelectionEmail({ teamName: updated.teamName, teamCode: updated.teamCode, recipients });
       } catch (emailErr) {
         console.error('Failed to send selection email(s):', emailErr);
