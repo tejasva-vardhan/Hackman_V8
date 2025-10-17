@@ -82,7 +82,13 @@ export async function PUT(
     const transitionedToSelected = selectionStatus === 'selected' && existing && existing.selectionStatus !== 'selected';
     if (transitionedToSelected && team) {
       try {
-        const recipients = (team.members || []).map((m: any) => m.email).filter(Boolean);
+        type MemberLike = { email?: string };
+        const membersUnknown: unknown = (team as unknown as { members?: unknown }).members;
+        const recipients: string[] = Array.isArray(membersUnknown)
+          ? (membersUnknown as MemberLike[])
+              .map((m) => m.email)
+              .filter((e): e is string => typeof e === 'string' && e.length > 0)
+          : [];
         await sendSelectionEmail({ teamName: team.teamName, teamCode: team.teamCode, recipients });
       } catch (emailErr) {
         console.error('Failed to send selection email(s):', emailErr);
