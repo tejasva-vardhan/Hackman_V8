@@ -174,7 +174,7 @@ export async function POST(request: Request) {
       });
       const emailPromises = parsed.data.members.map((member) => {
         return transporter.sendMail({
-          from: `"Genesis 2K25 Hackathon" <${process.env.EMAIL_SERVER_USER}>`,
+          from: `"Hackman V8 Team" <${process.env.EMAIL_SERVER_USER}>`,
           to: member.email,
           subject: '🎉 Registration Confirmed | HackmanV8',
           html: `
