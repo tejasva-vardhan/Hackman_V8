@@ -93,7 +93,7 @@ export default function Navigation() {
       >
         <span
           className={`block w-6 h-0.5 bg-white transition-all duration-300 ${
-            isMenuOpen ? "rotate-45 translate-y-1.5" : "-translate-y-1"
+            isMenuOpen ? "rotate-45 translate-y-2" : "-translate-y-1"
           }`}
         />
         <span
@@ -103,7 +103,7 @@ export default function Navigation() {
         />
         <span
           className={`block w-6 h-0.5 bg-white transition-all duration-300 mt-1.5 ${
-            isMenuOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-1"
+            isMenuOpen ? "-rotate-45 -translate-y-2" : "translate-y-1"
           }`}
         />
       </button>
