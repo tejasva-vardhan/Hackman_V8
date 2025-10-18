@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono, Jolly_Lodger, Nosifer} from "next/font/google"
+import { Geist, Geist_Mono, Jolly_Lodger, Nosifer, Creepster} from "next/font/google"
 import { Toaster } from 'react-hot-toast'
 import "./globals.css"
 const geistSans = Geist({
@@ -17,6 +17,11 @@ const jolly = Jolly_Lodger({
 })
 const nosifer = Nosifer({
   variable: "--font-nosifer",
+  subsets: ["latin"],
+  weight: "400", 
+})
+const creepster = Creepster({
+  variable: "--font-creepster",
   subsets: ["latin"],
   weight: "400", 
 })
@@ -57,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${jolly.variable} ${nosifer.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${jolly.variable} ${nosifer.variable} ${creepster.variable} antialiased`}
       >
         <Toaster 
           position="top-center" 

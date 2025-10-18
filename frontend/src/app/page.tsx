@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
@@ -10,20 +10,41 @@ import Contact from '@/components/Contact';
 import Gallery from '@/components/Gallery';
 import { AboutHackman } from '@/components/About';
 import WelcomeScreen from '@/components/WelcomeScreen';
+import BackgroundAudio from '@/components/BackgroundAudio';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  useEffect(() => {
+    // Check if user has already seen the welcome screen in this session
+    const hasSeenWelcome = sessionStorage.getItem('welcomeScreenShown');
+
+    if (!hasSeenWelcome) {
+      // First visit in this session - show welcome screen
+      setShowWelcome(true);
+      setIsLoading(true);
+    } else {
+      // Already seen in this session - skip welcome screen
+      setShowWelcome(false);
+      setIsLoading(false);
+    }
+  }, []);
 
   const handleIntroComplete = () => {
+    // Mark welcome screen as shown for this session
+    sessionStorage.setItem('welcomeScreenShown', 'true');
     setIsLoading(false);
   };
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && showWelcome ? (
         <WelcomeScreen onComplete={handleIntroComplete} />
       ) : (
         <>
+          {/* Background audio plays only after welcome screen */}
+          <BackgroundAudio />
           <Navigation />
           <main className="min-h-screen">
             <section id="hero">
