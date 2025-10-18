@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { Nosifer, Jolly_Lodger, Poppins } from "next/font/google";
 import { useEffect, useRef } from "react";
-import Navigation from "./Navigation";
 const nosifer = Nosifer({ weight: "400", subsets: ["latin"] });
 const jolly = Jolly_Lodger({ weight: "400", subsets: ["latin"] });
 const poppins = Poppins({ weight: ["400"], subsets: ["latin"] });
@@ -67,19 +66,19 @@ export default function Hero() {
           50% { filter: brightness(1.1) drop-shadow(0 0 15px rgba(255, 120, 0, 0.6)); }
         }
         @keyframes dateGlow {
-          0%, 100% { 
+          0%, 50% { 
             box-shadow: 
-              0 0 20px rgba(255, 7, 0, 0.6),
-              0 0 40px rgba(254, 119, 45, 0.4),
-              inset 0 0 20px rgba(255, 7, 0, 0.2);
+              0 0 1px rgba(255, 7, 0, 0.04),
+              0 0 3px rgba(254, 119, 45, 0.02),
+              inset 0 0 1px rgba(255, 7, 0, 0.015);
             transform: scale(1);
           }
-          50% { 
+          10% { 
             box-shadow: 
-              0 0 30px rgba(255, 7, 0, 0.8),
-              0 0 60px rgba(254, 119, 45, 0.6),
-              inset 0 0 30px rgba(255, 7, 0, 0.3);
-            transform: scale(1.02);
+              0 0 2px rgba(255, 7, 0, 0.05),
+              0 0 4px rgba(254, 119, 45, 0.03),
+              inset 0 0 2px rgba(255, 7, 0, 0.02);
+            transform: scale(1.04);
           }
         }
         @keyframes textShimmer {
@@ -89,12 +88,12 @@ export default function Hero() {
         @keyframes cornerPulse {
           0%, 100% { 
             transform: scale(1);
-            opacity: 0.8;
+            opacity: 1;
             box-shadow: 0 0 10px rgba(255, 7, 0, 0.6);
           }
           50% { 
             transform: scale(1.3);
-            opacity: 1;
+            opacity: 0.2;
             box-shadow: 0 0 20px rgba(255, 7, 0, 1);
           }
         }
@@ -165,7 +164,6 @@ export default function Hero() {
           backgroundSize: "cover",
         }}
       >
-        {}
         <div>
           <Image
             src="/Hero/botton.png"
@@ -385,8 +383,8 @@ export default function Hero() {
           </div>
           <div className={`${jolly.className} hero-subtitle flex justify-start mt-4 mb-6 opacity-0`}>
             <div className="relative inline-block animate-date-glow w-[70vw] sm:w-[40vw] md:w-[28vw] lg:w-[22vw] xl:w-[19vw]">
-              <div className="absolute -inset-2 bg-gradient-to-r from-[#FF0700] via-[#FE772D] to-[#FF0700] rounded-xl blur-md opacity-90"></div>
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#FE772D] via-[#FF0700] to-[#FE772D] rounded-lg blur-sm opacity-60"></div>
+              <div className="absolute -inset-2 bg-gradient-to-r from-[#FF0700] via-[#FE772D] to-[#FF0700] rounded-xl blur-md opacity-35"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#FE772D] via-[#FF0700] to-[#FE772D] rounded-lg blur-sm opacity-45"></div>
               <div className="relative bg-gradient-to-br from-black/90 via-gray-900/90 to-black/90 px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-3 lg:px-8 lg:py-4 rounded-xl border-2 border-[#FE772D] backdrop-blur-sm flex items-center justify-center">
                 <span className="animate-text-shimmer text-[5vw] sm:text-[3vw] md:text-[2.2vw] lg:text-[1.6vw] xl:text-[1.4vw] leading-tight font-bold tracking-wider drop-shadow-2xl text-center whitespace-nowrap overflow-hidden text-ellipsis">
                   31st October 2025
