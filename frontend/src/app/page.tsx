@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     // Check if user has already seen the welcome screen in this session
     const hasSeenWelcome = sessionStorage.getItem('welcomeScreenShown');
-    
+
     if (!hasSeenWelcome) {
       // First visit in this session - show welcome screen
       setShowWelcome(true);
@@ -43,7 +43,7 @@ export default function Home() {
         <WelcomeScreen onComplete={handleIntroComplete} />
       ) : (
         <>
-          {/* Background audio plays only on hero page (after welcome screen) */}
+          {/* Background audio plays only after welcome screen */}
           <BackgroundAudio />
           <Navigation />
           <main className="min-h-screen">
