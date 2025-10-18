@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { Nosifer } from "next/font/google";
 
 const nosifer = Nosifer({
@@ -11,8 +12,8 @@ const nosifer = Nosifer({
 // Configuration Constants
 const DARKNESS_MS = 800; // Initial darkness after button click
 const BAT_SWARM_DURATION_MS = 4000; // Duration of bat animation
-const FADE_OUT_DURATION_MS = 1000; // Fade to hero
-const AUDIO_GAP_MS = 3000; // 3 second gap between audio loops
+const FADE_OUT_DURATION_MS = 100; // Fade to hero
+const AUDIO_GAP_MS = 1000; // 3 second gap between audio loops
 
 interface Bat {
   id: number;
@@ -413,10 +414,12 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onComplete }) => {
               animation: "favicon-pulse 3s ease-in-out infinite, favicon-glow 2s ease-in-out infinite",
             }}
           >
-            <img 
+             <Image 
               src="/favicon.ico" 
               alt="Favicon"
-              className="w-full h-full object-contain"
+              fill
+              className="object-contain"
+              priority
             />
           </div>
         </div>
