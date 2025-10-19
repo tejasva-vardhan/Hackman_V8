@@ -119,7 +119,7 @@ export default function Contact() {
             <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500" />
             <input type="email" name="email" placeholder="Your Email Id" value={formData.email} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500" />
             <textarea name="message" placeholder="Message" rows={4} value={formData.message} onChange={handleChange} className="w-full p-3 md:p-4 bg-[#121212] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 placeholder-gray-500 resize-none" />
-            <button type="submit" disabled={isSubmitting} className={`${jollyLodger.className} w-full md:w-[40%] mx-auto block bg-[#FE772D] text-gray-800 rounded-xl text-xl md:text-2xl py-3 md:py-4 transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed`} >
+            <button type="submit" disabled={isSubmitting} className={`${jollyLodger.className} w-full md:w-[40%] mx-auto block bg-[#FE772D] text-gray-800 rounded-xl text-xl md:text-2xl py-3 md:py-4 transform transition-all duration-300 hover:scale-105 hover:bg-[#E5691F] hover:shadow-xl cursor-pointer disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed`} >
               {isSubmitting ? "Sending..." : "Send Message"}
             </button>
           </form>
