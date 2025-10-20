@@ -58,6 +58,7 @@ export default function Navigation() {
     { href: "#hero", label: "Home", delay: 0.5 },
     { href: "#about", label: "About Genesis", delay: 0.6 },
     { href: "#about-hackman", label: "About Hackman", delay: 0.7 },
+    { href: "#timeline", label: "Timeline", delay: 0.75 },
     { href: "#gallery", label: "Gallery", delay: 0.8 },
     { href: "#sponsors", label: "Sponsors", delay: 0.9 },
     { href: "/dashboard", label: "Dashboard", delay: 1.0 },
