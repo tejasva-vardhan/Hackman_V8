@@ -178,7 +178,7 @@ const Timeline: React.FC = () => {
         
         {/* CHANGE 3: Remove "animate-fade-up" class */}
         <p className={styles.subtitle}>
-          Mark your calendars for Hackman V8's spooky coding adventure
+          Mark your calendars for Hackman V8&apos;s spooky coding adventure
         </p>
 
         {activeView === 'timeline' ? (
