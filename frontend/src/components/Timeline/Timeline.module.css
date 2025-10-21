@@ -1,0 +1,872 @@
+.timelineSection {
+  background: #000000;
+  color: #e9e7e4;
+  min-height: auto;
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 0.5rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease;
+}
+
+.timelineSection.animateIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timelineContainer {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+/* FIXED: Heading Animation */
+.title {
+  font-size: 2rem;
+  color: #FF0700;
+  text-transform: none;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-shadow: none;
+  line-height: 1.2;
+  
+  /* Animation properties - FIXED */
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.timelineSection.animateIn .title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.subtitle {
+  text-align: center;
+  color: #cfcfcf;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-geist-sans);
+  line-height: 1.3;
+  padding: 0 0.5rem;
+  
+  /* Animation properties - FIXED */
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+.timelineSection.animateIn .subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Rest of your CSS remains exactly the same... */
+
+/* Rest of your CSS remains exactly the same... */
+
+/* Rest of your CSS remains the same... */
+
+/* Timeline View */
+.timelineView {
+  padding: 0.5rem 0;
+}
+
+/* Mobile Timeline Track */
+.timelineTrack {
+  position: relative;
+  height: auto;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.trackLine {
+  position: absolute;
+  left: 1.5rem;
+  transform: none;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, #FF0700 0%, rgba(255,7,0,0.8) 50%, rgba(255,7,0,0.4) 100%);
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(255,7,0,0.3);
+}
+
+/* Mobile Timeline Items */
+.timelineItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  padding-left: 0.1rem;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.6s ease;
+}
+
+.timelineSection.animateIn .timelineItem {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timelineSection.animateIn .timelineItem.item0 { transition-delay: 0.3s; }
+.timelineSection.animateIn .timelineItem.item1 { transition-delay: 0.45s; }
+.timelineSection.animateIn .timelineItem.item2 { transition-delay: 0.6s; }
+.timelineSection.animateIn .timelineItem.item3 { transition-delay: 0.75s; }
+.timelineSection.animateIn .timelineItem.item4 { transition-delay: 0.9s; }
+
+/* Card Content */
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 0.8rem 0.5rem;
+}
+
+/* Mobile Cards */
+.mobileCard {
+  background: linear-gradient(135deg, rgba(255, 107, 45, 0.15), rgba(255, 7, 0, 0.08));
+  border: 1.5px solid rgba(255, 107, 45, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  width: 220px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  margin: 0 auto;
+  flex-shrink: 0;
+  min-height: 100px;
+}
+
+.mobileCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 107, 45, 0.15), transparent);
+  transition: left 0.4s ease;
+}
+
+.mobileCard:hover::before {
+  left: 100%;
+}
+
+.mobileCard:hover {
+  border-color: #FF0700;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(255,7,0,0.25);
+}
+
+.mobileCard.highlighted {
+  border-color: #FF0700;
+  background: linear-gradient(135deg, rgba(255, 7, 0, 0.2), rgba(40, 40, 40, 0.9));
+  box-shadow: 
+    0 0 20px rgba(255, 7, 0, 0.3),
+    inset 0 0 10px rgba(255, 7, 0, 0.1);
+}
+
+/* Mobile Date Styling */
+.date {
+  display: block;
+  font-size: 1rem;
+  color: #ff6b2d;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+  font-weight: 700;
+  font-family: var(--font-geist-sans);
+  word-wrap: break-word;
+}
+
+.event {
+  font-size: 0.85rem;
+  color: #ffffff;
+  line-height: 1.3;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  font-family: var(--font-geist-sans);
+}
+
+.clickHint {
+  font-size: 0.65rem;
+  color: #ffb38a;
+  font-weight: 600;
+  margin-top: 0.4rem;
+  opacity: 0.9;
+  font-family: var(--font-geist-sans);
+}
+
+.mainEventTag {
+  background: linear-gradient(135deg,#FF0700,#ff3333);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(255,7,0,0.3);
+  font-family: var(--font-geist-sans);
+  letter-spacing: 0.3px;
+}
+
+/* Mobile Timeline Marker */
+.timelineMarker {
+  position: absolute;
+  left: 1.5rem;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.2s ease;
+  top: 50%;
+}
+
+.timelineMarker:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.markerDot {
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg,#FF0700,#ff3333);
+  border-radius: 50%;
+  border: 2px solid #0b0b0b;
+  box-shadow: 0 0 8px rgba(255,7,0,0.4);
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.markerPulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(255,7,0,0.2) 0%, rgba(255,7,0,0.05) 70%);
+  border-radius: 50%;
+  animation: pulseMobile 2s ease-in-out infinite;
+}
+
+.timelineMarker.highlightedMarker .markerDot {
+  background: #ff3333;
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(255, 7, 0, 0.5);
+}
+
+/* Desktop Cards (Hidden on Mobile) */
+.leftCard, .rightCard {
+  display: none;
+}
+
+/* Scroll Ghost (Hidden on Mobile) */
+.scrollGhost {
+  display: none;
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+  .timelineSection {
+    padding: 3.5rem 1rem;
+    min-height: 100vh;
+  }
+  
+  .timelineContainer {
+    max-width: 1200px;
+    padding: 0;
+  }
+  
+  .title {
+    font-size: clamp(2rem, 4.5vw, 3.8rem);
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    margin-bottom: 2.2rem;
+    padding: 0;
+  }
+  
+  .timelineTrack {
+    height: 500px;
+    padding: 0;
+    position: relative;
+  }
+  
+  .trackLine {
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+  }
+  
+  .timelineItem {
+    position: absolute !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateY(-50%) !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+    width: 100%;
+    left: 0 !important;
+    top: auto !important;
+    opacity: 0;
+    transform: translateY(-50%) translateX(-20px) !important;
+    transition: all 0.6s ease;
+  }
+
+  .timelineSection.animateIn .timelineItem {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0) !important;
+  }
+  
+  .timelineItem.item0 { top: 10% !important; }
+  .timelineItem.item1 { top: 25% !important; }
+  .timelineItem.item2 { top: 45% !important; }
+  .timelineItem.item3 { top: 65% !important; }
+  .timelineItem.item4 { top: 85% !important; }
+  
+  /* Show Desktop Cards */
+  .leftCard, .rightCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px;
+  }
+  
+  /* Hide Mobile Card */
+  .mobileCard {
+    display: none;
+  }
+  
+  /* Desktop Card Styles */
+  .leftCard {
+    background: linear-gradient(135deg, rgba(255, 107, 45, 0.15), rgba(255, 7, 0, 0.08));
+    border: 1.5px solid rgba(255, 107, 45, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    width: 220px;
+    min-width: 200px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+
+  .rightCard {
+    background: linear-gradient(135deg, rgba(255, 107, 45, 0.15), rgba(255, 7, 0, 0.08));
+    border: 1.5px solid rgba(255, 107, 45, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    width: 220px;
+    min-width: 200px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    margin-left: 15px;
+    flex-shrink: 0;
+  }
+
+  .leftCard::before, .rightCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 45, 0.15), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .leftCard:hover::before, .rightCard:hover::before {
+    left: 100%;
+  }
+
+  .leftCard:hover {
+    border-color: #FF0700;
+    transform: translateX(-2px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(255,7,0,0.3);
+  }
+
+  .rightCard:hover {
+    border-color: #FF0700;
+    transform: translateX(2px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(255,7,0,0.3);
+  }
+
+  .leftCard.highlighted, .rightCard.highlighted {
+    border-color: #FF0700;
+    background: linear-gradient(135deg, rgba(255, 7, 0, 0.2), rgba(40, 40, 40, 0.9));
+    box-shadow: 
+      0 0 20px rgba(255, 7, 0, 0.35),
+      inset 0 0 12px rgba(255, 7, 0, 0.1);
+  }
+
+  /* Desktop Date Styling */
+  .leftCard .date, .rightCard .date {
+    font-size: 1.1rem;
+  }
+
+  .leftCard .event, .rightCard .event {
+    font-size: 0.9rem;
+    line-height: 1.3;
+  }
+
+  .timelineMarker {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .markerDot {
+    width: 16px;
+    height: 16px;
+  }
+
+  .markerPulse {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Show Scroll Ghost - FIXED: Start from track position */
+  .scrollGhost {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    z-index: 25;
+    transition: top 0.6s ease-out;
+    will-change: top;
+    filter: 
+      drop-shadow(0 0 12px rgba(255, 7, 0, 0.9))
+      drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+    animation: ghostFloat 3s ease-in-out infinite;
+    pointer-events: none;
+    text-shadow: 0 0 15px rgba(255, 7, 0, 0.8);
+    /* FIXED: Start position will be set by JavaScript */
+    top: 200px; /* Initial position - JS will override this */
+  }
+
+  .ghostHidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) scale(0.8);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  @keyframes ghostFloat {
+    0%, 100% { 
+      transform: translateX(-50%) translateY(0px) rotate(0deg);
+    }
+    25% { 
+      transform: translateX(-50%) translateY(-8px) rotate(-2deg);
+    }
+    50% { 
+      transform: translateX(-50%) translateY(-4px) rotate(2deg);
+    }
+    75% { 
+      transform: translateX(-50%) translateY(-10px) rotate(-1deg);
+    }
+  }
+}
+
+@keyframes pulseMobile {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Schedule View */
+.scheduleView {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.4s ease;
+  padding: 0.5rem 0;
+}
+
+.scheduleHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  padding: 0 0.5rem;
+  position: relative;
+}
+
+.backButton {
+  background: linear-gradient(135deg, var(--primary-red-light, #ff3333) 0%, var(--primary-red, #FF0700) 100%);
+  border: none;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  font-weight: 800;
+  font-size: 0.95rem;
+  font-family: var(--font-geist-sans);
+  box-shadow: 0 8px 20px rgba(255, 7, 0, 0.28);
+  border: 1px solid rgba(255,255,255,0.06);
+  width: auto;
+  max-width: none;
+  order: 2;
+}
+
+.backButton:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(255, 7, 0, 0.35);
+}
+
+.scheduleHeader.sticky {
+  position: sticky;
+  top: 1rem;
+  z-index: 30;
+  background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.35));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+.scheduleTitle {
+  font-size: 1.5rem;
+  color: #FF0700;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 2px 6px rgba(255,7,0,0.2);
+  order: 1;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+/* Mobile Schedule Container */
+.scheduleContainer {
+  background: linear-gradient(135deg, rgba(20,20,20,0.95), rgba(30,30,30,0.9));
+  border: 1.5px solid rgba(255,107,45,0.2);
+  border-radius: 14px;
+  padding: 1.2rem;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.scheduleContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF0700, #ff6b2d, #FF0700);
+  opacity: 0.7;
+}
+
+.scheduleDay {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 0.8rem;
+  background: rgba(255,107,45,0.08);
+  border-radius: 10px;
+  border: 1px solid rgba(255,107,45,0.15);
+}
+
+.dayTitle {
+  font-size: 1.3rem;
+  color: #ff6b2d;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  text-shadow: 0 2px 4px rgba(255,107,45,0.2);
+  line-height: 1.2;
+}
+
+.daySubtitle {
+  color: #cfcfcf;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Mobile Schedule - Single Column */
+.scheduleColumns {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.scheduleColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.columnTitle {
+  text-align: center;
+  color: #ff6b2d;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(255,107,45,0.25);
+  position: relative;
+}
+
+.columnTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 25%;
+  right: 25%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #FF0700, transparent);
+}
+
+.scheduleItem {
+  padding: 0.9rem 1rem;
+  background: rgba(40,40,40,0.7);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.scheduleItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(180deg, #FF0700, #ff6b2d);
+  opacity: 0.7;
+}
+
+.scheduleItem:hover {
+  background: rgba(50,50,50,0.8);
+  transform: translateX(3px);
+  border-color: rgba(255,107,45,0.25);
+  box-shadow: 0 4px 12px rgba(255,107,45,0.1);
+}
+
+.timeSlot {
+  color: #ff6b2d;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+  font-family: var(--font-geist-sans);
+  line-height: 1.2;
+}
+
+.eventSlot {
+  color: #f0f0f0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.scheduleFooter {
+  text-align: center;
+  padding: 1.2rem;
+  background: linear-gradient(135deg, rgba(255,7,0,0.08), rgba(255,107,45,0.05));
+  border: 1px solid rgba(255,107,45,0.25);
+  border-radius: 12px;
+  color: #ff6b2d;
+  font-size: 1rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+.scheduleFooter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,107,45,0.12), transparent);
+  transition: left 0.4s ease;
+}
+
+.scheduleFooter:hover::before {
+  left: 100%;
+}
+
+/* Desktop Schedule */
+@media (min-width: 769px) {
+  .scheduleHeader {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+  }
+  
+  .backButton {
+    position: absolute;
+    left: 1rem;
+    width: auto;
+    order: 0;
+  }
+  
+  .scheduleTitle {
+    order: 0;
+    margin-bottom: 0;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+  }
+  
+  .scheduleContainer {
+    padding: 2.5rem;
+    border-radius: 20px;
+  }
+  
+  .scheduleColumns {
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .scheduleDay {
+    margin-bottom: 2rem;
+  }
+  
+  .dayTitle {
+    font-size: 1.8rem;
+  }
+  
+  .scheduleItem {
+    padding: 1.2rem 1.5rem;
+  }
+  
+  .scheduleFooter {
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .timelineSection {
+    padding: 1.5rem 0.3rem;
+  }
+  
+  .timelineContainer {
+    padding: 0 0.3rem;
+  }
+  
+  .title {
+    font-size: 1.7rem;
+  }
+  
+  .scheduleTitle {
+    font-size: 1.3rem;
+  }
+  
+  .mobileCard {
+    padding: 0.7rem;
+    width: 140px;
+  }
+  
+  .date {
+    font-size: 0.75rem;
+  }
+  
+  .event {
+    font-size: 0.7rem;
+  }
+  
+  .scheduleContainer {
+    padding: 1rem;
+  }
+  
+  .scheduleItem {
+    padding: 0.8rem;
+  }
+}
+/* Add these missing classes at the end of your CSS file */
+
+/* Schedule Open Animation */
+.timelineSection.scheduleOpen .timelineView {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.timelineSection.scheduleOpen .scheduleView {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.4s ease 0.2s;
+}
+
+/* Make schedule view visible by default when active */
+.scheduleView {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Animation delays for timeline items */
+.timelineSection.animateIn .timelineItem.item0 { transition-delay: 0.3s; }
+.timelineSection.animateIn .timelineItem.item1 { transition-delay: 0.45s; }
+.timelineSection.animateIn .timelineItem.item2 { transition-delay: 0.6s; }
+.timelineSection.animateIn .timelineItem.item3 { transition-delay: 0.75s; }
+.timelineSection.animateIn .timelineItem.item4 { transition-delay: 0.9s; }
+
+/* Ghost Hidden State */
+.ghostHidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) scale(0.8);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* CSS Variables */
+:root {
+  --font-geist-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --primary-red: #FF0700;
+  --primary-red-light: #ff3333;
+}
+
+/* Fix font fallback for subtitle */
+.subtitle {
+  font-family: var(--font-geist-sans);
+}

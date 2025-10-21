@@ -9,6 +9,7 @@ import Sponsors from '@/components/Sponsors';
 import Contact from '@/components/Contact';
 import Gallery from '@/components/Gallery';
 import { AboutHackman } from '@/components/About';
+import Timeline from '@/components/Timeline/Timeline';
 import WelcomeScreen from '@/components/WelcomeScreen';
 import BackgroundAudio from '@/components/BackgroundAudio';
 
@@ -55,6 +56,9 @@ export default function Home() {
             </section>
             <section id="about-hackman">
               <AboutHackman />
+            </section>
+            <section id="timeline">
+              <Timeline />
             </section>
             <section id="faq">
               <FAQ />
