@@ -8,6 +8,7 @@ import TeamInfo from '@/components/dashboard/TeamInfo';
 import SubmissionStatus from '@/components/dashboard/SubmissionStatus';
 import SelectionStatus from '@/components/dashboard/SelectionStatus';
 import ProjectSubmission from '@/components/dashboard/ProjectSubmission';
+import PaymentManagement from '@/components/dashboard/PaymentManagement';
 import styles from '@/styles/Dashboard.module.css';
 
 const nosifer = Nosifer({
@@ -37,6 +38,9 @@ interface TeamData {
   members: TeamMember[];
   submissionStatus: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
   selectionStatus: 'pending' | 'selected' | 'waitlisted' | 'rejected';
+  paymentStatus?: 'unpaid' | 'pending' | 'paid' | 'verified';
+  paymentProof?: string;
+  paymentDate?: string;
   submissionDetails: {
     githubRepo: string;
     liveDemo: string;
@@ -50,6 +54,12 @@ interface TeamData {
   updatedAt: string;
 }
 
+interface PaymentData {
+  paymentStatus?: 'unpaid' | 'pending' | 'paid' | 'verified';
+  paymentProof?: string;
+  paymentDate?: string;
+}
+
 export default function DashboardPage() {
   const router = useRouter();
   const [leadEmail, setLeadEmail] = useState('');
@@ -57,7 +67,7 @@ export default function DashboardPage() {
   const [teamData, setTeamData] = useState<TeamData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [activeTab, setActiveTab] = useState<'overview' | 'submission' | 'status'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'submission' | 'status' | 'payment'>('overview');
 
   
   useEffect(() => {
@@ -125,6 +135,16 @@ export default function DashboardPage() {
 
   const updateTeamData = (updatedData: Partial<TeamData>) => {
     setTeamData(prev => prev ? { ...prev, ...updatedData } : null);
+  };
+
+  const updatePaymentData = (updatedData: Partial<PaymentData>) => {
+    // Convert PaymentData to TeamData format
+    const teamDataUpdate: Partial<TeamData> = {
+      paymentStatus: updatedData.paymentStatus,
+      paymentProof: updatedData.paymentProof,
+      paymentDate: updatedData.paymentDate,
+    };
+    updateTeamData(teamDataUpdate);
   };
 
   if (!isAuthenticated) {
@@ -247,6 +267,14 @@ export default function DashboardPage() {
           >
             Selection Status
           </button>
+          {teamData?.selectionStatus === 'selected' && (
+            <button
+              className={`${styles.tabButton} ${activeTab === 'payment' ? styles.active : ''}`}
+              onClick={() => setActiveTab('payment')}
+            >
+              Payment
+            </button>
+          )}
         </nav>
 
         <div className={styles.tabContent}>
@@ -277,6 +305,12 @@ export default function DashboardPage() {
               <SubmissionStatus teamData={teamData} />
               <SelectionStatus teamData={teamData} />
             </div>
+          )}
+          {activeTab === 'payment' && teamData?.selectionStatus === 'selected' && (
+            <PaymentManagement 
+              teamData={teamData} 
+              onUpdate={updatePaymentData}
+            />
           )}
         </div>
       </div>

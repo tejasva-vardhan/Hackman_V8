@@ -71,6 +71,12 @@ export async function POST(request: Request) {
              <p>${sanitizedMessage.replace(/\n/g, '<br>')}</p>`,
     };
     await transporter.sendMail(mailOptions);
+    // Prepare contact data
+    const contactData: Record<string, unknown> = {
+      name: sanitizedName,
+      email,
+      message: sanitizedMessage,
+    };
     return NextResponse.json({ message: 'Email sent successfully!' }, { status: 200 });
   } catch (error) {
     console.error(error);
