@@ -5,9 +5,6 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { Nosifer } from 'next/font/google';
 import TeamInfo from '@/components/dashboard/TeamInfo';
-import SubmissionStatus from '@/components/dashboard/SubmissionStatus';
-import SelectionStatus from '@/components/dashboard/SelectionStatus';
-import ProjectSubmission from '@/components/dashboard/ProjectSubmission';
 import PaymentManagement from '@/components/dashboard/PaymentManagement';
 import styles from '@/styles/Dashboard.module.css';
 
@@ -67,7 +64,7 @@ export default function DashboardPage() {
   const [teamData, setTeamData] = useState<TeamData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [activeTab, setActiveTab] = useState<'overview' | 'submission' | 'status' | 'payment'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'payment'>('overview');
 
   
   useEffect(() => {
@@ -255,24 +252,13 @@ export default function DashboardPage() {
           >
             Team Overview
           </button>
-          <button
-            className={`${styles.tabButton} ${activeTab === 'submission' ? styles.active : ''}`}
-            onClick={() => setActiveTab('submission')}
-          >
-            Project Submission
-          </button>
-          <button
-            className={`${styles.tabButton} ${activeTab === 'status' ? styles.active : ''}`}
-            onClick={() => setActiveTab('status')}
-          >
-            Selection Status
-          </button>
+          {/* Show Payment tab only if team is selected */}
           {teamData?.selectionStatus === 'selected' && (
             <button
               className={`${styles.tabButton} ${activeTab === 'payment' ? styles.active : ''}`}
               onClick={() => setActiveTab('payment')}
             >
-              Payment
+              💳 Payment
             </button>
           )}
         </nav>
@@ -291,20 +277,8 @@ export default function DashboardPage() {
               }))}
               teamLeadIndex={teamData.teamLeadId}
               selectionStatus={teamData.selectionStatus}
-              submissionStatus={teamData.submissionStatus}
+              paymentStatus={teamData.paymentStatus}
             />
-          )}
-          {activeTab === 'submission' && (
-            <ProjectSubmission 
-              teamData={teamData} 
-              onUpdate={updateTeamData}
-            />
-          )}
-          {activeTab === 'status' && (
-            <div className={styles.statusContainer}>
-              <SubmissionStatus teamData={teamData} />
-              <SelectionStatus teamData={teamData} />
-            </div>
           )}
           {activeTab === 'payment' && teamData?.selectionStatus === 'selected' && (
             <PaymentManagement 

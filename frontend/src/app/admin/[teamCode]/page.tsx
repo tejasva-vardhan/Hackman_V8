@@ -58,6 +58,8 @@ type TeamData = {
   submissionStatus: string;
   selectionStatus: string;
   paymentStatus?: 'unpaid' | 'pending' | 'paid' | 'verified';
+  paymentProof?: string;
+  paymentDate?: string;
   members: Member[];
   createdAt?: string;
   updatedAt?: string;
@@ -128,6 +130,51 @@ export default function AdminTeamView() {
       })
       .finally(() => setLoading(false));
   }, [token, teamCode, router]);
+
+  async function updatePaymentStatus(status: 'unpaid' | 'pending' | 'paid' | 'verified') {
+    if (!token || !teamCode) return;
+    
+    const confirmMessage = status === 'verified' 
+      ? 'Are you sure you want to VERIFY this payment?' 
+      : `Are you sure you want to set payment status to ${status.toUpperCase()}?`;
+    
+    if (!window.confirm(confirmMessage)) return;
+    
+    try {
+      setUpdating(true);
+      setError("");
+      
+      const res = await fetch(`/api/admin/team/${teamCode}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ paymentStatus: status }),
+      });
+
+      if (res.status === 401) {
+        localStorage.removeItem('admin_token');
+        router.push('/admin');
+        throw new Error('Unauthorized');
+      }
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || 'Failed to update payment status');
+      }
+
+      const json = await res.json();
+      setTeam(json.data);
+      alert(`Payment status updated to ${status.toUpperCase()}`);
+    } catch (e) {
+      if ((e as Error).message !== 'Unauthorized') {
+        setError((e as Error).message || 'Failed to update payment status');
+      }
+    } finally {
+      setUpdating(false);
+    }
+  }
 
   async function updateSelectionStatus(status: string) {
     if (!token || !teamCode) return;
@@ -366,6 +413,80 @@ export default function AdminTeamView() {
                       <p className="text-gray-300 mt-1 whitespace-pre-wrap">{team.submissionDetails.additionalNotes}</p>
                     </div>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* Payment Proof Section */}
+            {team.paymentProof && (
+              <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 shadow-xl">
+                <h2 className="text-2xl font-bold text-white mb-4">💳 Payment Information</h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-gray-400 text-sm font-semibold">Payment Status</label>
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className={`px-4 py-2 rounded-lg text-sm font-semibold border ${
+                        team.paymentStatus === 'verified' ? 'bg-green-600/20 text-green-400 border-green-500/30' :
+                        team.paymentStatus === 'paid' || team.paymentStatus === 'pending' ? 'bg-blue-600/20 text-blue-400 border-blue-500/30' :
+                        'bg-gray-600/20 text-gray-400 border-gray-500/30'
+                      }`}>
+                        {(team.paymentStatus || 'unpaid').toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {team.paymentDate && (
+                    <div>
+                      <label className="text-gray-400 text-sm font-semibold">Payment Date</label>
+                      <p className="text-white mt-1">
+                        {new Date(team.paymentDate).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </p>
+                    </div>
+                  )}
+                  
+                  <div>
+                    <label className="text-gray-400 text-sm font-semibold">Payment Proof Screenshot</label>
+                    <div className="mt-2 bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
+                      <img
+                        src={team.paymentProof}
+                        alt="Payment Proof"
+                        className="max-w-full max-h-96 rounded-lg border border-gray-600"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Payment Action Buttons */}
+                  <div className="flex gap-3 mt-4 flex-wrap">
+                    {team.paymentStatus !== 'verified' && (
+                      <button
+                        onClick={() => updatePaymentStatus('verified')}
+                        disabled={updating}
+                        className="px-6 py-2 rounded-xl font-semibold bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        ✅ Verify Payment
+                      </button>
+                    )}
+                    {team.paymentStatus === 'verified' && (
+                      <button
+                        onClick={() => updatePaymentStatus('pending')}
+                        disabled={updating}
+                        className="px-6 py-2 rounded-xl font-semibold bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        ⏳ Mark as Pending
+                      </button>
+                    )}
+                    <button
+                      onClick={() => updatePaymentStatus('unpaid')}
+                      disabled={updating}
+                      className="px-6 py-2 rounded-xl font-semibold bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      ❌ Mark as Unpaid
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

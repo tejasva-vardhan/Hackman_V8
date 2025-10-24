@@ -14,126 +14,110 @@ interface TeamInfoProps {
   members: Member[];
   teamLeadIndex: number;
   selectionStatus?: 'pending' | 'selected' | 'waitlisted' | 'rejected';
-  submissionStatus?: 'not_submitted' | 'submitted' | 'under_review' | 'accepted' | 'rejected';
+  paymentStatus?: 'unpaid' | 'pending' | 'paid' | 'verified';
 }
-const TeamInfo: React.FC<TeamInfoProps> = ({ projectTitle, projectDescription, teamLeadPhone, members, teamLeadIndex, selectionStatus, submissionStatus }) => {
-  const getSelectionStatusColor = (status?: string) => {
-    switch (status) {
-      case 'selected':
-        return '#10b981';
-      case 'rejected':
-        return '#ef4444';
-      case 'waitlisted':
-        return '#f59e0b';
-      default:
-        return '#6b7280';
+const TeamInfo: React.FC<TeamInfoProps> = ({ projectTitle, projectDescription, teamLeadPhone, members, teamLeadIndex, selectionStatus, paymentStatus }) => {
+  const getStatusInfo = () => {
+    // If selected, check payment status
+    if (selectionStatus === 'selected') {
+      if (paymentStatus === 'verified') {
+        return {
+          color: '#10b981',
+          icon: '🎉',
+          title: 'Payment Verified!',
+          message: "You're confirmed for HackmanV8! See you at the event!"
+        };
+      } else if (paymentStatus === 'paid' || paymentStatus === 'pending') {
+        return {
+          color: '#f59e0b',
+          icon: '⏳',
+          title: 'Payment Under Review',
+          message: 'Your payment is being verified. You will be notified once confirmed.'
+        };
+      } else {
+        // unpaid or undefined
+        return {
+          color: '#fbbf24',
+          icon: '💳',
+          title: 'Payment Due!',
+          message: 'Complete payment ASAP to confirm your spot. Go to Payment tab to upload proof.'
+        };
+      }
     }
+    
+    // If waitlisted
+    if (selectionStatus === 'waitlisted') {
+      return {
+        color: '#f59e0b',
+        icon: '⏳',
+        title: 'Waitlisted',
+        message: "You're on the waitlist. We'll notify you if a spot opens up."
+      };
+    }
+    
+    // If rejected
+    if (selectionStatus === 'rejected') {
+      return {
+        color: '#ef4444',
+        icon: '❌',
+        title: 'Not Selected',
+        message: 'Unfortunately, your team was not selected this time. Better luck next time!'
+      };
+    }
+    
+    // Default: pending
+    return {
+      color: '#6b7280',
+      icon: '🔄',
+      title: 'Under Evaluation',
+      message: 'Your application is being reviewed. Results will be announced soon.'
+    };
   };
 
-  const getSelectionStatusIcon = (status?: string) => {
-    switch (status) {
-      case 'selected':
-        return '✅';
-      case 'rejected':
-        return '❌';
-      case 'waitlisted':
-        return '⏳';
-      default:
-        return '🔄';
-    }
-  };
-
-  const getSubmissionStatusColor = (status?: string) => {
-    switch (status) {
-      case 'submitted':
-      case 'accepted':
-        return '#10b981';
-      case 'rejected':
-        return '#ef4444';
-      case 'under_review':
-        return '#f59e0b';
-      default:
-        return '#6b7280';
-    }
-  };
-
-  const getSubmissionStatusIcon = (status?: string) => {
-    switch (status) {
-      case 'submitted':
-      case 'accepted':
-        return '📤';
-      case 'rejected':
-        return '❌';
-      case 'under_review':
-        return '🔍';
-      default:
-        return '📝';
-    }
-  };
+  const statusInfo = getStatusInfo();
 
   return (
     <div className={styles.teamOverviewSection}>
       <h2 className={styles.sectionTitle}>Team Overview</h2>
       
-      {/* Status Cards Section */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginBottom: '24px' }}>
-        {/* Selection Status Card */}
+      {/* Selection Status Card */}
+      <div style={{ marginBottom: '24px' }}>
         <div style={{
-          background: 'linear-gradient(135deg, rgba(255, 5, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: `2px solid ${getSelectionStatusColor(selectionStatus)}`,
+          background: `linear-gradient(135deg, ${statusInfo.color}15 0%, rgba(0, 0, 0, 0.3) 100%)`,
+          border: `2px solid ${statusInfo.color}`,
           borderRadius: '12px',
-          padding: '20px',
-          boxShadow: `0 4px 15px ${getSelectionStatusColor(selectionStatus)}40`
+          padding: '24px',
+          boxShadow: `0 4px 20px ${statusInfo.color}40`
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-            <span style={{ fontSize: '32px' }}>{getSelectionStatusIcon(selectionStatus)}</span>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>Selection Status</h3>
+            <span style={{ fontSize: '36px' }}>{statusInfo.icon}</span>
+            <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#fff', margin: 0 }}>Selection Status</h3>
           </div>
           <div style={{ 
-            fontSize: '24px', 
+            fontSize: '28px', 
             fontWeight: 700, 
-            color: getSelectionStatusColor(selectionStatus),
-            textTransform: 'uppercase',
-            letterSpacing: '1px'
+            color: statusInfo.color,
+            marginBottom: '12px'
           }}>
-            {selectionStatus || 'pending'}
+            {statusInfo.title}
           </div>
-          <p style={{ fontSize: '12px', color: '#999', marginTop: '8px', marginBottom: 0 }}>
-            {selectionStatus === 'selected' && 'Congratulations! Your team has been selected! 🎉'}
-            {selectionStatus === 'rejected' && 'Unfortunately, your team was not selected this time.'}
-            {selectionStatus === 'waitlisted' && 'Your team is on the waitlist. We\'ll notify you if a spot opens up.'}
-            {(!selectionStatus || selectionStatus === 'pending') && 'Your selection status will be updated soon.'}
+          <p style={{ fontSize: '14px', color: '#ccc', marginBottom: 0, lineHeight: 1.6 }}>
+            {statusInfo.message}
           </p>
         </div>
+      </div>
 
-        {/* Submission Status Card */}
-        <div style={{
-          background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: `2px solid ${getSubmissionStatusColor(submissionStatus)}`,
-          borderRadius: '12px',
-          padding: '20px',
-          boxShadow: `0 4px 15px ${getSubmissionStatusColor(submissionStatus)}40`
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-            <span style={{ fontSize: '32px' }}>{getSubmissionStatusIcon(submissionStatus)}</span>
-            <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#fff', margin: 0 }}>Submission Status</h3>
+      <div className={styles.projectInfoCard}>
+        <h3>Project Submission</h3>
+        <div className={styles.projectDetails}>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Project Title</span>
+            <span className={styles.detailValue}>{projectTitle}</span>
           </div>
-          <div style={{ 
-            fontSize: '24px', 
-            fontWeight: 700, 
-            color: getSubmissionStatusColor(submissionStatus),
-            textTransform: 'uppercase',
-            letterSpacing: '1px'
-          }}>
-            {submissionStatus?.replace('_', ' ') || 'not submitted'}
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Project Description</span>
+            <span className={styles.detailValue} style={{ whiteSpace: 'pre-wrap' }}>{projectDescription}</span>
           </div>
-          <p style={{ fontSize: '12px', color: '#999', marginTop: '8px', marginBottom: 0 }}>
-            {submissionStatus === 'submitted' && 'Your project has been submitted successfully!'}
-            {submissionStatus === 'accepted' && 'Your submission has been accepted!'}
-            {submissionStatus === 'rejected' && 'Your submission needs revision.'}
-            {submissionStatus === 'under_review' && 'Your submission is currently under review.'}
-            {(!submissionStatus || submissionStatus === 'not_submitted') && 'Submit your project in the submission tab.'}
-          </p>
         </div>
       </div>
 

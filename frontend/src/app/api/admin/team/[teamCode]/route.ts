@@ -3,7 +3,7 @@ import dbConnect from '@/lib/dbConnect';
 import Registration from '@/models/Registration';
 // Admin endpoints rely on strong token auth; no rate limiting applied
 import { sanitizeString } from '@/lib/security';
-import { sendSelectionEmail } from '@/lib/selectionEmail';
+import { sendSelectionEmail, sendPaymentVerificationEmail } from '@/lib/selectionEmail';
 
 function isAuthorized(request: NextRequest): boolean {
   const header = request.headers.get('authorization') || '';
@@ -53,11 +53,16 @@ export async function PUT(
 
   try {
     const body = await request.json();
-    const { selectionStatus, reviewComments, finalScore } = body;
+    const { selectionStatus, reviewComments, finalScore, paymentStatus } = body;
 
     const allowed = ['pending', 'selected', 'waitlisted', 'rejected'];
     if (selectionStatus && !allowed.includes(selectionStatus)) {
       return NextResponse.json({ message: 'Invalid selectionStatus' }, { status: 400 });
+    }
+
+    const allowedPaymentStatus = ['unpaid', 'pending', 'paid', 'verified'];
+    if (paymentStatus && !allowedPaymentStatus.includes(paymentStatus)) {
+      return NextResponse.json({ message: 'Invalid paymentStatus' }, { status: 400 });
     }
 
     await dbConnect();
@@ -67,6 +72,7 @@ export async function PUT(
     if (selectionStatus) update.selectionStatus = selectionStatus;
     if (typeof reviewComments === 'string') update.reviewComments = reviewComments;
     if (typeof finalScore === 'number' || finalScore === null) update.finalScore = finalScore;
+    if (paymentStatus) update.paymentStatus = paymentStatus;
 
     const team = await Registration.findOneAndUpdate(
       { teamCode: teamCode.toUpperCase() },
@@ -92,6 +98,34 @@ export async function PUT(
         await sendSelectionEmail({ teamName: team.teamName, teamCode: team.teamCode, recipients });
       } catch (emailErr) {
         console.error('Failed to send selection email(s):', emailErr);
+      }
+    }
+
+    // If transitioning to verified payment, send payment verification email
+    const transitionedToVerified = paymentStatus === 'verified' && existing && existing.paymentStatus !== 'verified';
+    if (transitionedToVerified && team) {
+      try {
+        type MemberLike = { email?: string };
+        const membersUnknown: unknown = (team as unknown as { members?: unknown }).members;
+        const recipients: string[] = Array.isArray(membersUnknown)
+          ? (membersUnknown as MemberLike[])
+              .map((m) => m.email)
+              .filter((e): e is string => typeof e === 'string' && e.length > 0)
+          : [];
+        
+        const whatsappLink = process.env.WHATSAPP_LINK || '';
+        if (whatsappLink) {
+          await sendPaymentVerificationEmail({ 
+            teamName: team.teamName, 
+            teamCode: team.teamCode, 
+            recipients,
+            whatsappLink 
+          });
+        } else {
+          console.warn('WHATSAPP_LINK environment variable not set, skipping WhatsApp link in payment verification email');
+        }
+      } catch (emailErr) {
+        console.error('Failed to send payment verification email(s):', emailErr);
       }
     }
 

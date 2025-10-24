@@ -595,6 +595,8 @@ input:-webkit-autofill:active {
   transition: var(--transition);
   position: relative;
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .projectInfoCard::before {
@@ -635,24 +637,28 @@ input:-webkit-autofill:active {
 }
 
 .projectDetails {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .detailItem {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: var(--transition);
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .detailItem:hover {
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 8px;
-  padding: 16px 12px;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 5, 0, 0.1);
 }
 
 .detailItem:last-child {
@@ -660,18 +666,34 @@ input:-webkit-autofill:active {
 }
 
 .detailLabel {
-  color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 1rem;
+  color: var(--primary-red);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0;
 }
 
 .detailValue {
   color: var(--text-primary);
-  font-weight: 600;
-  text-align: right;
-  max-width: 60%;
-  word-break: break-word;
+  font-weight: 400;
+  text-align: left;
+  width: 100% !important;
+  min-width: 100%;
+  max-width: none !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  white-space: pre-wrap;
+  display: block !important;
+  box-sizing: border-box;
+  float: none;
+  clear: both;
 }
 
 /* Team Members Section */
@@ -1029,8 +1051,10 @@ input:-webkit-autofill:active {
 
 .detailRow {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
   padding: 14px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: var(--transition);
@@ -1050,15 +1074,19 @@ input:-webkit-autofill:active {
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 0.95rem;
+  min-width: 140px;
+  flex-shrink: 0;
 }
 
 .detailValue {
   color: var(--text-primary);
   font-weight: 600;
-  text-align: right;
-  max-width: 60%;
+  text-align: left;
+  max-width: 70%;
   word-break: break-word;
   font-size: 0.95rem;
+  line-height: 1.5;
+  flex: 1;
 }
 
 .detailLink {
@@ -2131,6 +2159,171 @@ input:-webkit-autofill:active {
   .memberCard {
     padding: 15px 12px;
   }
+}
+
+/* Payment Section */
+.paymentSection {
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid var(--border-dark);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 0;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.successBanner,
+.infoBanner,
+.warningBanner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 2px solid;
+}
+
+.successBanner {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+}
+
+.infoBanner {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: #f59e0b;
+}
+
+.warningBanner {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: #fbbf24;
+}
+
+.successIcon,
+.infoIcon,
+.warningIcon {
+  font-size: 32px;
+}
+
+.successBanner h3,
+.infoBanner h3,
+.warningBanner h3 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+.successBanner p,
+.infoBanner p,
+.warningBanner p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.paymentCard {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+  padding: 30px;
+  margin-top: 20px;
+}
+
+.paymentCard h3 {
+  color: var(--primary-red);
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.paymentCard h4 {
+  color: var(--text-primary);
+  font-size: 18px;
+  margin: 24px 0 16px 0;
+  font-weight: 600;
+}
+
+.paymentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.infoLabel {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.infoValue {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.upiDetails {
+  background: rgba(255, 5, 0, 0.05);
+  border: 1px solid rgba(255, 5, 0, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.upiInfo p {
+  margin: 8px 0;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.qrPlaceholder {
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text-secondary);
+  margin-top: 16px;
+}
+
+.paymentForm {
+  margin-top: 20px;
+}
+
+.fileInput {
+  background: rgba(13, 13, 13, 0.8);
+  border: 1.5px solid #2d3748;
+  color: var(--text-primary);
+  padding: 12px;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-family: var(--font-geist-sans);
+  transition: var(--transition);
+  width: 100%;
+  cursor: pointer;
+}
+
+.fileInput:hover {
+  border-color: var(--primary-red);
+}
+
+.fileInput:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 3px rgba(255, 5, 0, 0.1);
+}
+
+.fileName {
+  display: block;
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
 /* Scrollbar Styling */
