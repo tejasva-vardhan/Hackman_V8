@@ -199,7 +199,7 @@ export default function Hero() {
             alt="" 
             width={70} 
             height={20} 
-            className="absolute size-10 sm:size-auto right-[220px] top-[calc(6.5vh+140px)] sm:right-155 sm:top-54 animate-fly" 
+            className="absolute size-10 sm:size-auto right-[270px] top-[calc(16.5vh+140px)] sm:right-155 sm:top-54 animate-fly" 
           /> 
           <Image 
             src="/Hero/witch.png" 
@@ -213,8 +213,32 @@ export default function Hero() {
             alt="" 
             width={90} 
             height={20} 
-            className="absolute right-[25%] top-[calc(6.5vh+20%)] sm:right-73 sm:top-[10%] w-[13%] animate-float" 
+            className="absolute right-[25%] top-[calc(2.5vh+20%)] sm:right-73 sm:top-[10%] w-[13%] animate-float" 
           />
+<div className="hidden sm:flex absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-6 mt-4">
+  <span className="animate-text-shimmer text-[5vw] sm:text-[3vw] md:text-[2.2vw] lg:text-[1.6vw] xl:text-[1.4vw] leading-tight font-bold tracking-wider drop-shadow-2xl text-center whitespace-nowrap overflow-hidden text-ellipsis mb-2">
+    Sponsored by:-
+  </span>
+
+  <div className="flex items-center justify-center gap-10">
+    <Image 
+      src="/Hero/DERBI.png" 
+      alt="Derbi" 
+      width={200} 
+      height={120} 
+      className="rounded-xl object-contain shadow-lg"
+    />
+    <Image 
+      src="/Hero/SagarHospital.png" 
+      alt="Sagar Hospital" 
+      width={200} 
+      height={120} 
+      className="rounded-xl object-contain shadow-lg"
+    />
+  </div>
+</div>
+
+
           <Image 
             src="/Hero/pumpkin evil.png" 
             alt="" 
@@ -401,7 +425,33 @@ export default function Hero() {
                 <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-1 h-4 bg-gradient-to-b from-[#FF0700] to-transparent rounded-full opacity-70"></div>
               </div>
             </div>
+<div className="absolute left-1/2 top-[200%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center sm:hidden mt-4">
+  <span className="animate-text-shimmer text-[5vw] sm:text-[3vw] md:text-[2.2vw] lg:text-[1.6vw] xl:text-[1.4vw] leading-tight font-bold tracking-wider drop-shadow-2xl text-center whitespace-nowrap overflow-hidden text-ellipsis mb-2">
+    Sponsored by:-
+  </span>
+
+  <div className="flex items-center justify-center gap-10">
+    <Image 
+      src="/Hero/DERBI.png" 
+      alt="Derbi" 
+      width={100} 
+      height={80} 
+      className="rounded-xl object-contain shadow-lg"
+    />
+    <Image 
+      src="/Hero/SagarHospital.png" 
+      alt="Sagar Hospital" 
+      width={100} 
+      height={80} 
+      className="rounded-xl object-contain shadow-lg"
+    />
+  </div>
+</div>
+
+
           </div>
+
+
           {}
         </div>
       </div>
