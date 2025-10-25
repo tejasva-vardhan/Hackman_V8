@@ -160,7 +160,7 @@ export default function DashboardPage() {
         </button>
         <div className={styles.loginContainer}>
           <h1 className={`${styles.title} ${nosifer.className}`}>Team Dashboard</h1>
-          <p className={styles.subtitle}>Enter your project title and team code to access your dashboard</p>
+          <p className={styles.subtitle}>Enter team lead email and phone number to access your dashboard</p>
           
           <form onSubmit={handleLogin} className={styles.loginForm}>
             <div className={styles.inputGroup}>
