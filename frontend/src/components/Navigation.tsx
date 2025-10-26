@@ -75,11 +75,13 @@ export default function Navigation() {
         <p
           className="leading-[140%] animate-fade-in px-2"
           style={{
-            animation: "fadeIn 1s ease-out 0.3s forwards",
+            animation: "fadeIn 1s ease-out 0.3s forwards, blink 2s ease-in-out infinite",
             opacity: 0,
+            textShadow: "0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 0, 0, 0.6)",
+            fontSize: 'clamp(18px, 3vw, 28px)',
           }}
         >
-          Registrations Are Now Open For Hackman… If You Dare To Enter.
+          🎃 The clock ticks... Registrations vanish on October 28th at 7:00 PM - Dare to enter? 👻
         </p>
       </div>
       <button
